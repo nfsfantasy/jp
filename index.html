@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ร้านเด็ดทริปโตเกียว</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+JP:wght@600;900&display=swap">
+<style>
+/* Layout: a ticket-stub list. Each card has a vertical kanji "noren" panel on the left and the Thai review on the right. */
+:root{
+  --bg:#eef1f4; --card:#ffffff; --fg:#17222e; --muted:#5b6876; --line:#d9dfe6;
+  --ikura:#e2571f; --ikura-soft:#fde6db;
+  --ok:#2f6b43; --ok-soft:#e1f0e5; --warn:#a23a1a; --warn-soft:#fbe3da; --done:#1f4f8a; --done-soft:#dde8f6;
+  --sea:#1d3f63; --soba:#7a5a34; --meat:#8c2630; --ramen:#a8741a; --alley:#3a3f47; --coffee:#4b3021; --matcha:#4c6a2a; --gold:#e0a91b; --gold-soft:#fdf3d6; --gold-ink:#7a5600; --sushi:#1f5f5b; --chicken:#9a4a12; --cat:#5b4a7a; --view:#9c3b22; --shop:#6b5a2e;
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif; --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margin:0 0 6px;text-wrap:balance;font-weight:700}
+header h1 span{color:var(--ikura)}
+header p{margin:0;color:var(--muted);max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 0;font-size:13px;color:var(--muted)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-top:18px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--ikura);outline-offset:2px}
+.sp{flex:1}
+.count{font-size:13px;color:var(--muted)}
+.list{display:grid;gap:16px;margin-top:18px}
+.card{display:grid;grid-template-columns:96px 1fr;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.noren{color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:14px 6px;gap:10px}
+.noren .jp{writing-mode:vertical-rl;font-family:var(--f-jp);font-weight:900;font-size:26px;letter-spacing:.12em;line-height:1}
+.noren .cat{font-size:11px;letter-spacing:.06em;opacity:.85;text-align:center}
+.c-sea{background:var(--sea)}.c-soba{background:var(--soba)}.c-meat{background:var(--meat)}.c-ramen{background:var(--ramen)}.c-alley{background:var(--alley)}.c-coffee{background:var(--coffee)}.c-matcha{background:var(--matcha)}.c-sushi{background:var(--sushi)}.c-chicken{background:var(--chicken)}.c-cat{background:var(--cat)}.c-view{background:var(--view)}.c-shop{background:var(--shop)}
+.body{padding:16px 18px;min-width:0;display:grid;gap:10px}
+.top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.top h2{margin:0;font-size:19px;line-height:1.3}
+.area{color:var(--muted);font-size:13px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.meta b{color:var(--fg);font-weight:600}
+.star{color:var(--ikura);font-weight:700}
+.pill{font-size:12.5px;font-weight:600;border-radius:6px;padding:2px 9px;white-space:nowrap}
+.card.is-top{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.topbadge{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;border-radius:6px;padding:2px 9px;background:var(--gold);color:#241a00;white-space:nowrap}
+.why{margin:0 0 10px;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 6px 6px 0;font-size:14.5px}
+.why b{color:var(--gold-ink)}
+.p-must{background:var(--warn-soft);color:var(--warn)}
+.p-done{background:var(--done-soft);color:var(--done)}
+.p-no{background:var(--ok-soft);color:var(--ok)}
+.p-app{background:var(--ikura-soft);color:var(--ikura)}
+.order{font-size:14.5px}
+.order strong{color:var(--ikura)}
+.rv{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rv div{font-size:13.5px;background:var(--bg);border-radius:8px;padding:8px 11px}
+.rv h3{margin:0 0 2px;font-size:12px;letter-spacing:.04em;color:var(--muted);font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--muted)}
+.tag.me{border-color:var(--ikura);color:var(--ikura)}
+.foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:14px;background:var(--fg);color:var(--bg);border-radius:8px;padding:7px 14px}
+.note{font-size:12.5px;color:var(--muted)}
+.empty{color:var(--muted);padding:24px 0}
+footer{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch}
+@media (max-width:620px){
+  .card{grid-template-columns:62px 1fr}
+  .noren .jp{font-size:20px}
+  .rv{grid-template-columns:1fr}
+  .body{padding:14px}
+}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <h1>ร้านเด็ดทริปโตเกียว <span>27 พ.ย.–5 ธ.ค.</span></h1>
+    <p>ร้านอาหาร ร้านกาแฟ มัทฉะ ซูชิสายพาน ไก่ทอด ที่เล่นกับแมว และจุดชมใบไม้เปลี่ยนสี ที่วางไว้ในแพลน พร้อมคะแนนและสรุปรีวิวจาก Google Maps ว่าคนชมอะไรและติอะไร กดปุ่ม “ดูรูปใน Google Maps” เพื่อดูรูปอาหารและรีวิวเต็ม</p>
+    <div class="legend">
+      <span><span class="topbadge">★ ต้องไปให้ได้</span></span>
+      <span><span class="pill p-done">จองแล้ว</span></span>
+      <span><span class="pill p-must">ต้องจอง / ควรจอง</span></span>
+      <span><span class="pill p-app">จองคิวในแอป</span></span>
+      <span><span class="pill p-no">เดินเข้าได้</span></span>
+      <span><span class="tag me">ของชอบคุณ</span> <span class="tag">ของชอบแฟน</span></span>
+    </div>
+  </header>
+
+  <div class="bar" role="toolbar" aria-label="กรองร้าน">
+    <button class="chip" id="f-all" data-cat="all" aria-pressed="true">ทั้งหมด</button>
+    <button class="chip" id="f-sea" data-cat="sea" aria-pressed="false">ทะเล · อิคุระ · อูนิ</button>
+    <button class="chip" id="f-soba" data-cat="soba" aria-pressed="false">โซบะ · โฮโทะ</button>
+    <button class="chip" id="f-meat" data-cat="meat" aria-pressed="false">เนื้อ · ไก่</button>
+    <button class="chip" id="f-ramen" data-cat="ramen" aria-pressed="false">ราเมง · มอนจา</button>
+    <button class="chip" id="f-alley" data-cat="alley" aria-pressed="false">ตรอกกินดื่ม</button>
+    <button class="chip" id="f-coffee" data-cat="coffee" aria-pressed="false">กาแฟ</button>
+    <button class="chip" id="f-matcha" data-cat="matcha" aria-pressed="false">มัทฉะ</button>
+    <button class="chip" id="f-sushi" data-cat="sushi" aria-pressed="false">ซูชิสายพาน</button>
+    <button class="chip" id="f-chicken" data-cat="chicken" aria-pressed="false">ไก่ทอด · คาราอาเกะ</button>
+    <button class="chip" id="f-cat" data-cat="cat" aria-pressed="false">แมว</button>
+    <button class="chip" id="f-view" data-cat="view" aria-pressed="false">ใบไม้เปลี่ยนสี · วิว</button>
+    <button class="chip" id="f-shop" data-cat="shop" aria-pressed="false">ของฝาก</button>
+    <span class="sp"></span>
+    <button class="chip" id="f-top" aria-pressed="false">★ ต้องไปให้ได้</button>
+    <button class="chip" id="f-book" aria-pressed="false">เฉพาะที่ต้องจอง</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>
+    คะแนนและจำนวนรีวิวจาก Google Maps ณ 19–25 พ.ย. 2026 สรุปรีวิวเขียนเป็นภาษาไทยจากรีวิวล่าสุดบน Google Maps ไม่ได้คัดลอกข้อความรีวิว เวลาเปิด-ปิดและราคาอาจเปลี่ยน เช็กอีกครั้งก่อนไป หน้านี้ใส่รูปจาก Google Maps ตรงๆ ไม่ได้ จึงมีปุ่มพาไปดูรูปในแอปแทน
+  </footer>
+</div>
+
+<script>
+const CAT={sea:"ทะเล",soba:"โซบะ",meat:"เนื้อ·ไก่",ramen:"เส้น·กระทะ",alley:"ตรอก",coffee:"กาแฟ",matcha:"มัทฉะ",sushi:"ซูชิสายพาน",chicken:"ไก่ทอด",cat:"แมว",view:"วิว",shop:"ของฝาก"};
+const BOOK={done:["p-done","จองแล้ว"],must:["p-must","ต้องจอง"],should:["p-must","ควรจอง"],app:["p-app","จองคิวในแอป"],no:["p-no","เดินเข้าได้"],queue:["p-no","ไม่รับจอง · ต่อคิว"]};
+const R=[
+{n:"Namino",top:"ร้านเฉพาะอิคุระของจริง มีหลายเกรดให้ชิมเทียบ ตรงสายอิคุระที่สุดในทริป",jp:"いくら丼",cat:"sea",area:"จิยูกาโอกะ",day:"พฤ. 3 ธ.ค. 11:00",r:4.4,c:609,price:"¥2,000–4,000",book:"done",
+ order:"<strong>ดงอิคุระ 3 ชนิด</strong> ชิมเทียบเกรดและแหล่ง สั่งซาชิมิแซลมอนเพิ่มแล้วโปะอิคุระเอง",
+ pro:"ร้านเฉพาะอิคุระที่คนท้องถิ่นมากิน มีหลายเกรดให้เลือกพร้อมอธิบายรส เม็ดสดเกาะกันเด้ง ปิดท้ายด้วยข้าวไข่ดิบเลือกไข่ได้ พนักงานเป็นกันเองมาก",
+ con:"บางคนรู้สึกว่าไข่ปลาแต่ละชนิดรสใกล้กัน ถ้าไม่ได้ชอบอิคุระจัดๆ อาจไม่ว้าว",
+ tags:[["อิคุระ",1],["ปลาดิบ",1]],note:"จองทาง IG แล้ว",q:"Namino Jiyugaoka",id:"ChIJjRJEiB_1GGARsKKq4uooKbw"},
+{n:"Itasoba Kaoriya",top:"โซบะเย็นที่หลายคนยกให้ดีที่สุดในโตเกียว เข้ากับสายบะหมี่เย็น",jp:"板そば",cat:"soba",area:"เอบิสุ",day:"พฤ. 3 ธ.ค. 17:00",r:4.3,c:1423,price:"¥1,500–3,000",book:"should",
+ order:"<strong>อิตะโซบะเย็นเส้นบาง</strong> จิ้มซอสงา + กุ้งเทมปุระตัวใหญ่ ต่อด้วยสาเก",
+ pro:"หลายคนบอกว่าเป็นโซบะที่ดีที่สุดในโตเกียว เส้นหนึบ ซอสงาเด่น เทมปุระทอดสดกรอบ สาเกให้เลือกเยอะ มีเมนูอังกฤษ",
+ con:"เส้นหนาบางคนว่าแป้งเยอะไป เลือกเส้นบางปลอดภัยกว่า ช่วงคนเยอะต้องรอหน้าร้าน",
+ tags:[["บะหมี่เย็น",1],["เทมปุระ",0]],note:"รับจองเฉพาะมื้อเย็น โทร +81 3-3449-8498 หรือจองผ่าน Tabelog",q:"Itasoba Kaoriya Ebisu",id:"ChIJHXS5UxWLGGARvvtsf6Hh-I8"},
+{n:"Sushi Kuni",top:"อูนิหวานครีมมี่ให้เต็มชาม คนกลับมากินซ้ำ คุ้มที่จะตื่นเช้ามาต่อคิว",jp:"うに丼",cat:"sea",area:"ตลาดสึกิจิ",day:"ศ. 4 ธ.ค. เช้า",r:4.3,c:1488,price:"¥4,000–9,000",book:"queue",
+ order:"<strong>ดงอูนิอิคุระ</strong> ได้ไข่หวานปิดท้าย หรือดงอูนิล้วนถ้าสายอูนิ",
+ pro:"อูนิหวานครีมมี่และให้เยอะ โทโระหั่นหนาละลายในปาก ร้านใหม่สะอาดกว่าแผงรอบๆ คนกลับมากินซ้ำหลายรอบ",
+ con:"แพงกว่าร้านในตลาดทั่วไป ของบางอย่างหมดตั้งแต่เช้า ควรไปต่อคิวก่อนเปิด 9:00",
+ tags:[["อูนิ",1],["อิคุระ",1]],note:"ปิดวันพุธ",q:"Sushi Kuni Tsukiji",id:"ChIJRRp9ecOLGGARd4wZ5kFhZW8"},
+{n:"Marukita 2nd Branch",jp:"海鮮丼",cat:"sea",area:"ตลาดสึกิจิ",day:"ศ. 4 ธ.ค. เช้า",r:3.9,c:678,price:"¥2,290 / ¥5,000",book:"no",
+ order:"<strong>ดงอิคุระ+ทูน่า+แซลมอน</strong> หรือ Marukita-don ทะเล 11 อย่าง (มีอิคุระ+อูนิ) + เบียร์",
+ pro:"ชุดราคาถูกคุ้มมาก ได้ซุปและชาด้วย กุ้งกับหอยเชลล์ย่างสดอร่อย Marukita-don ซาชิมิเต็มชาม มีโต๊ะนั่งกลุ่ม",
+ con:"ชุดแพงบางคนว่าเกินราคา ไปถึงหลัง 8:30 ตลาดเริ่มแน่น",
+ tags:[["อิคุระ",1],["เบียร์",1]],note:"เปิด 6:00 ไป 7:00 ไม่ต้องรอ",q:"Marukita Kaisendon 2nd Branch",id:"ChIJTdeIL9-LGGAR6Ck4u9RFu0o"},
+{n:"Kasagawa",jp:"中トロ",cat:"sea",area:"ตลาดสึกิจิ",day:"ศ. 4 ธ.ค. เช้า",r:4.5,c:476,price:"~¥3,000–5,000",book:"no",
+ order:"<strong>ซูชิโอโทโระ ชูโทโระ</strong> + กุงกันอูนิ อิคุระ ปลาไหล (จำกัดคนละ 1)",
+ pro:"ทูน่าสามแบบเกินคาด ละลายในปาก ข้าวปั้นเล็กจึงชิมได้หลายคำ คนญี่ปุ่นแนะนำต่อกัน",
+ con:"มีรีวิวว่าดงจริงเล็กกว่ารูปและอูนิน้อย สั่งเป็นซูชิทีละคำดีกว่าสั่งดง",
+ tags:[["ปลาดิบ",1],["อูนิ",1]],note:"เงินสด",q:"Kasagawa Seafood Bowls Tsukiji",id:"ChIJl-TBF8OLGGARFtMxvpNaIhw"},
+{n:"Tsukijiro",jp:"鮪丼",cat:"sea",area:"ตลาดสึกิจิ",day:"ศ. 4 ธ.ค. เช้า",r:4.5,c:534,price:"~¥4,000–4,500",book:"no",
+ order:"<strong>ดงทูน่า</strong> + หอยเชลล์ย่างเนยโชยุ ให้พนักงานแนะนำสาเกเข้าคู่",
+ pro:"นั่งสบายไม่ต้องยืนกินแบบแผง ปลาสดรสหวานมัน ลูกค้าคนญี่ปุ่นเยอะ พนักงานแนะนำสาเกได้ดี",
+ con:"มีรีวิวว่าดงราคา ¥4,500 แต่ปลาน้อย อิคุระเค็มเกิน อูนิไม่ดี ถ้าสายอิคุระไปร้านอื่นดีกว่า",
+ tags:[["ปลาดิบ",1]],note:"ปิด 14:30",q:"TSUKIJIRO Tsukiji",id:"ChIJb5vAMd-LGGARVBXBY5n58aE"},
+{n:"Tsukiji Kanno",jp:"刺身",cat:"sea",area:"ตลาดสึกิจิ",day:"สำรอง",r:4.0,c:1385,price:"~¥3,000–5,000",book:"no",
+ order:"<strong>ซาชิมิโอโทโระ</strong> ดงปลาไหล และซุปมิโสะก้างปลา",
+ pro:"เมนูเยอะ ทูน่าคุณภาพดี ซุปมิโสะต้มจากก้างปลาสด พนักงานพูดอังกฤษ ชั้นบนนั่งเป็นกลุ่มได้",
+ con:"ชุดอูนิราคาถูกใช้อูนินำเข้า มีคนเจอรสขมสีหม่น ถามก่อนว่าเป็นอูนิญี่ปุ่นหรือไม่",
+ tags:[["ปลาดิบ",1]],note:"เปิดตั้งแต่ 4:30",q:"Tsukiji Kanno",id:"ChIJ06Q23t6LGGARefWUM2yP9ME"},
+{n:"Tsukiji Yamacho",jp:"玉子焼",cat:"sea",area:"ตลาดสึกิจิ",day:"ศ. 4 ธ.ค. ของกินเล่น",r:3.9,c:1415,price:"ราคาย่อมเยา",book:"no",
+ order:"<strong>ไข่หวานเสียบไม้</strong> กินเดินเล่นระหว่างร้าน",
+ pro:"ทำสดให้ดูตรงหน้า นุ่มฉ่ำ คิวยาวแต่เดินเร็ว ได้ภายในไม่กี่นาที",
+ con:"หลายคนว่าหวานกว่าที่คิด ถ้าคิวยาวเกิน 10 นาทีข้ามได้",
+ tags:[["ของกินเล่น",0]],note:"",q:"Tsukiji Yamacho",id:"ChIJpYBA196LGGARHJnwxaxGNKg"},
+{n:"Kanda Matsuya",jp:"もりそば",cat:"soba",area:"คันดะ",day:"พ. 2 ธ.ค. กลางวัน",r:4.3,c:3904,price:"¥1,000–2,800",book:"queue",
+ order:"<strong>โมริโซบะเย็น</strong> หรือโกะมะโซบะ + ไก่ย่าง + เบียร์",
+ pro:"ร้านโซบะเก่าแก่ เส้นหอมสะอาด น้ำจิ้มเข้มพอดี ไก่ย่างต้องสั่ง ได้ดูทำเส้นสดๆ มีเมนูอังกฤษ ลูกค้าส่วนใหญ่เป็นคนญี่ปุ่น",
+ con:"บางคนว่าอร่อยแต่ไม่ถึงกับพิเศษ บริการแบบดั้งเดิม ไม่ค่อยเอาใจนักท่องเที่ยว",
+ tags:[["บะหมี่เย็น",1],["เบียร์",1]],note:"ต่อคิวก่อน 10:30 เงินสด ปิดอา.–จ.",q:"Kanda Matsuya",id:"ChIJQ3MESwOMGGARX99d47o0V6k"},
+{n:"Namiki Yabusoba",jp:"ざるそば",cat:"soba",area:"อาซากุสะ",day:"สำรอง (วันที่ไปอาซากุสะร้านปิด)",r:4.1,c:2104,price:"เท็นซารุ ¥2,200",book:"queue",
+ order:"<strong>เท็นซารุ</strong> โซบะเย็น + กุ้งเทมปุระ 4 ตัว ปิดท้ายด้วยน้ำต้มโซบะ",
+ pro:"เปิดมาตั้งแต่ 1913 เส้นทำมือหอมบัควีท ได้นั่งพื้นเสื่อแบบดั้งเดิม",
+ con:"ปริมาณน้อย น้ำจิ้มค่อนข้างเค็ม บางคนว่าไม่ถึงกับต้องตั้งใจมา",
+ tags:[["บะหมี่เย็น",1]],note:"ปิดพุธ–พฤหัส",q:"Namiki Yabusoba",id:"ChIJq6oF_saOGGARikXRyPA55vI"},
+{n:"Kazoku Kitchen Raku",jp:"天ざる",cat:"soba",area:"คาวากุจิโกะ",day:"จ. 30 พ.ย. กลางวัน",r:4.9,c:224,price:"~¥1,500–2,500",book:"no",
+ order:"<strong>โซบะทำมือเย็น</strong> + เทมปุระทะเลจานใหญ่",
+ pro:"เทมปุระทอดหลังสั่ง กรอบเบา ให้เยอะ ร้านครอบครัวอบอุ่นมาก ส่งลูกค้าถึงหน้าร้าน หลายคนยกให้เป็นมื้อดีที่สุดของทริป",
+ con:"อยู่นอกถนนหลัก เดินจากป้ายรถเมล์ไกลหน่อย นั่งแท็กซี่สะดวกกว่า",
+ tags:[["บะหมี่เย็น",1],["เทมปุระ",0]],note:"เปิด 10:00–16:00 ปิดพฤหัส",q:"Kazoku Kitchen Teuchi Soba Raku",id:"ChIJnZUIEeJfGWARqGOIaxtmWrE"},
+{n:"KAKASHIYA",jp:"ほうとう",cat:"soba",area:"ฟุนัตสึ คาวากุจิโกะ",day:"จ. 30 พ.ย. ค่ำ",r:4.7,c:703,price:"~¥1,500–2,000",book:"no",
+ order:"<strong>โฮโทะ</strong> เส้นแบนหม้อร้อน (มีแบบเผ็ดและแกงกะหรี่) + ไก่ทอด + เบียร์",
+ pro:"เส้นโฮโทะทำเองอร่อย ร้านครอบครัวใกล้สถานี ไม่ค่อยมีนักท่องเที่ยว ไก่ทอดกรอบฉ่ำ แบบเผ็ดไม่เผ็ดมาก",
+ con:"น้ำซุปบางคนว่ารสเรียบไป ลองแบบเผ็ดหรือแกงกะหรี่",
+ tags:[["เบียร์",1],["คาราอาเกะ",0]],note:"Google Maps แสดงเวลาปิด 19:00 ไปก่อน 18:00",q:"KAKASHIYA Kawaguchiko",id:"ChIJO2K5HmdhGWARpQWReWIsZ8s"},
+{n:"Wagyu Yakiniku Tetsu",top:"มื้อเนื้อวากิวใหญ่ของกลุ่ม คะแนน 4.8 สม่ำเสมอ",jp:"焼肉",cat:"meat",area:"คาบุกิโจ ชินจูกุ",day:"พ. 2 ธ.ค. ค่ำ (ทั้งกลุ่ม)",r:4.8,c:1819,price:"~¥6,800–10,000",book:"must",
+ order:"<strong>คอร์ส Premium + ดื่มไม่อั้น</strong> ลิ้นวัว ฟิเลคุโรอุชิคาโกชิมะ ปิดท้ายบะหมี่เย็น",
+ pro:"วากิวละลายในปาก มีป้ายบอกส่วนของวัวทุกจาน ย่างเองได้ตามชอบ พนักงานพูดอังกฤษ ราคาสมเหตุสมผลกับคุณภาพ",
+ con:"ทุกคนในโต๊ะต้องสั่งคอร์สราคาเดียวกัน ตกลงกันก่อนไป",
+ tags:[["เนื้อ",1],["บะหมี่เย็น",1],["เบียร์",1]],note:"จอง 10 คน โทร +81 3-5292-5545 หรือ Tabelog",q:"Wagyu Yakiniku Tetsu Shinjuku",id:"ChIJK52S3K-NGGAROhTdV0KVvf8"},
+{n:"Hinomaru",jp:"焼肉",cat:"meat",area:"คาบุกิโจ ชินจูกุ",day:"สำรอง",r:4.9,c:23622,price:"~¥4,000–7,000",book:"should",
+ order:"<strong>ชุดเนื้อโกเบ 3 ส่วน</strong> หรือบุฟเฟ่ต์ยากินิคุ",
+ pro:"เนื้อลายสวยนุ่ม เครื่องเคียงเยอะ บริการไวมาก เปิดถึงตี 5",
+ con:"มีรีวิวว่าพนักงานขอให้รีวิวแลกเครื่องดื่มฟรี คะแนนอาจสูงเกินจริง ชุดวากิวเล็กกินไม่อิ่ม",
+ tags:[["เนื้อ",1]],note:"จอง Hot Pepper หรือโทร +81 3-5761-9997",q:"Hinomaru Kabukicho",id:"ChIJJbYu9ZmNGGARQN-9DHwAl-E"},
+{n:"Gyukatsu Motomura",top:"4.9 จากรีวิวกว่า 17,000 รายการ เนื้อชุบทอดสีชมพูย่างเองบนหินร้อน",jp:"牛かつ",cat:"meat",area:"ชิบูย่า",day:"ส. 28 พ.ย.",r:4.9,c:17248,price:"",book:"should",
+ order:"<strong>กิวคัตสึ</strong> เนื้อชุบเกล็ดขนมปัง ย่างต่อบนหินร้อนตามความสุกที่ชอบ",
+ pro:"กรอบนอกนุ่มใน สนุกที่ได้ย่างเอง เครื่องเคียงเข้ากันดี",
+ con:"สาขานี้มีเคาน์เตอร์แค่ 9 ที่ใต้ดิน ต้องรอเกือบทุกครั้ง ถ้าจองแล้วต้องรอหน้าร้านชั้นใต้ดิน ไม่อย่างนั้นอาจโดนยกเลิกคิว",
+ tags:[["เนื้อ",1]],note:"กลุ่มต้องมาครบพร้อมกัน",q:"Gyukatsu Motomura Shibuya",id:"ChIJn2FoeFmLGGARnIog2ijRZXw"},
+{n:"Torikizoku Shibuya",jp:"焼き鳥",cat:"meat",area:"ชิบูย่า",day:"ส. 28 พ.ย. ค่ำ",r:3.7,c:204,price:"ทุกเมนู ¥370",book:"should",
+ order:"<strong>ไก่เสียบไม้ทุกส่วน</strong> หนังไก่ทอด + เลมอนซาวร์",
+ pro:"ถูกมาก สั่งผ่านแท็บเล็ตภาษาอังกฤษ ของมาเร็ว หนังไก่ทอดอร่อย",
+ con:"สาขานี้มีรีวิวว่าช้าและแย่กว่าสาขาอากิบะกับชินจูกุ ไม่จองนั่งได้แค่ 1 ชั่วโมง",
+ tags:[["เบียร์",1],["ไก่ทอด",0]],note:"",q:"Torikizoku Shibuya Mark City Mae",id:"ChIJRUBoyFeLGGAR0f5IrqfHcIk"},
+{n:"Kikanbo",top:"ราเมงหม่าล่าเผ็ดชาที่ดังที่สุดในโตเกียว ของโปรดแฟน",jp:"辛味噌",cat:"ramen",area:"คันดะ",day:"สำหรับแฟน (แถวคันดะ)",r:4.4,c:6717,price:"",book:"queue",
+ order:"<strong>ราเมงมิโสะเผ็ดชา</strong> เลือกระดับเผ็ดกับระดับชาแยกกัน",
+ pro:"ซุปเข้มข้น เผ็ดและชาลงตัวแบบหม่าล่า ระบบตู้ตั๋วเร็ว หลายคนยกให้เป็นราเมงที่ดีที่สุดของทริป",
+ con:"คิว 30–60 นาที หมูชาชูในชามธรรมดาน้อย",
+ tags:[["หม่าล่า",0]],note:"ซื้อตั๋วตู้ (เงินสด) อา. ปิด 16:00",q:"Kikanbo Kanda",id:"ChIJ0ZJ-DwKMGGARDfmgrVH1HLY"},
+{n:"AFURI Ebisu",jp:"柚子塩",cat:"ramen",area:"เอบิสุ",day:"สำรองถ้า Kaoriya เต็ม",r:4.3,c:4684,price:"",book:"no",
+ order:"<strong>ราเมงยูซุชิโอะ</strong> ซุปใสกลิ่นส้มยูซุ ชาชูย่างถ่าน",
+ pro:"ซุปเบาสดชื่น ไม่เลี่ยน ของมาไว เปิดถึงตี 5 อยู่ติด Ebisu Yokocho",
+ con:"สั่งผ่านตู้ ช่วงคนเยอะต้องรอบ้าง",
+ tags:[["บะหมี่",1]],note:"",q:"AFURI Ebisu",id:"ChIJgYtUxUGLGGAR2LLtCdmLFbs"},
+{n:"Monja Moheji Flagship",top:"มอนจายากิต้นตำรับย่านสึกิชิมะ 4.8 จาก 13,000+ รีวิว เป็นประสบการณ์ที่ไทยไม่มี",jp:"もんじゃ",cat:"ramen",area:"สึกิชิมะ",day:"อา. 29 พ.ย. ค่ำ",r:4.8,c:13506,price:"",book:"should",
+ order:"<strong>มอนจาไข่ปลาเมนไทโกะ</strong> หรือหมึกดำ ทะเลรวม วากิวแกงกะหรี่ใส่ชีส",
+ pro:"พนักงานทำบนกระทะให้และสอนวิธีกิน สาขาแฟลกชิปใหญ่สุดในถนน ได้ที่ง่ายกว่าสาขาเล็ก",
+ con:"บางวันไม่มีเมนูอังกฤษ ใช้แอปแปลช่วย",
+ tags:[["เบียร์",1]],note:"เต็มก็ไปสาขาอื่นของ Moheji บนถนนเดียวกัน",q:"Tsukishima Monja Moheji Flagship",id:"ChIJAcWODXmJGGARyXHltkbgfoI"},
+
+{n:"Omoide Yokocho",top:"ตรอกยากิโทริควันฉุยแบบโตเกียวเก่า มาโตเกียวต้องมาเดินสักครั้ง",jp:"横丁",cat:"alley",area:"ชินจูกุ",day:"พ. 2 ธ.ค. ค่ำ (หลัง Tetsu)",r:4.2,c:16043,price:"~¥3,000–4,000",book:"no",
+ order:"<strong>ยากิโทริ</strong> + เบียร์สด ร้านเล็กใต้โคมแดง",
+ pro:"บรรยากาศตรอกเก่าเหมือนฉากหนัง กลิ่นไก่ย่างถ่านทั้งซอย กลางคืนสนุกสุด",
+ con:"ร้านเล็กมาก 6–10 ที่ คนแน่น กลุ่มใหญ่หาที่ยาก ส่วนใหญ่มีค่าที่นั่งราว ¥400",
+ tags:[["เบียร์",1],["ไก่ย่าง",0]],note:"แยกนั่งกลุ่มละ 2–4 คน",q:"Omoide Yokocho",id:"ChIJP9eKBdeMGGAR0zzBXJNVj5A"},
+{n:"Ebisu Yokocho",jp:"横丁",cat:"alley",area:"เอบิสุ",day:"พฤ. 3 ธ.ค. หลังมื้อเย็น",r:3.8,c:1691,price:"",book:"no",
+ order:"<strong>ไล่ชิมร้านเล็ก</strong> เบียร์ + ไก่ทอดสำหรับแฟน",
+ pro:"ตรอกในร่มแบบเรโทร ร้านเล็กเยอะ คนท้องถิ่นมานั่งหลังเลิกงาน มีนักดนตรีเล่นสด",
+ con:"บางร้านสูบบุหรี่ในร้านได้ ช่วงดึกแน่น มาเร็วจะได้ที่นั่ง",
+ tags:[["เบียร์",1],["ไก่ทอด",0]],note:"เปิด 17:00",q:"Ebisu Yokocho",id:"ChIJ06N2yEGLGGARycMkSbjIBYQ"}
+,{n:"Kayaba Coffee",jp:"喫茶",cat:"coffee",area:"ยานากะ",day:"ศ. 27 พ.ย.",r:4.2,c:2221,price:"",book:"should",
+ order:"<strong>แซนด์วิชไข่สูตรดั้งเดิม</strong> + กาแฟรัสเซียน (กาแฟผสมโกโก้)",
+ pro:"คิสสะเต็งในอาคารเก่าร้อยปี ชั้นบนนั่งเสื่อทาทามิเงียบสงบ แซนด์วิชไข่กับพุดดิ้งอร่อย ลูกค้าคนท้องถิ่นเยอะ",
+ con:"รีวิวหลายคนบอกว่าควรจอง เดินเข้าได้เฉพาะตอนไม่เต็ม แซนด์วิชไข่หมดเร็ว ต้องสั่งคนละ 1 อย่าง",
+ tags:[["คิสสะเต็ง",0],["ทาทามิ",0]],note:"ปิดจันทร์ เปิด 8:00",q:"Kayaba Coffee Yanaka",id:"ChIJrdgn_9KNGGAR51pQCSVxBbI"},
+{n:"Café Lapin",jp:"珈琲",cat:"coffee",area:"อุเอโนะ",day:"ศ. 27 พ.ย.",r:4.6,c:965,price:"",book:"no",
+ order:"<strong>ดริปซิงเกิลออริจิน</strong>ตามที่บาริสต้าแนะนำ + ทามาโกะซันโดะหรือพุดดิ้งคาราเมล",
+ pro:"คั่วเองในร้าน นั่งเคาน์เตอร์ดูชงได้ แซนด์วิชไข่ชิ้นใหญ่ พุดดิ้งเนียนละลาย มีเมนูอังกฤษ",
+ con:"มีคนต่อคิวตั้งแต่ก่อนเปิด 8:30",
+ tags:[["คั่วเอง",0]],note:"ปิดอาทิตย์",q:"Cafe Lapin Ueno",id:"ChIJ9zTs3h-MGGARvqx1jws3E8s"},
+{n:"Savor the Matcha",jp:"抹茶",cat:"matcha",area:"สวนอุเอโนะ",day:"ศ. 27 พ.ย.",r:4.7,c:284,price:"ลาเต้ ~¥800",book:"no",
+ order:"<strong>Rich Matcha Latte</strong> เลือกชนิดมัทฉะได้ ขอน้ำแข็งน้อยถ้าชอบรสเข้ม",
+ pro:"ตีมัทฉะทีละถ้วยตามแบบดั้งเดิม ร้านสวยเรียบแบบเซน พนักงานใจดีพูดอังกฤษได้",
+ con:"อยู่ลึกจากสถานี ต้องข้ามสะพานลอย โฮจิฉะลาเต้ไม่เด่นเท่ามัทฉะ",
+ tags:[["มัทฉะลาเต้",0]],note:"ปิดอังคาร",q:"Savor the Matcha Ueno",id:"ChIJFYPWSQCPGGARH2HSSCcUHlI"},
+{n:"Chatei Hatou",jp:"喫茶",cat:"coffee",area:"ชิบูย่า",day:"ส. 28 พ.ย.",r:4.1,c:2165,price:"กาแฟ/ชา ~¥1,100",book:"no",
+ order:"<strong>กาแฟดริปเข้ม</strong> + ชิฟฟอนเค้ก",
+ pro:"คิสสะเต็งไม้สีเข้ม แสงอำพัน ถ้วยแอนทีคเลือกให้แต่ละคน ชีสเค้กและชิฟฟอนเบาไม่หวานจัด",
+ con:"ราคาสูง บางคนว่าพนักงานไม่ค่อยยิ้ม ห้ามถ่ายรูปในร้าน (ถ่ายได้แค่อาหาร) ทางเข้าหายาก",
+ tags:[["คั่วเข้ม",0],["คิสสะเต็ง",0]],note:"",q:"Chatei Hatou Shibuya",id:"ChIJGQivCliLGGARQGD2vV8CIII"},
+{n:"Sarutahiko The Bridge",jp:"珈琲",cat:"coffee",area:"สถานีฮาราจูกุ ชั้น 3",day:"ส. 28 พ.ย.",r:4.3,c:1178,price:"",book:"no",
+ order:"<strong>ลาเต้</strong> หรือไอซ์มอคค่า ซื้อเมล็ดคั่วอ่อนกลับบ้าน",
+ pro:"ร้านใหญ่ที่นั่งเยอะ อยู่บนสถานี พนักงานพูดอังกฤษ บริการดีมาก",
+ con:"หลัง 11:00 แน่น ขนมบางอย่างแห้ง",
+ tags:[["คั่วอ่อน",0]],note:"เปิด 8:00 ไปเช้าได้ที่นั่งง่าย",q:"Sarutahiko Coffee The Bridge Harajuku",id:"ChIJJ7chkaKNGGAR16fsJLpLTLk"},
+{n:"Little Nap Coffee Stand",jp:"珈琲",cat:"coffee",area:"โยโยงิ",day:"ส. 28 พ.ย.",r:4.5,c:1190,price:"",book:"no",
+ order:"<strong>Gibraltar</strong> (คอร์ตาโด) + เค้ก",
+ pro:"ร้านเล็กบรรยากาศดี เปิดแผ่นเสียง นั่งดูรถไฟผ่าน เจ้าของเป็นกันเอง",
+ con:"ที่นั่งน้อยมาก บางคนเจอกาแฟขมและเลือกเมล็ดคั่วอ่อนไม่ได้",
+ tags:[["ร้านเล็ก",0]],note:"",q:"Little Nap Coffee Stand",id:"ChIJUyaS0ErzGGAR6_mFuqndQ9o"},
+{n:"About Life Coffee Brewers",jp:"珈琲",cat:"coffee",area:"ชิบูย่า",day:"ส. 28 พ.ย.",r:4.5,c:823,price:"",book:"no",
+ order:"<strong>กาแฟประจำวัน</strong> หรือไอซ์อเมริกาโน่",
+ pro:"ใช้เมล็ด Onibus คั่วสมัยใหม่ บาริสต้ารู้เรื่องพูดอังกฤษได้ มีโปรเติมแก้วราคาคุ้ม",
+ con:"เป็นซุ้มยืน มีม้านั่งตัวเดียว บางคนเจอพนักงานไม่เป็นมิตร",
+ tags:[["คั่วอ่อน",0]],note:"",q:"About Life Coffee Brewers Shibuya",id:"ChIJXVNv51WLGGARAFLANNXRSoo"},
+{n:"The Matcha Tokyo Omotesando",jp:"抹茶",cat:"matcha",area:"โอโมเตะซันโด",day:"ส. 28 พ.ย.",r:4.3,c:1198,price:"",book:"no",
+ order:"<strong>มัทฉะร้อนไม่ใส่นม</strong>เพื่อชิมรสแท้ หรือ Matcha Mocha ตัวขายดี",
+ pro:"มัทฉะออร์แกนิกตีสดทีละถ้วย อูมามิครีมมี่ มีที่นั่งมองถนนโอโมเตะซันโด",
+ con:"ร้านเล็ก คิวยาว ไปก่อนเปิด 11:00",
+ tags:[["มัทฉะ",0]],note:"",q:"The Matcha Tokyo Omotesando",id:"ChIJ17f1w_qNGGARfQzEoh19PyE"},
+{n:"Café de L'ambre",top:"คิสสะเต็งกาแฟในตำนานของกินซ่า ชงกาแฟมากว่า 70 ปี",jp:"喫茶",cat:"coffee",area:"กินซ่า",day:"อา. 29 พ.ย.",r:4.3,c:1958,price:"เยลลี่กาแฟ ~¥1,000",book:"no",
+ order:"<strong>เยลลี่กาแฟ</strong>ราดไอศกรีม หรือกาแฟดำสูตรร้าน",
+ pro:"เปิดมาตั้งแต่ 1948 บรรยากาศเงียบขรึม ทำกาแฟอย่างเดียว พนักงานอธิบายแหล่งเมล็ด ตอนนี้ปลอดบุหรี่แล้ว",
+ con:"ร้านเล็กแคบ ไม่เหมาะนั่งนาน",
+ tags:[["คั่วเข้ม",0],["คิสสะเต็ง",0]],note:"ปิดจันทร์ วันอาทิตย์ปิด 18:00",q:"Cafe de L'ambre Ginza",id:"ChIJZxiNeeiLGGARH3hUjIwOpSs"},
+{n:"Glitch Coffee Ginza",jp:"珈琲",cat:"coffee",area:"กินซ่า",day:"อา. 29 พ.ย.",r:4.2,c:1538,price:"",book:"no",
+ order:"<strong>ชิมกาแฟคั่วอ่อนหลายตัว</strong> หรือคอร์ตาโด",
+ pro:"เมล็ดหายาก โปรเซสแปลกใหม่ รสชัดเจน บาริสต้ารู้ลึก คนกลับมาซ้ำหลายรอบ",
+ con:"คิวเดินช้า ร้านเล็ก",
+ tags:[["คั่วอ่อน",0]],note:"",q:"Glitch Coffee and Roasters Ginza",id:"ChIJE0xjRfqLGGARkLg8IUjcu2o"},
+{n:"Ippodo Shin-Marunouchi",jp:"抹茶",cat:"matcha",area:"สถานีโตเกียว",day:"อา. 29 พ.ย.",r:4.1,c:99,price:"",book:"no",
+ order:"<strong>มัทฉะร้อน</strong> แล้วซื้อชาเกียวโตกลับบ้าน",
+ pro:"ร้านชาเก่าแก่จากเกียวโต มัทฉะเนียนรสเข้ม มีโฮจิฉะและชาชนิดอื่นให้ลอง",
+ con:"มัทฉะกระป๋องจำกัดคนละ 1 บางช่วงหมด เครื่องดื่มแก้วเล็กและแพง",
+ tags:[["ชาซื้อกลับ",0]],note:"ชั้น B1 ตึก Shin-Marunouchi",q:"Ippodo Tea Shin-Marunouchi",id:"ChIJxzhzE4GLGGAREm08ztodQgg"},
+{n:"Tourist Base Kawaguchiko",jp:"珈琲",cat:"coffee",area:"ข้างสถานีคาวากุจิโกะ",day:"จ. 30 พ.ย.",r:4.9,c:1304,price:"",book:"no",
+ order:"<strong>กาแฟกับวิวฟูจิ</strong> นั่งชั้นบน",
+ pro:"หน้าต่างเห็นฟูจิเต็มๆ เครื่องดื่มและขนมแบบไม่อั้น นั่งทาทามิ มีไวไฟและปลั๊ก",
+ con:"วันเมฆมากไม่เห็นฟูจิ",
+ tags:[["วิวฟูจิ",0]],note:"ชั้น 3–4",q:"Tourist Base Kawaguchiko",id:"ChIJK7Yw5d9fGWARHXKhKr7eNFk"},
+{n:"Fuji Cafe CUP'S",jp:"珈琲",cat:"coffee",area:"คาวากุจิโกะ",day:"จ. 30 พ.ย.",r:4.8,c:2397,price:"",book:"no",
+ order:"<strong>ลาเต้</strong> + แพนเค้กแอปเปิลคาราเมล",
+ pro:"กระจกบานใหญ่หันหาฟูจิ วิวสวยมาก",
+ con:"พนักงานน้อย บางวันรอของนานเป็นชั่วโมง มีคนเจอมัทฉะลาเต้เป็นก้อน สั่งกาแฟปลอดภัยกว่า",
+ tags:[["วิวฟูจิ",0]],note:"",q:"Fuji Cafe CUP'S Kawaguchiko",id:"ChIJzec194ZfGWARx0WT2gsT3sg"},
+{n:"抹茶専門店 R&K",jp:"抹茶",cat:"matcha",area:"ใกล้สถานีคาวากุจิโกะ",day:"จ. 30 พ.ย.",r:4.8,c:158,price:"",book:"no",
+ order:"<strong>มัทฉะ</strong> + ชีสเค้กบาสก์มัทฉะ",
+ pro:"นั่งได้ทั้งทาทามิและโต๊ะ เมนูมัทฉะกับขนมเยอะ คุ้มราคา พนักงานใจดีพูดอังกฤษ",
+ con:"รีวิวยังไม่มาก",
+ tags:[["ทาทามิ",0]],note:"ปิดอังคาร",q:"抹茶専門店 R&K 河口湖",id:"ChIJu_2nNgBfGWAROleMtKVMHSc"},
+{n:"Yamanaka Terrace",jp:"珈琲",cat:"coffee",area:"ยามานากะโกะ",day:"อ. 1 ธ.ค.",r:4.6,c:334,price:"",book:"no",
+ order:"<strong>กาแฟดริป</strong> + ชีสเค้กโฮมเมด",
+ pro:"คาเฟ่ไม้กลางป่า แสงธรรมชาติ กาแฟดี ขนมทำเอง เจ้าของคุยเก่ง",
+ con:"อยู่ไกล ต้องขับรถหรือนั่งรถเมล์",
+ tags:[["กลางป่า",0]],note:"",q:"Yamanaka Terrace",id:"ChIJZ-GPqoFvGWARQQylR88tsTs"},
+{n:"ITO88 Matcha Truck",jp:"抹茶",cat:"matcha",area:"โอชิโนะฮักไก",day:"อ. 1 ธ.ค.",r:4.9,c:55,price:"",book:"no",
+ order:"<strong>สตรอว์เบอร์รีมัทฉะ</strong> หรือไอซ์มัทฉะลาเต้ + โมจิ",
+ pro:"มัทฉะตีสด อูมามิชัด เจ้าของร้านอัธยาศัยดีมาก ทักทายหลายภาษา",
+ con:"เป็นรถขาย มีเต็นท์นั่งเล็กๆ ใน Google Maps ไม่ระบุเวลาเปิด",
+ tags:[["รถขาย",0]],note:"",q:"ITO88 Matcha Oshino Hakkai",id:"ChIJYU42lVdnGWAR7eLAuuSIvIk"},
+{n:"Coffee Tengoku",jp:"喫茶",cat:"coffee",area:"อาซากุสะ",day:"พ. 2 ธ.ค.",r:3.7,c:587,price:"ชุดแพนเค้ก ¥1,400",book:"no",
+ order:"<strong>ชุดแพนเค้กสลักคำว่า 天国</strong> + กาแฟหรือชา",
+ pro:"แพนเค้กทำสดทีละแผ่น นุ่มหอม ร้านเรโทรแบบที่เห็นในซีรีส์ Kantaro",
+ con:"ไม่มีเมนูอังกฤษ ร้านเล็ก",
+ tags:[["คิสสะเต็ง",0],["แพนเค้ก",0]],note:"ปิดอังคาร เปิด 12:00",q:"Coffee Tengoku Asakusa",id:"ChIJH-LUh8COGGARGUaIkcsSwls"},
+{n:"Fuglen Asakusa",jp:"珈琲",cat:"coffee",area:"อาซากุสะ",day:"พ. 2 ธ.ค.",r:4.1,c:2973,price:"",book:"no",
+ order:"<strong>ไอซ์คอฟฟี่คั่วอ่อน</strong> + วาฟเฟิลนอร์เวย์",
+ pro:"กาแฟคั่วอ่อนรสผลไม้ วาฟเฟิลอร่อย ชั้นบนบรรยากาศดี",
+ con:"แพงกว่าร้านรอบๆ อาหารจานเล็ก บางคนเจอพนักงานไม่สุภาพ",
+ tags:[["คั่วอ่อน",0]],note:"",q:"Fuglen Asakusa",id:"ChIJzVXOw5SPGGAR7yVtRAihT7o"},
+{n:"Suzukien Asakusa",top:"เจลาโต้มัทฉะเข้ม 7 ระดับ ร้านดังของอาซากุสะ",jp:"抹茶",cat:"matcha",area:"อาซากุสะ",day:"พ. 2 ธ.ค.",r:4.4,c:4094,price:"",book:"no",
+ order:"<strong>ไอศกรีมมัทฉะดับเบิลสกู๊ป</strong> ลองระดับ 5 กับ 7",
+ pro:"เข้มข้นแต่ไม่ฝาด เนื้อเนียนเบา มีที่นั่งชั้นบน ซื้อผงมัทฉะกลับได้",
+ con:"ละลายเร็ว มีคิวตั้งแต่ก่อนเปิด 11:00",
+ tags:[["ไอศกรีมมัทฉะ",0]],note:"",q:"Suzukien Asakusa",id:"ChIJidgn3MGOGGARVSZF3Mq9vho"},
+{n:"Tajimaya Coffee",jp:"喫茶",cat:"coffee",area:"ชินจูกุ ข้าง Omoide Yokocho",day:"พ. 2 ธ.ค.",r:4.1,c:1287,price:"",book:"no",
+ order:"<strong>กาแฟเกอิชา</strong> หรือเยลลี่กาแฟ",
+ pro:"ร้านไม้ยุคโชวะ แสงสลัว ถ้วยสวย เมนูบอกโปรไฟล์รสเมล็ด",
+ con:"ยังสูบบุหรี่ในร้านได้ กลิ่นค่อนข้างแรง",
+ tags:[["คั่วเข้ม",0],["คิสสะเต็ง",0]],note:"",q:"Tajimaya Coffee Shinjuku",id:"ChIJtUxmFteMGGAR_0Z9ZE-8a0g"},
+{n:"BERG",jp:"喫茶",cat:"coffee",area:"ในสถานีชินจูกุ",day:"พ. 2 ธ.ค.",r:4.2,c:2274,price:"เบียร์ ¥390",book:"no",
+ order:"<strong>เบียร์ฮาล์ฟแอนด์ฮาล์ฟ</strong> หรือเอสเพรสโซ + แซนด์วิช",
+ pro:"ห่างประตูตรวจตั๋วไม่กี่ก้าว ราคาถูก บรรยากาศเรโทรที่อยู่มาหลายสิบปี จ่ายด้วย Suica ได้",
+ con:"ร้านเล็กและวุ่น ลูกค้ากินเร็วแล้วลุก",
+ tags:[["เบียร์",1],["คิสสะเต็ง",0]],note:"ชั้น B1 Lumine Est",q:"BERG Shinjuku",id:"ChIJBZj3ptCMGGARnSO9cvUj1GM"},
+{n:"Sarutahiko atre Ebisu",jp:"珈琲",cat:"coffee",area:"เอบิสุ",day:"พฤ. 3 ธ.ค.",r:4.3,c:258,price:"",book:"no",
+ order:"<strong>คาเฟ่ลาเต้</strong> หรือเมนูประจำฤดูกาล",
+ pro:"พนักงานใจดีพูดอังกฤษคล่อง มีม้านั่งหน้าร้าน",
+ con:"ที่นั่งในร้านน้อย",
+ tags:[["คั่วอ่อน",0]],note:"",q:"Sarutahiko Coffee atre Ebisu",id:"ChIJg6YtW0CLGGARX7cb5SWFCho"},
+{n:"Sunset Coffee",jp:"珈琲",cat:"coffee",area:"จิยูกาโอกะ",day:"พฤ. 3 ธ.ค.",r:4.4,c:101,price:"",book:"no",
+ order:"<strong>ไอซ์ลาเต้</strong> หรือดับเบิลเอสเพรสโซ",
+ pro:"ลาเต้เนียนไม่เปรี้ยว ทำไว พนักงานยิ้มแย้ม",
+ con:"ซื้อกลับเป็นหลัก มีแค่ม้านั่งหน้าร้าน",
+ tags:[["ซื้อกลับ",0]],note:"",q:"Sunset Coffee Jiyugaoka",id:"ChIJ3RGKyx_1GGAR7ib88I6_vho"},
+{n:"Re:Route Cafe",jp:"抹茶",cat:"matcha",area:"จิยูกาโอกะ",day:"พฤ. 3 ธ.ค.",r:4.7,c:112,price:"",book:"no",
+ order:"<strong>ชุดชิมชาคู่ขนม</strong> เช่น ขนมถั่วแดงราดซอสมัทฉะคู่ชาคุคิฉะ",
+ pro:"คาเฟ่ชาเชิงประสบการณ์ ขนมทำจากชา มีเวิร์กช็อปปั้นขนมเนริกิริและคั่วโฮจิฉะ บรรยากาศสว่างสบาย",
+ con:"รีวิวยังไม่มาก",
+ tags:[["ชุดชิมชา",0]],note:"ถ้าอยากทำเวิร์กช็อปถามร้านก่อน · ปิดอาทิตย์",q:"Re:Route CAFE Jiyugaoka",id:"ChIJpem0p4X1GGARPuXqjI4K4DA"},
+{n:"27 Coffee Roasters",jp:"珈琲",cat:"coffee",area:"ถนน Komachi คามาคุระ",day:"พฤ. 3 ธ.ค. ทีมคามาคุระ",r:4.3,c:287,price:"",book:"no",
+ order:"<strong>เบลนด์คามาคุระ</strong> + ขนมปังปิ้งแซลมอนครีมชีส",
+ pro:"โรงคั่วในคามาคุระ กาแฟดีบริการดี ซื้อเมล็ดแล้วได้ส่วนลดเครื่องดื่ม",
+ con:"คิวเดินช้า บางคนว่ารสกลมเกินไป",
+ tags:[["คั่วเอง",0]],note:"",q:"27 Coffee Roasters Kamakura",id:"ChIJS0KO6DlFGGARN5b2b1dQesk"},
+{n:"Ignis Coffee",jp:"珈琲",cat:"coffee",area:"ถนน Komachi คามาคุระ",day:"พฤ. 3 ธ.ค. ทีมคามาคุระ",r:4.8,c:409,price:"",book:"no",
+ order:"<strong>ไอซ์ลาเต้เมล็ดบราซิล</strong> หรือลาเต้โคจิ",
+ pro:"กาแฟ specialty รสสดใสกลิ่นดอกไม้ บาริสต้าพูดอังกฤษแนะนำดี",
+ con:"ราคาค่อนข้างสูง ซื้อกลับเป็นหลัก มีม้านั่งหน้าร้าน",
+ tags:[["คั่วอ่อน",0]],note:"เปิด 11:00",q:"Ignis Coffee Kamakura",id:"ChIJ-wzzTNRFGGAROPnGRv4XlCs"},
+{n:"Kamakura Chacha",top:"มัทฉะเจลาโต้เข้มที่สุดย่านคามาคุระ 4.8 จาก 700+ รีวิว",jp:"抹茶",cat:"matcha",area:"ถนน Komachi คามาคุระ",day:"พฤ. 3 ธ.ค. ทีมคามาคุระ",r:4.8,c:732,price:"",book:"no",
+ order:"<strong>ไอซ์มัทฉะลาเต้แบบ Rich</strong> น้ำแข็งก็เป็นมัทฉะ หรือพุดดิ้งมัทฉะ",
+ pro:"มัทฉะกลมกล่อมทั้งอูมามิและหวาน เลือกระดับความเข้มของไอศกรีมได้ โฮจิฉะก็ดี",
+ con:"ร้านเล็ก ไม่มีที่นั่ง",
+ tags:[["ไอศกรีมมัทฉะ",0]],note:"",q:"Kamakura Chacha Komachi",id:"ChIJIZCogFRFGGAR48LFysyTUFs"},
+{n:"Turret Coffee",jp:"珈琲",cat:"coffee",area:"สึกิจิ",day:"ศ. 4 ธ.ค. เช้า",r:4.6,c:2285,price:"ลาเต้ ~¥590",book:"no",
+ order:"<strong>Turret Latte</strong> (เพิ่มช็อตได้) + ชีสเค้กบาสก์แครอท",
+ pro:"ลาเต้ฟองนุ่มกาแฟหอม ลาเต้อาร์ตสวย เปิดเช้า 7:00 ก่อนเดินตลาด",
+ con:"ร้านเล็กที่นั่งน้อย มอคค่าหวาน",
+ tags:[["เปิดเช้า",0]],note:"ปิดพุธ",q:"Turret Coffee Tsukiji",id:"ChIJW4Hi46OLGGARZVuuNeN6hxs"},
+{n:"Onibus Coffee Nakameguro",jp:"珈琲",cat:"coffee",area:"นาคาเมกุโระ",day:"ศ. 4 ธ.ค.",r:4.3,c:2366,price:"",book:"no",
+ order:"<strong>ลาเต้ดับเบิลช็อต</strong> + เค้กกล้วย",
+ pro:"บ้านเก่ามีต้นไม้ นั่งชั้นบนดูรถไฟผ่าน กาแฟคั่วสมัยใหม่รสสดใส",
+ con:"คนเยอะ ที่นั่งน้อย ชั้นบนอุ่น บางคนว่ากาแฟกลางๆ จ่ายค่าบรรยากาศ",
+ tags:[["คั่วอ่อน",0]],note:"",q:"Onibus Coffee Nakameguro",id:"ChIJvXUZEEmLGGARlC39ZdeJ06Q"},
+{n:"Sidewalk Stand",jp:"珈琲",cat:"coffee",area:"ริมคลองนาคาเมกุโระ",day:"ศ. 4 ธ.ค.",r:4.3,c:799,price:"",book:"no",
+ order:"<strong>อเมริกาโน่</strong> + แซนด์วิชร้อน",
+ pro:"แวะพักริมคลอง แซนด์วิชร้อนอร่อย พนักงานพูดอังกฤษ",
+ con:"ที่นั่งยืน 2 โต๊ะ ไม่มีห้องน้ำ เมนูประจำฤดูบางตัวหวานมาก",
+ tags:[["ริมคลอง",0]],note:"",q:"Sidewalk Stand Nakameguro",id:"ChIJAQBEfE6LGGAR6Q4nD3t69A8"},
+{n:"The Matcha Tokyo Miyashita",jp:"抹茶",cat:"matcha",area:"ชิบูย่า Miyashita Park",day:"ศ. 4 ธ.ค.",r:4.4,c:700,price:"",book:"no",
+ order:"<strong>Tokyo Rich Matcha Latte</strong> หรือมัทฉะโฟลตมะพร้าว",
+ pro:"มัทฉะออร์แกนิกคุณภาพคงที่ ไม่หวานเกิน เปิดถึง 21:00",
+ con:"ผงมัทฉะสองรุ่นแพ็กเกจคล้ายกัน เช็กก่อนจ่าย",
+ tags:[["มัทฉะ",0]],note:"",q:"The Matcha Tokyo Miyashita Park",id:"ChIJD9MoTLmNGGARkDxz7v9ubxg"},
+{n:"Westside Coffee Kuramae",jp:"珈琲",cat:"coffee",area:"คุระมาเอะ",day:"ส. 5 ธ.ค. เช้า",r:4.9,c:55,price:"",book:"no",
+ order:"<strong>ดริปเมล็ดเอธิโอเปีย</strong> + ทีรามิสุ",
+ pro:"ร้านเล็กเรียบร้อย พนักงานอธิบายเมล็ดทีละตัว พูดอังกฤษได้ เปิด 8:00",
+ con:"รีวิวยังไม่มาก",
+ tags:[["คั่วอ่อน",0]],note:"",q:"Westside Coffee Kuramae",id:"ChIJbYldo2WPGGARUphfxmlPtSw"},
+{n:"Lonich,",jp:"珈琲",cat:"coffee",area:"คุระมาเอะ",day:"ส. 5 ธ.ค.",r:4.9,c:909,price:"",book:"should",
+ order:"<strong>Coffee Omakase</strong> ราว 75 นาที หรือ Creative Course 4 แก้ว",
+ pro:"เหมือนคอร์สชิมในร้านอาหาร บาริสต้าออกแบบลำดับให้ทีละแก้ว อธิบายเมล็ดและอุปกรณ์ มีเกอิชาหายาก",
+ con:"เคาน์เตอร์แค่ 5 ที่ ต้องเผื่อเวลาเกินชั่วโมง",
+ tags:[["โอมากาเสะ",0]],note:"ควรจองคอร์สล่วงหน้า (เช็กหน้าร้านใน Google Maps)",q:"Lonich Kuramae",id:"ChIJoQz8-EuPGGARzGzJW0cnDYI"},
+{n:"Nakamura Tea Life Store",jp:"抹茶",cat:"matcha",area:"คุระมาเอะ",day:"ส. 5 ธ.ค.",r:4.3,c:140,price:"",book:"no",
+ order:"<strong>ขอชิมชาก่อนซื้อ</strong> เกนไมฉะ คาบุเซฉะ หรือชาดำญี่ปุ่น",
+ pro:"ร้านครอบครัว ปลูกชาเอง ราคาไม่แพง ให้ดมและชิมก่อน สาธิตวิธีชง",
+ con:"เดินทางด้วยรถไฟไม่สะดวกมาก",
+ tags:[["ชาซื้อกลับ",0]],note:"ปิดจันทร์ เปิด 12:00",q:"Nakamura Tea Life Store",id:"ChIJW7q9ZreOGGARZ7zh2XxUOOo"}
+
+,
+{n:"Kaiten Sushi Toriton Skytree",top:"ซูชิสายพานเกรดพรีเมียมจากฮอกไกโด ชิ้นใหญ่ สดมาก คุ้มคิว",jp:"回転寿司",cat:"sushi",area:"โตเกียวสกายทรี ชั้น 6",day:"พ. 2 ธ.ค. (ใกล้อาซากุสะ)",r:4.2,c:2582,price:"สูงกว่าเชนทั่วไป",book:"queue",order:"<strong>แซลมอนติดมันย่างไฟ</strong> + ปลาอาจิ และเมนูปลาตามฤดูกาล สั่งผ่านแท็บเล็ตหลายภาษา",pro:"ซูชิสายพานเกรดสูงจากฮอกไกโด ชิ้นปลาใหญ่และสด ข้าวดี เชฟหลายคนอัธยาศัยดี คุ้มกว่าร้านโอมากาเสะมาก",con:"คิวยาวมาก บางวันรอ 2–4 ชม. ราคาสูงกว่าเชนสายพานทั่วไป",tags:[["ปลาดิบ", 1], ["แซลมอน", 1]],note:"ไปกดบัตรคิวที่หน้าร้านก่อน แล้วไปเดินเล่นในห้างรอเรียก",q:"Kaiten Sushi Toriton Tokyo Skytree",id:"ChIJOwR-8daOGGARccFzVsB5U1E"},
+{n:"Nemuro Hanamaru KITTE",jp:"回転寿司",cat:"sushi",area:"KITTE มารุโนะอุจิ (สถานีโตเกียว)",day:"อา. 29 พ.ย.",r:4.1,c:3153,price:"",book:"queue",order:"<strong>อูนิ ปู และเมนูตามฤดูกาล</strong> + ทูน่าสับต้นหอม ปลาไหล แซลมอน",pro:"ซูชิสายพานจากเนมูโระ ฮอกไกโด คนชมว่าดีที่สุดที่กินในโตเกียว มีเมนูภาษาอังกฤษ ของสั่งพิเศษออกเร็ว",con:"คิวยาวมาก ช่วงพีครอบ 2–3 ชม. ต่อคิวช้า บางครั้งเสิร์ฟผิดออเดอร์",tags:[["อูนิ", 1], ["ปลาดิบ", 1]],note:"ไปช่วงบ่าย 14:30–15:00 คิวสั้นกว่า หรือมาก่อนเปิด 11:00 ประมาณ 1 ชม.",q:"Kaitenzushi Nemuro Hanamaru KITTE Marunouchi",id:"ChIJuzydSvqLGGARXTqdIJs_08Y"},
+{n:"SUSHIRO Ueno",jp:"回転寿司",cat:"sushi",area:"อุเอโนะ ใกล้ Hop Inn",day:"ศ. 27 – อา. 29 พ.ย.",r:3.9,c:4282,price:"ราคาถูก",book:"app",order:"<strong>ซูชิจานถูกหลายแบบ</strong> + ชงมัทฉะฟรีที่โต๊ะ มีเบียร์และของหวาน",pro:"เชนยอดนิยม ราคาถูก เมนูเยอะ ระบบสั่งเองง่ายสำหรับนักท่องเที่ยว มีโต๊ะสำหรับกลุ่ม ส่งจานถึงโต๊ะ",con:"ช่วงพีครอบรอ 30 นาทีขึ้นไป บางคนว่าข้าวร่วน คุณภาพระดับเชน ไม่ได้ว้าว",tags:[["ปลาดิบ", 1], ["เบียร์", 1]],note:"จองคิวผ่านแอป Sushiro ล่วงหน้าได้ เวลาที่แจ้งมักนานกว่าจริง",q:"SUSHIRO Ueno",id:"ChIJ-xpGqZ-OGGAREIc2DwZpaic"},
+{n:"Uobei Shibuya Dogenzaka",jp:"回転寿司",cat:"sushi",area:"ชิบูย่า โดเก็นซากะ",day:"ส. 28 พ.ย. / ศ. 4 ธ.ค.",r:4.3,c:9353,price:"¥100 ต่อจาน",book:"no",order:"<strong>สั่งผ่านจอ จานวิ่งรางด่วนมาส่ง</strong> ลองซูชิแปลกๆ เช่น แฮมเบิร์กมาโย + ชาเขียวฟรี",pro:"ถูกมาก กินอิ่มได้ไม่กี่ร้อยเยน ของออกเร็ว สนุก ที่นั่งเยอะ รอไม่นาน อยู่กลางชิบูย่า",con:"รสชาติระดับกลาง ไม่ใช่สายพานพรีเมียม นั่งเคาน์เตอร์เรียงกัน กลุ่มใหญ่นั่งแยกกัน",tags:[["ปลาดิบ", 1]],note:"เปิด 11:00–23:00",q:"Uobei Shibuya Dogenzaka",id:"ChIJaTXpw6mMGGARP-d-_tbssVE"},
+{n:"Asakusa Chicken",top:"คาราอาเกะคะแนน 4.9 กรอบฉ่ำ คนบอกว่าดีที่สุดในโตเกียว ของโปรดแฟน",jp:"唐揚げ",cat:"chicken",area:"อาซากุสะ ข้างดองกี้",day:"พ. 2 ธ.ค.",r:4.9,c:453,price:"ถูก",book:"no",order:"<strong>คาราอาเกะทอดใหม่</strong> กินระหว่างเดิน คู่กับเบียร์เย็น",pro:"ฟู้ดทรัคคู่สามีภรรยาน่ารัก พูดอังกฤษได้ ไก่กรอบนอกฉ่ำใน ปรุงกระเทียมโชยุพอดี ไม่เลี่ยน หลายคนว่าอร่อยที่สุดในโตเกียว",con:"เป็นรถขายของ ไม่มีที่นั่ง รับเงินสดเท่านั้น",tags:[["คาราอาเกะ", 0], ["เบียร์", 1]],note:"เงินสดเท่านั้น · ปิดจันทร์และศุกร์ · 11:00–20:00",q:"Asakusa Chicken",id:"ChIJ24ByaKWPGGAR2HAk6gbMs7U"},
+{n:"Oshu Iwai Karaage",jp:"唐揚げ",cat:"chicken",area:"อาซากุสะบาชิ (เดินจากอากิบะ ~10 นาที)",day:"พ. 2 ธ.ค.",r:4.2,c:413,price:"ถูก",book:"no",order:"<strong>ข้าวกล่องคาราอาเกะกระเทียม</strong> หรือคาราอาเกะรสยูซุ",pro:"ได้ที่ 2 งานประกวดคาราอาเกะ ทอดใหม่ตามออเดอร์ กรอบ ชุ่มฉ่ำ มีเมนูอังกฤษ ราคาดี",con:"ร้านซื้อกลับ มีม้านั่งเล็ก 2 ตัว บางคนว่ารสอ่อนเกลือไป",tags:[["คาราอาเกะ", 0]],note:"10:30–19:00 ทุกวัน · มีสวนใกล้ร้านให้นั่งกิน",q:"Oshu Iwai Karaage Shop Akihabara",id:"ChIJCwlaB6-OGGARs7y6-0pd-nU"},
+{n:"Karaage Yukari Asakusa",jp:"唐揚げ",cat:"chicken",area:"อาซากุสะ",day:"พ. 2 ธ.ค.",r:4.1,c:393,price:"ขายตามน้ำหนัก",book:"no",order:"<strong>คาราอาเกะหลายซอส</strong> ซื้อรวมรสมาชิม",pro:"ร้านคาราอาเกะซื้อกลับในอาซากุสะ มีหลายรสให้เลือก เปิดถึงดึก",con:"ร้านซื้อกลับ ไม่มีที่นั่ง ถ้าได้ชิ้นที่ทอดไว้นานจะไม่ฉ่ำ ขอแบบทอดใหม่",tags:[["คาราอาเกะ", 0]],note:"10:30–22:00",q:"Karaage Yukari Asakusa",id:"ChIJrWVYdr-OGGAR3LRa7lcxjes"},
+{n:"Toriyoshi Shoten Ueno",jp:"唐揚げ",cat:"chicken",area:"อุเอโนะ ใกล้ Hop Inn",day:"ศ. 27 – อา. 29 พ.ย. (มื้อดึก)",r:3.6,c:945,price:"ถูก",book:"no",order:"<strong>คาราอาเกะ + ไก่ทอดเกาหลี</strong> ยากิโทริ และโปเตโต้สลัด",pro:"เปิด 24 ชม. เดินจากโรงแรมได้ ราคาถูก ไก่กรอบไม่มันเยิ้ม คนญี่ปุ่นมากินเยอะ",con:"ร้านแคบ โต๊ะชิดกัน ไม่ค่อยสะอาด บางโซนต้องถอดรองเท้า ปีกไก่ค่อนข้างหวาน",tags:[["คาราอาเกะ", 0], ["เบียร์", 1]],note:"เปิด 24 ชม.",q:"Toriyoshi Shoten Ueno 6 Chome",id:"ChIJvU_c3vuPGGARub_0mXYy5eM"},
+{n:"Torikizoku Ueno Chuo-dori",jp:"鳥貴族",cat:"chicken",area:"อุเอโนะ ถนนชูโอ",day:"ศ. 27 พ.ย. คืนแรก",r:3.8,c:446,price:"ราคาเดียวทั้งเมนู ถูก",book:"should",order:"<strong>คาราอาเกะจานใหญ่</strong> (พอ 2–3 คน) + หนังไก่ หัวใจไก่ ไก่ต้นหอม และเบียร์",pro:"เชนยากิโทริราคาประหยัด เมนูอังกฤษ พนักงานพูดอังกฤษได้ ร้านกว้าง เหมาะกับกลุ่มใหญ่ ห้องปลอดบุหรี่ ห่อกลับได้ฟรี",con:"เสียงดัง ช่วงเย็นคิวยาว",tags:[["คาราอาเกะ", 0], ["เบียร์", 1]],note:"กลุ่ม 10 คนควรจองออนไลน์ · เปิด 16:00–05:00 (ส.–อา. 13:00)",q:"Torikizoku Ueno Chuo Dori",id:"ChIJI9GjzJ-OGGAR4piU81lXDD8"},
+{n:"Yakitori Toriton Shibuya",top:"อิซากายะคนท้องถิ่น 4.7 บรรยากาศสนุก ยากิโทริกับไก่เมนูเด็ด + เบียร์",jp:"焼鳥",cat:"chicken",area:"ชิบูย่า",day:"ส. 28 พ.ย. มื้อเย็น",r:4.7,c:895,price:"ถูก",book:"should",order:"<strong>\"Addictive chicken\"</strong> เมนูเด่นของร้าน + ยากิโทริ และปลาหมึกทอด",pro:"อิซากายะที่คนท้องถิ่นแน่นร้าน ยากิโทริหอมถ่าน พนักงานพูดอังกฤษ เป็นกันเอง ลูกค้าใหม่ได้ของทานเล่นฟรี",con:"คนเยอะ อาจรอ 15 นาที ร้านไม่มีแอร์ช่วงหน้าร้อน",tags:[["ไก่ทอด", 0], ["เบียร์", 1]],note:"เปิด 17:00–05:00 · กลุ่มใหญ่ควรโทรจอง +81 3-6452-6827",q:"Yakitori Toriton Shibuya",id:"ChIJaeyN6KeMGGAR-POf0VVSWPU"},
+{n:"Taiyo-an",jp:"唐揚げ",cat:"chicken",area:"ชิบูย่า-ฮงมาจิ (นอกเส้นทาง)",day:"ถ้ามีเวลาว่าง",r:4.5,c:271,price:"ถูก",book:"no",order:"<strong>ไก่นัมบัง</strong> (ไก่ทอดซอสมาโยไข่) หรือคาราอาเกะซอสกระเทียมมาโย",pro:"ร้านเล็กบรรยากาศอบอุ่น เจ้าของทำเองคนเดียว ร่าเริงมาก ไก่ฉ่ำมาก มีเมนูอังกฤษ เปิดถึงเที่ยงคืน",con:"ร้านเล็ก อยู่ไกลจากแผนหลัก",tags:[["คาราอาเกะ", 0]],note:"17:00–24:00",q:"Taiyo-an Shibuya Honmachi",id:"ChIJ3dGcsNfzGGAR8j1oTTiDYps"},
+{n:"Yanaka Ginza",top:"ถนนโตเกียวเก่าย่านแมว เดินคู่กับ Kayaba Coffee ได้ทั้งของกินและบรรยากาศ",jp:"猫",cat:"cat",area:"ยานากะ / นิปโปริ",day:"ศ. 27 พ.ย. (คู่กับ Kayaba Coffee)",r:4.1,c:11975,price:"",book:"no",order:"<strong>ถนนช้อปปิ้งย้อนยุค</strong> ของกินริมทาง ของที่ระลึกลายแมว ตามหาแมวจร",pro:"บรรยากาศโตเกียวเก่า เดินสบาย 500–800 ม. ของกินเยอะ ร้านของแมวเพียบ บางคนเจอแมวตามซอย",con:"บางวันไม่เจอแมวเลย ร้านส่วนใหญ่เปิดหลัง 11:00 และปิดราว 17:00",tags:[["แมว", 1]],note:"ไปช่วง 11:00–16:00",q:"Yanaka Ginza",id:"ChIJPYwFnNGNGGARYEeXwiYQPe8"},
+{n:"Yuyake Dandan",jp:"猫",cat:"cat",area:"หัวถนน Yanaka Ginza",day:"ศ. 27 พ.ย.",r:4.0,c:1064,price:"",book:"no",order:"<strong>บันไดชมพระอาทิตย์ตก</strong> จุดที่แมวจรชอบมานอน ถ่ายรูปมุมถนนเก่า",pro:"บรรยากาศเงียบสงบแบบเมืองเก่า คนรักแมวชอบ เป็นจุดถ่ายรูปช่วงเย็น",con:"ร้านแถวนี้ปิดราว 17:00 ถ้าไม่ได้ตั้งใจมาเดินเล่นอาจรู้สึกธรรมดา",tags:[["แมว", 1]],note:"มาช่วงก่อนพระอาทิตย์ตก (ปลาย พ.ย. ตกราว 16:30)",q:"Yuyake Dandan Yanaka",id:"ChIJrw6t4tONGGARm4SASOVzzLc"},
+{n:"Nekomaru Cafe",jp:"猫",cat:"cat",area:"อุเอโนะ ชั้น 8 ใกล้ Hop Inn",day:"ศ. 27 – อา. 29 พ.ย.",r:4.0,c:413,price:"¥1,700 / 60 นาที",book:"no",order:"<strong>เล่นกับแมวช่วยเหลือ 60 นาที</strong> ซื้อขนมแมวเพิ่มได้",pro:"แมวส่วนใหญ่เป็นแมวช่วยเหลือ ดูแลดีมาก มีที่ให้แมวพักแยก เจ้าของพูดอังกฤษ ราคาถูก คนไม่เยอะ",con:"ร้านเล็ก ต้องเปลี่ยนรองเท้าและเก็บกระเป๋าในล็อกเกอร์",tags:[["แมว", 1]],note:"ทางเข้าประตูกระจกข้าง Wendy's ขึ้นลิฟต์ชั้น 8 · 12:00–20:00 (ส.–อา. 11:00)",q:"Nekomaru Cafe Ueno",id:"ChIJyT7ouZ6OGGARv5U0O7l8QJo"},
+{n:"Cat Cafe MOCHA Akihabara",jp:"猫",cat:"cat",area:"อากิฮาบาระ",day:"พ. 2 ธ.ค.",r:4.2,c:2197,price:"แพ็ก 30 นาที หรือ ¥300 / 10 นาที",book:"no",order:"<strong>รอบ 30 นาที</strong> ได้ขนมแมวไอติมแท่ง 1 อัน + เครื่องดื่มฟรี",pro:"สะอาด ไม่มีกลิ่น แมวสุขภาพดีและเป็นมิตร พนักงานใจดี เช็กอินภาษาอังกฤษ มีที่ชาร์จมือถือ",con:"แมวบางตัวไม่ให้จับ เป็นเชนจึงคึกคักกว่าคาเฟ่เล็ก",tags:[["แมว", 1]],note:"10:00–21:00",q:"Cat Cafe MOCHA Akihabara",id:"ChIJjcsX6R2MGGARNWW10n1hUeY"},
+{n:"Gotokuji Temple",jp:"招き猫",cat:"cat",area:"เซตากายะ (นอกเส้นทาง)",day:"ถ้ามีเวลาว่าง (ช่วงเช้า)",r:4.6,c:11497,price:"เข้าฟรี",book:"no",order:"<strong>ชมตุ๊กตาแมวกวัก (มาเนกิเนโกะ) นับพันตัว</strong> ซื้อแมวกวักมาวางเพิ่มได้",pro:"วัดสงบ สวยและเงียบ ถ่ายรูปสวย ถนนแนวสนทางเข้าสวย คนไม่แน่นอย่างที่คิด",con:"ไกลจากย่านหลัก ร้านรอบวัดเปิด 10:00 ร้านแมวกวักบางวันปิด",tags:[["แมว", 1]],note:"เปิด 6:00–17:00",q:"Gotokuji Temple",id:"ChIJVVUBmZ_zGGARrEy-Ua3psAY"},
+{n:"Enoshima",jp:"猫",cat:"cat",area:"ฟูจิซาวะ ใกล้คามาคุระ",day:"พฤ. 3 ธ.ค. ทีมคามาคุระ",r:4.6,c:285,price:"",book:"no",order:"<strong>เดินเกาะ ชมฟูจิ</strong> ตามหาแมวจรตามทางขึ้นศาลเจ้า และดูพระอาทิตย์ตก",pro:"วิวฟูจิสวย ลมทะเลสดชื่น ของกินริมทางเยอะ มีศาลเจ้า สวน และ Sea Candle",con:"บันไดเยอะ ถ้ำต้องเดินขึ้นลงบันได ช่วงสายคนแน่น",tags:[["แมว", 1], ["ทะเล", 1]],note:"ใช้บันไดเลื่อนช่วยขึ้นเขาได้",q:"Enoshima",id:"ChIJcbT_oOZOGGARFHp30PfDRyY"}
+,
+{n:"Minatoya Ameyoko",jp:"海鮮丼",cat:"sea",area:"อาเมโยโกะ อุเอโนะ",day:"ศ. 27 พ.ย. กลางวัน",r:4.0,c:1667,price:"Z4 ¥1,400",book:"no",order:"<strong>ดงชุด Z4</strong> อูนิ อิคุระ ทูน่า แซลมอน กุ้งหวาน หอยเชลล์ ในชามเดียว",pro:"ถูกมากเมื่อเทียบกับของที่ได้ ปลาหั่นชิ้นหนา หวานสด บรรยากาศตลาดคึกคัก ชาฟรี",con:"เป็นแผงริมทาง ความสะอาดไม่ใช่จุดเด่น คุณภาพสมราคาแต่ไม่ถึงระดับพรีเมียม คนรับออเดอร์ใจร้อน",tags:[["อิคุระ", 1], ["อูนิ", 1], ["ปลาดิบ", 1]],note:"11:00–19:00 (ส.–อา. ถึง 19:30)",q:"Minatoya Ameyoko Ueno",id:"ChIJbfIujp-OGGARQpzhp7F2ocY"},
+{n:"Yebisu Brewery Tokyo",jp:"ビール",cat:"alley",area:"Yebisu Garden Place เอบิสุ",day:"พฤ. 3 ธ.ค. 15:00 (ก่อน Kaoriya)",r:4.4,c:4887,price:"",book:"no",order:"<strong>ชุดชิมเบียร์ Yebisu หลายแบบ</strong> + ดูนิทรรศการประวัติเบียร์ 20–30 นาที",pro:"ห้องโถงกว้าง คนไม่เยอะ มีออดิโอไกด์ภาษาอังกฤษ ล็อกเกอร์ฟรี ชุดชิมเบียร์อร่อย ของที่ระลึกดี",con:"ส่วนนิทรรศการสั้น ทัวร์แบบเสียเงินไม่จำเป็นถ้ามาเพื่อดื่ม",tags:[["เบียร์", 1]],note:"ปิดวันอังคาร · 12:00–20:00 (ส.–อา. 11:00–19:00)",q:"Yebisu Brewery Tokyo",id:"ChIJY24wMRSLGGARdbDv6D2KdHE"},
+{n:"Rokurinsha Tokyo Ramen Street",jp:"つけ麺",cat:"ramen",area:"ชั้น B1 สถานีโตเกียว",day:"อา. 29 พ.ย.",r:4.1,c:5440,price:"",book:"queue",order:"<strong>สึเกะเมงพิเศษ + ไข่ต้มยางมะตูม</strong> เส้นเย็นหนึบจุ่มซุปเข้มข้น",pro:"สึเกะเมงที่ดังที่สุดร้านหนึ่ง ซุปเข้ม เส้นเหนียวนุ่ม คิวเดินเร็ว ตู้กดสั่งมีปุ่มภาษาอังกฤษ คนญี่ปุ่นมากินเยอะ",con:"คิวเกือบตลอด ร้านเล็ก ต้องนั่งรวมโต๊ะ ช่วงเช้ามีแต่สึเกะเมง",tags:[["บะหมี่เย็น", 1]],note:"เงินสดหรือบัตร Suica เท่านั้น · มาช่วง 14:00 หรือก่อน 17:30 คิวสั้นกว่า",q:"Rokurinsha Tokyo Ramen Street",id:"ChIJtxODuv6LGGARnELlksWTmZo"},
+{n:"Hotou Fudo Kawaguchiko Station",jp:"ほうとう",cat:"soba",area:"หน้าสถานีคาวากุจิโกะ",day:"จ. 30 พ.ย. (สำรอง KAKASHIYA)",r:3.8,c:2883,price:"ถูก",book:"no",order:"<strong>โฮโทะหม้อเหล็ก</strong> เส้นแบนหนาในซุปมิโซะ ฟักทอง ผัก + หมูตุ๋นหัวหอม",pro:"หม้อใหญ่ร้อนจัด อุ่นท้องในวันหนาว ซุปเข้มข้น เส้นหนึบ ร้านกว้าง ตกแต่งไม้แบบดั้งเดิม เห็นฟูจิจากหน้าร้าน",con:"ช่วงมื้อหลักอาจรอ 20 นาที บางโต๊ะเป็นทาทามิ นั่งกินลำบาก โฮโทะไม่มีเนื้อสัตว์",tags:[["บะหมี่ร้อน", 0]],note:"เงินสดเท่านั้น · 11:00–19:00",q:"Hotou Fudo Kawaguchiko Station",id:"ChIJD9e0oIJgGWARjCiXDS-GJmA"},
+{n:"Daimaru Tokyo (ชั้นใต้ดิน)",jp:"デパ地下",cat:"shop",area:"ติดสถานีโตเกียว",day:"ส. 5 ธ.ค. ก่อนไปนาริตะ",r:4.0,c:22256,price:"",book:"no",order:"<strong>ชั้นอาหารใต้ดิน</strong> ขนมของฝากแพ็กสวย เบนโตะกินบนรถ และร้านสาเก",pro:"ของฝากและขนมญี่ปุ่นครบที่เดียว จัดร้านเป็นระเบียบ ร้านสาเกห่อขวดให้ดี มีเจลเย็นขาย เดินไปขึ้นรถบัสไปนาริตะได้",con:"คนเยอะช่วงเย็นและวันหยุด",tags:[["ของฝาก", 0]],note:"10:00–20:00 · เคาน์เตอร์ tax-free ชั้น 12",q:"Daimaru Tokyo",id:"ChIJtxODuv6LGGARGHePjyb8m-0"},
+{n:"Jingu Gaien Ginkgo Avenue",jp:"紅葉",cat:"view",area:"คิตะอาโอยามะ ใกล้โอโมเตะซันโด",day:"ส. 28 พ.ย.",r:4.4,c:10075,price:"ฟรี",book:"no",order:"<strong>เดินใต้อุโมงค์ต้นแปะก๊วยสีเหลือง</strong> ถ่ายรูป แล้วแวะคาเฟ่แถวอาโอยามะ",pro:"หนึ่งในถนนที่สวยที่สุดในโตเกียวช่วงใบไม้เปลี่ยนสี ปลาย พ.ย. คือช่วงเหลืองเต็มที่ เดินเล่นได้ฟรี",con:"คนแน่นมากช่วงพีค มีรถสปอร์ตวิ่งผ่านเสียงดัง",tags:[["ใบไม้เปลี่ยนสี", 1]],note:"ไปช่วงเช้าก่อน 10:00 คนน้อยกว่า",q:"Meiji Jingu Gaien Ginkgo Avenue",id:"ChIJ_XxY_JqMGGARACDk4sraoN8"},
+{n:"Lake Kawaguchi Maple Corridor",jp:"紅葉",cat:"view",area:"ริมทะเลสาบคาวากุจิโกะฝั่งเหนือ",day:"จ. 30 พ.ย.",r:4.3,c:6490,price:"ฟรี",book:"no",order:"<strong>เดินใต้อุโมงค์ใบเมเปิลแดง</strong> คู่กับวิวฟูจิ มีแผงขายของกินช่วงเทศกาล",pro:"ใบเมเปิลแดงส้มทองเต็มทางเดินเหมือนในนิทาน ถ้าฟ้าใสจะเห็นฟูจิ มีแผงของทำมือและของกิน",con:"ปลาย พ.ย. ใบอาจเลยพีคไปบ้าง คนแน่นมากและรถติด ถ้าใบยังไม่แดงจะไม่ค่อยมีอะไรทำ",tags:[["ใบไม้เปลี่ยนสี", 1]],note:"มีรถเช่า ไปช่วงเช้าหรือเย็นหลังรถทัวร์กลับ",q:"Lake Kawaguchi Maple Corridor",id:"ChIJ-RVpUlJeGWARfcMeEe58lho"},
+{n:"Chureito Pagoda",jp:"五重塔",cat:"view",area:"ฟูจิโยชิดะ",day:"อ. 1 ธ.ค. เช้า (ก่อนโอชิโนะ)",r:4.7,c:6493,price:"ฟรี",book:"no",order:"<strong>ภาพเจดีย์แดง + ภูเขาไฟฟูจิ</strong> จากจุดชมวิวด้านบน",pro:"จุดถ่ายรูปฟูจิที่ดังที่สุด เช้าๆ ฟ้าใสมักเห็นฟูจิชัด หิมะปกยอด วิวเหมือนโปสการ์ด",con:"บันไดชันประมาณ 398 ขั้น (มีทางลาดข้างๆ) หลัง 9:00 คนแน่นจนถ่ายรูปยาก",tags:[["วิวฟูจิ", 1], ["ใบไม้เปลี่ยนสี", 1]],note:"ไปให้ถึงก่อน 8:00",q:"Chureito Pagoda",id:"ChIJc6BS_UxnGWARmeeuIEnjV9o"}
+];
+const list=document.getElementById("list"),count=document.getElementById("count");
+let cat="all",onlyBook=false,onlyTop=false;
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+function url(x){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(x.q)+"&query_place_id="+x.id}
+function card(x){
+  const b=BOOK[x.book];
+  return `<article class="card${x.top?" is-top":""}">
+    <div class="noren c-${x.cat}" aria-hidden="true"><span class="jp">${x.jp}</span><span class="cat">${CAT[x.cat]}</span></div>
+    <div class="body">
+      <div class="top"><h2>${esc(x.n)}</h2><span class="area">${esc(x.area)}</span>${x.top?`<span class="topbadge">★ ต้องไป</span>`:""}<span class="pill ${b[0]}">${b[1]}</span></div>
+      <div class="meta"><span><span class="star">★ ${x.r.toFixed(1)}</span> (${x.c.toLocaleString("en-US")} รีวิว)</span><span>วัน: <b>${esc(x.day)}</b></span>${x.price?`<span>ราคา/คน: <b>${esc(x.price)}</b></span>`:""}</div>
+      ${x.top?`<p class="why"><b>ทำไมต้องไป:</b> ${esc(x.top)}</p>`:""}
+      <div class="order">${x.order}</div>
+      <div class="rv"><div><h3>คนชม</h3>${esc(x.pro)}</div><div><h3>คนติ</h3>${esc(x.con)}</div></div>
+      <div class="tags">${x.tags.map(t=>`<span class="tag${t[1]?" me":""}">${esc(t[0])}</span>`).join("")}</div>
+      <div class="foot"><a class="btn" href="${url(x)}" target="_blank" rel="noopener">ดูรูปใน Google Maps ↗</a>${x.note?`<span class="note">${esc(x.note)}</span>`:""}</div>
+    </div></article>`;
+}
+function render(){
+  const v=R.filter(x=>(cat==="all"||x.cat===cat)&&(!onlyTop||x.top)&&(!onlyBook||["done","must","should","app"].includes(x.book)));
+  list.innerHTML=v.length?v.map(card).join(""):`<p class="empty">ไม่มีร้านที่ตรงกับตัวกรองนี้</p>`;
+  count.textContent=v.length+" ร้าน";
+}
+document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{
+  cat=btn.dataset.cat;document.querySelectorAll("[data-cat]").forEach(b=>b.setAttribute("aria-pressed",b===btn));render();
+}));
+const fb=document.getElementById("f-book");
+fb.addEventListener("click",()=>{onlyBook=!onlyBook;fb.setAttribute("aria-pressed",onlyBook);render();});
+const ft=document.getElementById("f-top");
+ft.addEventListener("click",()=>{onlyTop=!onlyTop;ft.setAttribute("aria-pressed",onlyTop);render();});
+render();
+</script>
+
+</body>
+</html>
