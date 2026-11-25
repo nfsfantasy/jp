@@ -191,9 +191,9 @@ const CATS=[["food","🍜","กิน"],["shop","🛍","ช้อปปิ้ง
 const PAYS=[["cash","💴 เงินสด"],["card","💳 บัตร"],["ic","🚇 Suica/PASMO"]];
 const DAYS=[["2026-11-27","ศ. 27 พ.ย."],["2026-11-28","ส. 28 พ.ย."],["2026-11-29","อา. 29 พ.ย."],["2026-11-30","จ. 30 พ.ย."],["2026-12-01","อ. 1 ธ.ค."],["2026-12-02","พ. 2 ธ.ค."],["2026-12-03","พฤ. 3 ธ.ค."],["2026-12-04","ศ. 4 ธ.ค."],["2026-12-05","ส. 5 ธ.ค."]];
 const KEY="tokyo-trip-expenses-v1";
-let S={items:[],rate:0.2142,budget:"",people:["ฉัน","แฟน"],lastPayer:0,del:[]}, cat="food", pay="cash", payer=0, editId=null;
+let S={items:[],rate:0.2142,budget:"",people:["ใหม่","บุษ"],lastPayer:0,del:[]}, cat="food", pay="cash", payer=0, editId=null;
 try{const raw=localStorage.getItem(KEY); if(raw){const o=JSON.parse(raw); if(o&&Array.isArray(o.items)) S=Object.assign(S,o);}}catch(e){}
-if(!Array.isArray(S.people)||S.people.length<2)S.people=["ฉัน","แฟน"];if(!Array.isArray(S.del))S.del=[];S.items.forEach(x=>{if(x.payer===undefined)x.payer=0;});payer=S.lastPayer||0;
+if(!Array.isArray(S.people)||S.people.length<2)S.people=["ใหม่","บุษ"];if(!Array.isArray(S.del))S.del=[];S.items.forEach(x=>{if(x.payer===undefined)x.payer=0;});payer=S.lastPayer||0;
 const pn=i=>S.people[i]||("คนที่ "+(i+1));
 const $=id=>document.getElementById(id);
 const yen=n=>"¥"+Math.round(n).toLocaleString("en-US");
@@ -207,7 +207,7 @@ function todayDefault(){const t=new Date();const iso=t.getFullYear()+"-"+String(
 DAYS.forEach(d=>{const o=document.createElement("option");o.value=d[0];o.textContent=d[1];$("date").appendChild(o);});
 $("date").value=todayDefault();
 $("rate").value=S.rate; $("budget").value=S.budget||"";$("n0").value=S.people[0];$("n1").value=S.people[1];
-["n0","n1"].forEach((id,i)=>$(id).addEventListener("change",()=>{const v=$(id).value.trim()||(i?"แฟน":"ฉัน");if(v!==S.people[i]){S.people[i]=v;persist();drawChips();render();}$(id).value=v;}));
+["n0","n1"].forEach((id,i)=>$(id).addEventListener("change",()=>{const v=$(id).value.trim()||(i?"บุษ":"ใหม่");if(v!==S.people[i]){S.people[i]=v;persist();drawChips();render();}$(id).value=v;}));
 $("amt").addEventListener("input",()=>{const v=+$("amt").value;$("thbLive").textContent=v>0?("≈ "+baht(v)+" บาท"):"";});
 $("rate").addEventListener("change",()=>{const r=parseFloat($("rate").value);if(r>0&&r<10){if(r!==S.rate){S.rate=r;persist();render();}}else{$("rate").value=S.rate;}});
 $("budget").addEventListener("change",()=>{const v=parseFloat($("budget").value),nb=v>0?v:"";if(nb!==S.budget){S.budget=nb;persist();render();}});
@@ -253,7 +253,7 @@ $("csv").onclick=()=>{const head=["date","paid_by","category","amount_jpy","amou
   const blob=new Blob(["﻿"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="japan-trip-expenses.csv";document.body.appendChild(a);a.click();a.remove();toast("ดาวน์โหลดแล้ว");};
 $("copy").onclick=async()=>{const txt=JSON.stringify(S);try{await navigator.clipboard.writeText(txt);toast("คัดลอกแล้ว ไปวางเก็บใน LINE ได้เลย");}catch(e){$("restoreBox").hidden=false;$("restoreTxt").value=txt;$("restoreTxt").select();toast("กดค้างที่ข้อความเพื่อคัดลอก");}};
 $("restoreBtn").onclick=()=>{$("restoreBox").hidden=!$("restoreBox").hidden;};
-$("restoreGo").onclick=()=>{try{const o=JSON.parse($("restoreTxt").value);if(!o||!Array.isArray(o.items))throw 0;S=Object.assign({items:[],rate:0.2142,budget:"",people:["ฉัน","แฟน"],lastPayer:0,del:[]},o);if(!Array.isArray(S.del))S.del=[];persist();$("rate").value=S.rate;$("n0").value=S.people[0];$("n1").value=S.people[1];drawChips();$("budget").value=S.budget||"";render();$("restoreBox").hidden=true;syncNow();toast("กู้คืนแล้ว "+S.items.length+" รายการ");}catch(e){toast("ข้อมูลไม่ถูกต้อง");}};
+$("restoreGo").onclick=()=>{try{const o=JSON.parse($("restoreTxt").value);if(!o||!Array.isArray(o.items))throw 0;S=Object.assign({items:[],rate:0.2142,budget:"",people:["ใหม่","บุษ"],lastPayer:0,del:[]},o);if(!Array.isArray(S.del))S.del=[];persist();$("rate").value=S.rate;$("n0").value=S.people[0];$("n1").value=S.people[1];drawChips();$("budget").value=S.budget||"";render();$("restoreBox").hidden=true;syncNow();toast("กู้คืนแล้ว "+S.items.length+" รายการ");}catch(e){toast("ข้อมูลไม่ถูกต้อง");}};
 const PFX="TOKYO-EXP:";
 function payload(){return PFX+JSON.stringify({v:1,items:S.items,del:S.del,people:S.people});}
 $("share").onclick=async()=>{const txt=payload();try{if(navigator.share){await navigator.share({title:"ค่าใช้จ่ายทริป",text:txt});return;}}catch(e){if(e&&e.name==="AbortError")return;}
