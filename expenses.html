@@ -181,13 +181,14 @@ $("rate").value=S.rate; $("budget").value=S.budget||"";$("n0").value=S.people[0]
 $("amt").addEventListener("input",()=>{const v=+$("amt").value;$("thbLive").textContent=v>0?("≈ "+baht(v)+" บาท"):"";});
 $("rate").addEventListener("change",()=>{const r=parseFloat($("rate").value);if(r>0&&r<10){if(r!==S.rate){S.rate=r;persist();render();}}else{$("rate").value=S.rate;}});
 $("budget").addEventListener("change",()=>{const v=parseFloat($("budget").value),nb=v>0?v:"";if(nb!==S.budget){S.budget=nb;persist();render();}});
-function resetForm(){editId=null;$("amt").value="";$("note").value="";$("thbLive").textContent="";$("save").textContent="บันทึก";$("cancel").hidden=true;}
+let snap=null;
+function resetForm(){if(snap){$("date").value=snap.date;$("who").value=snap.who;cat=snap.cat;pay=snap.pay;payer=snap.payer;snap=null;drawChips();}editId=null;$("amt").value="";$("note").value="";$("thbLive").textContent="";$("save").textContent="บันทึก";$("cancel").hidden=true;}
 $("save").onclick=()=>{const a=Math.round(+$("amt").value);if(!(a>0)){toast("ใส่จำนวนเงินก่อน");$("amt").focus();return;}
-  S.lastPayer=payer;const rec={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:a,cat,pay,payer,date:$("date").value,who:$("who").value,note:$("note").value.trim(),ts:editId?(S.items.find(x=>x.id===editId)||{}).ts||Date.now():Date.now()};
+  if(!editId)S.lastPayer=payer;const rec={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:a,cat,pay,payer,date:$("date").value,who:$("who").value,note:$("note").value.trim(),ts:editId?(S.items.find(x=>x.id===editId)||{}).ts||Date.now():Date.now()};
   if(editId){S.items=S.items.map(x=>x.id===editId?rec:x);toast("แก้ไขแล้ว");}else{S.items.push(rec);toast("บันทึกแล้ว "+yen(a));}
   persist();resetForm();render();};
 $("cancel").onclick=()=>{resetForm();};
-function edit(id){const x=S.items.find(i=>i.id===id);if(!x)return;editId=id;$("amt").value=x.amt;cat=x.cat;pay=x.pay;payer=x.payer||0;$("date").value=x.date;$("who").value=x.who||"me";$("note").value=x.note||"";drawChips();$("amt").dispatchEvent(new Event("input"));$("save").textContent="บันทึกแก้ไข";$("cancel").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
+function edit(id){const x=S.items.find(i=>i.id===id);if(!x)return;if(!snap)snap={date:$("date").value,who:$("who").value,cat,pay,payer};editId=id;$("amt").value=x.amt;cat=x.cat;pay=x.pay;payer=x.payer||0;$("date").value=x.date;$("who").value=x.who||"me";$("note").value=x.note||"";drawChips();$("amt").dispatchEvent(new Event("input"));$("save").textContent="บันทึกแก้ไข";$("cancel").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
 function render(){
   const it=S.items, tot=it.reduce((s,x)=>s+x.amt,0), days=new Set(it.map(x=>x.date)).size||1;
   $("tY").textContent=yen(tot);$("tB").textContent="≈ "+baht(tot);
