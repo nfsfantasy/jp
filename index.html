@@ -74,6 +74,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:14px;background:var(--fg);color:var(--bg);border-radius:8px;padding:7px 14px}
 .note{font-size:12.5px;color:var(--muted)}
+.card{scroll-margin-top:120px}.card.flash{outline:3px solid var(--ikura);outline-offset:2px}
+.daylink{display:inline-flex;align-items:center;gap:8px;margin-top:14px;text-decoration:none;font-weight:700;font-size:15px;background:var(--ikura);color:#fff;border-radius:10px;padding:9px 16px}
 .empty{color:var(--muted);padding:24px 0}
 footer{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch}
 @media (max-width:620px){
@@ -99,6 +101,7 @@ footer{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch}
       <span><span class="pill p-no">เดินเข้าได้</span></span>
       <span><span class="tag me">ของชอบคุณ</span> <span class="tag">ของชอบแฟน</span></span>
     </div>
+    <a class="daylink" href="days.html">🗓 ดูแผนรายวัน: ไปไหน กินอะไร แต่ละวัน →</a>
   </header>
 
   <div class="bar" role="toolbar" aria-label="กรองร้าน">
@@ -410,7 +413,7 @@ const R=[
  tags:[["ชาซื้อกลับ",0]],note:"ปิดจันทร์ เปิด 12:00",q:"Nakamura Tea Life Store",id:"ChIJW7q9ZreOGGARZ7zh2XxUOOo"}
 
 ,
-{n:"Kaiten Sushi Toriton Skytree",top:"ซูชิสายพานเกรดพรีเมียมจากฮอกไกโด ชิ้นใหญ่ สดมาก คุ้มคิว",jp:"回転寿司",cat:"sushi",area:"โตเกียวสกายทรี ชั้น 6",day:"พ. 2 ธ.ค. (ใกล้อาซากุสะ)",r:4.2,c:2582,price:"สูงกว่าเชนทั่วไป",book:"queue",order:"<strong>แซลมอนติดมันย่างไฟ</strong> + ปลาอาจิ และเมนูปลาตามฤดูกาล สั่งผ่านแท็บเล็ตหลายภาษา",pro:"ซูชิสายพานเกรดสูงจากฮอกไกโด ชิ้นปลาใหญ่และสด ข้าวดี เชฟหลายคนอัธยาศัยดี คุ้มกว่าร้านโอมากาเสะมาก",con:"คิวยาวมาก บางวันรอ 2–4 ชม. ราคาสูงกว่าเชนสายพานทั่วไป",tags:[["ปลาดิบ", 1], ["แซลมอน", 1]],note:"ไปกดบัตรคิวที่หน้าร้านก่อน แล้วไปเดินเล่นในห้างรอเรียก",q:"Kaiten Sushi Toriton Tokyo Skytree",id:"ChIJOwR-8daOGGARccFzVsB5U1E"},
+{n:"Kaiten Sushi Toriton Skytree",top:"ซูชิสายพานเกรดพรีเมียมจากฮอกไกโด ชิ้นใหญ่ สดมาก คุ้มคิว",jp:"回転寿司",cat:"sushi",area:"โตเกียวสกายทรี ชั้น 6",day:"ศ. 4 ธ.ค. เย็น (Solamachi)",r:4.2,c:2582,price:"สูงกว่าเชนทั่วไป",book:"queue",order:"<strong>แซลมอนติดมันย่างไฟ</strong> + ปลาอาจิ และเมนูปลาตามฤดูกาล สั่งผ่านแท็บเล็ตหลายภาษา",pro:"ซูชิสายพานเกรดสูงจากฮอกไกโด ชิ้นปลาใหญ่และสด ข้าวดี เชฟหลายคนอัธยาศัยดี คุ้มกว่าร้านโอมากาเสะมาก",con:"คิวยาวมาก บางวันรอ 2–4 ชม. ราคาสูงกว่าเชนสายพานทั่วไป",tags:[["ปลาดิบ", 1], ["แซลมอน", 1]],note:"ไปกดบัตรคิวที่หน้าร้านก่อน แล้วไปเดินเล่นในห้างรอเรียก",q:"Kaiten Sushi Toriton Tokyo Skytree",id:"ChIJOwR-8daOGGARccFzVsB5U1E"},
 {n:"Nemuro Hanamaru KITTE",jp:"回転寿司",cat:"sushi",area:"KITTE มารุโนะอุจิ (สถานีโตเกียว)",day:"อา. 29 พ.ย.",r:4.1,c:3153,price:"",book:"queue",order:"<strong>อูนิ ปู และเมนูตามฤดูกาล</strong> + ทูน่าสับต้นหอม ปลาไหล แซลมอน",pro:"ซูชิสายพานจากเนมูโระ ฮอกไกโด คนชมว่าดีที่สุดที่กินในโตเกียว มีเมนูภาษาอังกฤษ ของสั่งพิเศษออกเร็ว",con:"คิวยาวมาก ช่วงพีครอบ 2–3 ชม. ต่อคิวช้า บางครั้งเสิร์ฟผิดออเดอร์",tags:[["อูนิ", 1], ["ปลาดิบ", 1]],note:"ไปช่วงบ่าย 14:30–15:00 คิวสั้นกว่า หรือมาก่อนเปิด 11:00 ประมาณ 1 ชม.",q:"Kaitenzushi Nemuro Hanamaru KITTE Marunouchi",id:"ChIJuzydSvqLGGARXTqdIJs_08Y"},
 {n:"SUSHIRO Ueno",jp:"回転寿司",cat:"sushi",area:"อุเอโนะ ใกล้ Hop Inn",day:"ศ. 27 – อา. 29 พ.ย.",r:3.9,c:4282,price:"ราคาถูก",book:"app",order:"<strong>ซูชิจานถูกหลายแบบ</strong> + ชงมัทฉะฟรีที่โต๊ะ มีเบียร์และของหวาน",pro:"เชนยอดนิยม ราคาถูก เมนูเยอะ ระบบสั่งเองง่ายสำหรับนักท่องเที่ยว มีโต๊ะสำหรับกลุ่ม ส่งจานถึงโต๊ะ",con:"ช่วงพีครอบรอ 30 นาทีขึ้นไป บางคนว่าข้าวร่วน คุณภาพระดับเชน ไม่ได้ว้าว",tags:[["ปลาดิบ", 1], ["เบียร์", 1]],note:"จองคิวผ่านแอป Sushiro ล่วงหน้าได้ เวลาที่แจ้งมักนานกว่าจริง",q:"SUSHIRO Ueno",id:"ChIJ-xpGqZ-OGGAREIc2DwZpaic"},
 {n:"Uobei Shibuya Dogenzaka",jp:"回転寿司",cat:"sushi",area:"ชิบูย่า โดเก็นซากะ",day:"ส. 28 พ.ย. / ศ. 4 ธ.ค.",r:4.3,c:9353,price:"¥100 ต่อจาน",book:"no",order:"<strong>สั่งผ่านจอ จานวิ่งรางด่วนมาส่ง</strong> ลองซูชิแปลกๆ เช่น แฮมเบิร์กมาโย + ชาเขียวฟรี",pro:"ถูกมาก กินอิ่มได้ไม่กี่ร้อยเยน ของออกเร็ว สนุก ที่นั่งเยอะ รอไม่นาน อยู่กลางชิบูย่า",con:"รสชาติระดับกลาง ไม่ใช่สายพานพรีเมียม นั่งเคาน์เตอร์เรียงกัน กลุ่มใหญ่นั่งแยกกัน",tags:[["ปลาดิบ", 1]],note:"เปิด 11:00–23:00",q:"Uobei Shibuya Dogenzaka",id:"ChIJaTXpw6mMGGARP-d-_tbssVE"},
@@ -425,7 +428,7 @@ const R=[
 {n:"Yuyake Dandan",jp:"猫",cat:"cat",area:"หัวถนน Yanaka Ginza",day:"ศ. 27 พ.ย.",r:4.0,c:1064,price:"",book:"no",order:"<strong>บันไดชมพระอาทิตย์ตก</strong> จุดที่แมวจรชอบมานอน ถ่ายรูปมุมถนนเก่า",pro:"บรรยากาศเงียบสงบแบบเมืองเก่า คนรักแมวชอบ เป็นจุดถ่ายรูปช่วงเย็น",con:"ร้านแถวนี้ปิดราว 17:00 ถ้าไม่ได้ตั้งใจมาเดินเล่นอาจรู้สึกธรรมดา",tags:[["แมว", 1]],note:"มาช่วงก่อนพระอาทิตย์ตก (ปลาย พ.ย. ตกราว 16:30)",q:"Yuyake Dandan Yanaka",id:"ChIJrw6t4tONGGARm4SASOVzzLc"},
 {n:"Nekomaru Cafe",jp:"猫",cat:"cat",area:"อุเอโนะ ชั้น 8 ใกล้ Hop Inn",day:"ศ. 27 – อา. 29 พ.ย.",r:4.0,c:413,price:"¥1,700 / 60 นาที",book:"no",order:"<strong>เล่นกับแมวช่วยเหลือ 60 นาที</strong> ซื้อขนมแมวเพิ่มได้",pro:"แมวส่วนใหญ่เป็นแมวช่วยเหลือ ดูแลดีมาก มีที่ให้แมวพักแยก เจ้าของพูดอังกฤษ ราคาถูก คนไม่เยอะ",con:"ร้านเล็ก ต้องเปลี่ยนรองเท้าและเก็บกระเป๋าในล็อกเกอร์",tags:[["แมว", 1]],note:"ทางเข้าประตูกระจกข้าง Wendy's ขึ้นลิฟต์ชั้น 8 · 12:00–20:00 (ส.–อา. 11:00)",q:"Nekomaru Cafe Ueno",id:"ChIJyT7ouZ6OGGARv5U0O7l8QJo"},
 {n:"Cat Cafe MOCHA Akihabara",jp:"猫",cat:"cat",area:"อากิฮาบาระ",day:"พ. 2 ธ.ค.",r:4.2,c:2197,price:"แพ็ก 30 นาที หรือ ¥300 / 10 นาที",book:"no",order:"<strong>รอบ 30 นาที</strong> ได้ขนมแมวไอติมแท่ง 1 อัน + เครื่องดื่มฟรี",pro:"สะอาด ไม่มีกลิ่น แมวสุขภาพดีและเป็นมิตร พนักงานใจดี เช็กอินภาษาอังกฤษ มีที่ชาร์จมือถือ",con:"แมวบางตัวไม่ให้จับ เป็นเชนจึงคึกคักกว่าคาเฟ่เล็ก",tags:[["แมว", 1]],note:"10:00–21:00",q:"Cat Cafe MOCHA Akihabara",id:"ChIJjcsX6R2MGGARNWW10n1hUeY"},
-{n:"Gotokuji Temple",jp:"招き猫",cat:"cat",area:"เซตากายะ (นอกเส้นทาง)",day:"ถ้ามีเวลาว่าง (ช่วงเช้า)",r:4.6,c:11497,price:"เข้าฟรี",book:"no",order:"<strong>ชมตุ๊กตาแมวกวัก (มาเนกิเนโกะ) นับพันตัว</strong> ซื้อแมวกวักมาวางเพิ่มได้",pro:"วัดสงบ สวยและเงียบ ถ่ายรูปสวย ถนนแนวสนทางเข้าสวย คนไม่แน่นอย่างที่คิด",con:"ไกลจากย่านหลัก ร้านรอบวัดเปิด 10:00 ร้านแมวกวักบางวันปิด",tags:[["แมว", 1]],note:"เปิด 6:00–17:00",q:"Gotokuji Temple",id:"ChIJVVUBmZ_zGGARrEy-Ua3psAY"},
+{n:"Gotokuji Temple",jp:"招き猫",cat:"cat",area:"เซตากายะ",day:"ศ. 4 ธ.ค.",r:4.6,c:11497,price:"เข้าฟรี",book:"no",order:"<strong>ชมตุ๊กตาแมวกวัก (มาเนกิเนโกะ) นับพันตัว</strong> ซื้อแมวกวักมาวางเพิ่มได้",pro:"วัดสงบ สวยและเงียบ ถ่ายรูปสวย ถนนแนวสนทางเข้าสวย คนไม่แน่นอย่างที่คิด",con:"ไกลจากย่านหลัก ร้านรอบวัดเปิด 10:00 ร้านแมวกวักบางวันปิด",tags:[["แมว", 1]],note:"เปิด 6:00–17:00",q:"Gotokuji Temple",id:"ChIJVVUBmZ_zGGARrEy-Ua3psAY"},
 {n:"Enoshima",jp:"猫",cat:"cat",area:"ฟูจิซาวะ ใกล้คามาคุระ",day:"พฤ. 3 ธ.ค. ทีมคามาคุระ",r:4.6,c:285,price:"",book:"no",order:"<strong>เดินเกาะ ชมฟูจิ</strong> ตามหาแมวจรตามทางขึ้นศาลเจ้า และดูพระอาทิตย์ตก",pro:"วิวฟูจิสวย ลมทะเลสดชื่น ของกินริมทางเยอะ มีศาลเจ้า สวน และ Sea Candle",con:"บันไดเยอะ ถ้ำต้องเดินขึ้นลงบันได ช่วงสายคนแน่น",tags:[["แมว", 1], ["ทะเล", 1]],note:"ใช้บันไดเลื่อนช่วยขึ้นเขาได้",q:"Enoshima",id:"ChIJcbT_oOZOGGARFHp30PfDRyY"}
 ,
 {n:"Minatoya Ameyoko",jp:"海鮮丼",cat:"sea",area:"อาเมโยโกะ อุเอโนะ",day:"ศ. 27 พ.ย. กลางวัน",r:4.0,c:1667,price:"Z4 ¥1,400",book:"no",order:"<strong>ดงชุด Z4</strong> อูนิ อิคุระ ทูน่า แซลมอน กุ้งหวาน หอยเชลล์ ในชามเดียว",pro:"ถูกมากเมื่อเทียบกับของที่ได้ ปลาหั่นชิ้นหนา หวานสด บรรยากาศตลาดคึกคัก ชาฟรี",con:"เป็นแผงริมทาง ความสะอาดไม่ใช่จุดเด่น คุณภาพสมราคาแต่ไม่ถึงระดับพรีเมียม คนรับออเดอร์ใจร้อน",tags:[["อิคุระ", 1], ["อูนิ", 1], ["ปลาดิบ", 1]],note:"11:00–19:00 (ส.–อา. ถึง 19:30)",q:"Minatoya Ameyoko Ueno",id:"ChIJbfIujp-OGGARQpzhp7F2ocY"},
@@ -435,15 +438,16 @@ const R=[
 {n:"Daimaru Tokyo (ชั้นใต้ดิน)",jp:"デパ地下",cat:"shop",area:"ติดสถานีโตเกียว",day:"ส. 5 ธ.ค. ก่อนไปนาริตะ",r:4.0,c:22256,price:"",book:"no",order:"<strong>ชั้นอาหารใต้ดิน</strong> ขนมของฝากแพ็กสวย เบนโตะกินบนรถ และร้านสาเก",pro:"ของฝากและขนมญี่ปุ่นครบที่เดียว จัดร้านเป็นระเบียบ ร้านสาเกห่อขวดให้ดี มีเจลเย็นขาย เดินไปขึ้นรถบัสไปนาริตะได้",con:"คนเยอะช่วงเย็นและวันหยุด",tags:[["ของฝาก", 0]],note:"10:00–20:00 · เคาน์เตอร์ tax-free ชั้น 12",q:"Daimaru Tokyo",id:"ChIJtxODuv6LGGARGHePjyb8m-0"},
 {n:"Jingu Gaien Ginkgo Avenue",jp:"紅葉",cat:"view",area:"คิตะอาโอยามะ ใกล้โอโมเตะซันโด",day:"ส. 28 พ.ย.",r:4.4,c:10075,price:"ฟรี",book:"no",order:"<strong>เดินใต้อุโมงค์ต้นแปะก๊วยสีเหลือง</strong> ถ่ายรูป แล้วแวะคาเฟ่แถวอาโอยามะ",pro:"หนึ่งในถนนที่สวยที่สุดในโตเกียวช่วงใบไม้เปลี่ยนสี ปลาย พ.ย. คือช่วงเหลืองเต็มที่ เดินเล่นได้ฟรี",con:"คนแน่นมากช่วงพีค มีรถสปอร์ตวิ่งผ่านเสียงดัง",tags:[["ใบไม้เปลี่ยนสี", 1]],note:"ไปช่วงเช้าก่อน 10:00 คนน้อยกว่า",q:"Meiji Jingu Gaien Ginkgo Avenue",id:"ChIJ_XxY_JqMGGARACDk4sraoN8"},
 {n:"Lake Kawaguchi Maple Corridor",jp:"紅葉",cat:"view",area:"ริมทะเลสาบคาวากุจิโกะฝั่งเหนือ",day:"จ. 30 พ.ย.",r:4.3,c:6490,price:"ฟรี",book:"no",order:"<strong>เดินใต้อุโมงค์ใบเมเปิลแดง</strong> คู่กับวิวฟูจิ มีแผงขายของกินช่วงเทศกาล",pro:"ใบเมเปิลแดงส้มทองเต็มทางเดินเหมือนในนิทาน ถ้าฟ้าใสจะเห็นฟูจิ มีแผงของทำมือและของกิน",con:"ปลาย พ.ย. ใบอาจเลยพีคไปบ้าง คนแน่นมากและรถติด ถ้าใบยังไม่แดงจะไม่ค่อยมีอะไรทำ",tags:[["ใบไม้เปลี่ยนสี", 1]],note:"มีรถเช่า ไปช่วงเช้าหรือเย็นหลังรถทัวร์กลับ",q:"Lake Kawaguchi Maple Corridor",id:"ChIJ-RVpUlJeGWARfcMeEe58lho"},
-{n:"Chureito Pagoda",jp:"五重塔",cat:"view",area:"ฟูจิโยชิดะ",day:"อ. 1 ธ.ค. เช้า (ก่อนโอชิโนะ)",r:4.7,c:6493,price:"ฟรี",book:"no",order:"<strong>ภาพเจดีย์แดง + ภูเขาไฟฟูจิ</strong> จากจุดชมวิวด้านบน",pro:"จุดถ่ายรูปฟูจิที่ดังที่สุด เช้าๆ ฟ้าใสมักเห็นฟูจิชัด หิมะปกยอด วิวเหมือนโปสการ์ด",con:"บันไดชันประมาณ 398 ขั้น (มีทางลาดข้างๆ) หลัง 9:00 คนแน่นจนถ่ายรูปยาก",tags:[["วิวฟูจิ", 1], ["ใบไม้เปลี่ยนสี", 1]],note:"ไปให้ถึงก่อน 8:00",q:"Chureito Pagoda",id:"ChIJc6BS_UxnGWARmeeuIEnjV9o"}
+{n:"Chureito Pagoda",jp:"五重塔",cat:"view",area:"ฟูจิโยชิดะ",day:"จ. 30 พ.ย. เช้า (จุดแรกของวัน)",r:4.7,c:6493,price:"ฟรี",book:"no",order:"<strong>ภาพเจดีย์แดง + ภูเขาไฟฟูจิ</strong> จากจุดชมวิวด้านบน",pro:"จุดถ่ายรูปฟูจิที่ดังที่สุด เช้าๆ ฟ้าใสมักเห็นฟูจิชัด หิมะปกยอด วิวเหมือนโปสการ์ด",con:"บันไดชันประมาณ 398 ขั้น (มีทางลาดข้างๆ) หลัง 9:00 คนแน่นจนถ่ายรูปยาก",tags:[["วิวฟูจิ", 1], ["ใบไม้เปลี่ยนสี", 1]],note:"ไปให้ถึงก่อน 8:00",q:"Chureito Pagoda",id:"ChIJc6BS_UxnGWARmeeuIEnjV9o"}
 ];
 const list=document.getElementById("list"),count=document.getElementById("count");
 let cat="all",onlyBook=false,onlyTop=false;
+const slug=n=>"r-"+String(n).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 function url(x){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(x.q)+"&query_place_id="+x.id}
 function card(x){
   const b=BOOK[x.book];
-  return `<article class="card${x.top?" is-top":""}">
+  return `<article class="card${x.top?" is-top":""}" id="${slug(x.n)}">
     <div class="noren c-${x.cat}" aria-hidden="true"><span class="jp">${x.jp}</span><span class="cat">${CAT[x.cat]}</span></div>
     <div class="body">
       <div class="top"><h2>${esc(x.n)}</h2><span class="area">${esc(x.area)}</span>${x.top?`<span class="topbadge">★ ต้องไป</span>`:""}<span class="pill ${b[0]}">${b[1]}</span></div>
@@ -468,6 +472,7 @@ fb.addEventListener("click",()=>{onlyBook=!onlyBook;fb.setAttribute("aria-presse
 const ft=document.getElementById("f-top");
 ft.addEventListener("click",()=>{onlyTop=!onlyTop;ft.setAttribute("aria-pressed",onlyTop);render();});
 render();
+if(location.hash){const t=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(t){t.scrollIntoView();t.classList.add("flash");}}
 </script>
 
 </body>
