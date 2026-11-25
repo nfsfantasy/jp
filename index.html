@@ -180,7 +180,7 @@ body::before{display:none!important}
       <span><span class="pill p-must">ต้องจอง / ควรจอง</span></span>
       <span><span class="pill p-app">จองคิวในแอป</span></span>
       <span><span class="pill p-no">เดินเข้าได้</span></span>
-      <span><span class="tag me">ของชอบคุณ</span> <span class="tag">ของชอบแฟน</span></span>
+      
     </div>
     <div class="links"><a class="daylink" href="days.html">🗓 ดูแผนรายวัน: ไปไหน กินอะไร แต่ละวัน →</a><a class="daylink alt" href="info.html">🧳 ข้อมูลจำเป็น + ประโยคญี่ปุ่น →</a><a class="daylink alt" href="expenses.html">💴 บันทึกค่าใช้จ่าย →</a></div>
   </header>
@@ -536,7 +536,7 @@ function card(x){
       ${x.top?`<p class="why"><b>ทำไมต้องไป:</b> ${esc(x.top)}</p>`:""}
       <div class="order">${x.order}</div>
       <div class="rv"><div><h3>คนชม</h3>${esc(x.pro)}</div><div><h3>คนติ</h3>${esc(x.con)}</div></div>
-      <div class="tags">${x.tags.map(t=>`<span class="tag${t[1]?" me":""}">${esc(t[0])}</span>`).join("")}</div>
+      <div class="tags">${x.tags.map(t=>`<span class="tag">${esc(t[0])}</span>`).join("")}</div>
       <div class="foot"><a class="btn" href="${url(x)}" target="_blank" rel="noopener">ดูรูปใน Google Maps ↗</a>${x.note?`<span class="note">${esc(x.note)}</span>`:""}</div>
     </div></article>`;
 }
