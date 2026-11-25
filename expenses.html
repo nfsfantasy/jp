@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f3a5f">
 <title>บันทึกค่าใช้จ่ายทริป</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,13 +95,92 @@ textarea{width:100%;box-sizing:border-box;min-height:80px;font:inherit;font-size
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ikura);outline-offset:2px}
 @media (max-width:520px){.tot{grid-template-columns:1fr 1fr}.tot .kpi:first-child{grid-column:1/-1}.bar{grid-template-columns:84px 1fr 80px}}
 </style>
+<style>
+/* Shared Japan theme layered over every page: washi paper, sumi ink, ai indigo, shu vermilion. CSS only, no images. */
+:root{
+  --bg:#f5efe3; --card:#fffdf8; --fg:#1d232b; --muted:#6a6357; --line:#e4d9c6;
+  --ikura:#c8372d; --ikura-soft:#f7e1d9; --ai:#1f3a5f; --ai-2:#2b4c76; --kin:#e9c27a;
+  --gold:#c99416; --gold-soft:#f8ecd0; --gold-ink:#7a5600;
+  --shadow:0 1px 2px rgba(31,40,52,.05),0 10px 28px -14px rgba(31,58,95,.28);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+body{background:var(--bg);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{display:none!important}
+
+/* Hero: indigo band with a seigaiha wave pattern and a vermilion seal. */
+.wrap>header,.wrap>.hero{position:relative;overflow:hidden;color:#fff;border-radius:0 0 22px 22px;
+  margin:-24px max(-16px,calc(-1 * env(safe-area-inset-left,0px) - 16px)) 18px;padding:28px 20px 22px;
+  background-color:var(--ai);
+  background-image:
+    linear-gradient(180deg,rgba(15,28,46,.15),rgba(15,28,46,.55)),
+    radial-gradient(circle at 100% 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 0 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 50% 100%,var(--ai-2) 10%,var(--ai) 10% 23%,var(--ai-2) 23% 30%,var(--ai) 30% 43%,var(--ai-2) 43% 50%,var(--ai) 50% 63%,var(--ai-2) 63% 71%,transparent 71%),
+    radial-gradient(circle at 100% 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%),
+    radial-gradient(circle at 0 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%);
+  background-size:auto,64px 32px,64px 32px,64px 32px,64px 32px,64px 32px}
+@media (min-width:760px){.wrap>header,.wrap>.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:-8px}}
+.wrap>header::after,.wrap>.hero::after{content:"旅";position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;background:var(--ikura);color:#fff;font:700 22px/1 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:0 0 0 3px rgba(255,255,255,.18);transform:rotate(-8deg)}
+.wrap>header h1,.wrap>.hero h1{color:#fff;margin:0 56px 8px 0;font-size:clamp(25px,6.6vw,34px);line-height:1.2;letter-spacing:-.01em}
+.wrap>header h1 span,.wrap>.hero h1 span{color:var(--kin);display:block}
+.wrap>header p,.wrap>.hero p{color:rgba(255,255,255,.86)!important;margin-bottom:0}
+.wrap>header .legend{margin-top:14px}
+.wrap>header .legend .tag{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.wrap>header a{color:#fff}
+.navl{display:none!important}
+
+/* Cards and sections */
+.card,.day,.sec,.tired{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sec h2,.card h2,.dh h2{letter-spacing:-.01em}
+:root:not([data-theme="dark"]) .sec h2,:root:not([data-theme="dark"]) .card h2{color:var(--ai)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sec h2,:root:not([data-theme="light"]) .card h2{color:var(--fg)}}
+.sub{color:var(--muted)}
+
+/* Sticky filter / jump bars get a frosted washi backdrop */
+.bar{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.chip{border-radius:999px}
+.chip[aria-pressed="true"],.chip.on{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.btn{border-radius:12px}
+
+/* Bottom tab bar shared by all pages */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs a{flex:1;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;
+  text-decoration:none;color:var(--muted);font:600 11.5px/1.2 var(--f-body,system-ui)}
+.tabs a .i{font-size:20px;line-height:1.1}
+.tabs a[aria-current="page"]{color:var(--ikura);background:var(--ikura-soft)}
+.tabs a:focus-visible{outline:2px solid var(--ikura);outline-offset:1px}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+@media print{.tabs{display:none}body{padding-bottom:0}}
+.wrap>header .links{margin-top:14px}
+.wrap>header .daylink{box-shadow:none}
+.wrap>header .daylink.alt{background:rgba(255,255,255,.13)!important;color:#fff!important;border:1px solid rgba(255,255,255,.32)}
+/* One swipeable row of filter chips instead of a tall sticky block on phones */
+.bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bar::-webkit-scrollbar{display:none}
+.bar>*{flex:none}
+</style>
 </head>
 <body>
 
 <div class="wrap">
   <div class="navl"><a href="index.html">← ร้านเด็ด</a><a href="days.html">🗓 แผนรายวัน</a><a href="info.html">🧳 ข้อมูลจำเป็น</a></div>
-  <h1>บันทึกค่าใช้จ่าย <span>ทริปญี่ปุ่น</span></h1>
-  <p class="sub">จดทุกครั้งที่จ่าย ระบุได้ว่าใครเป็นคนจ่าย และคิดให้ว่าตอนจบทริปใครต้องโอนให้ใคร ดูยอดรวมตามหมวดและตามวันได้ทันที ข้อมูลเก็บไว้ในมือถือเครื่องนี้เท่านั้น คนอื่นที่เปิดลิงก์เดียวกันจะไม่เห็น</p>
+  <header><h1>บันทึกค่าใช้จ่าย <span>ทริปญี่ปุ่น</span></h1>
+  <p class="sub">จดทุกครั้งที่จ่าย ระบุได้ว่าใครจ่ายและหารกับใคร ระบบรวบยอดให้ว่าใครต้องโอนให้ใคร ดูยอดตามหมวดและตามวันได้ทันที ถ้าเชื่อม Google Sheet ไว้ ข้อมูลจะขึ้น Sheet เองและเห็นจากทุกเครื่องที่เชื่อม</p></header>
 
   <section class="card" aria-labelledby="addh">
     <h2 id="addh">➕ จดรายการ</h2>
@@ -339,5 +419,6 @@ addEventListener("online",()=>syncNow());
 setInterval(()=>{if(!document.hidden)syncNow();},60000);
 </script>
 
+<nav class="tabs" aria-label="หน้า"><a href="index.html"><span class="i" aria-hidden="true">🍜</span>ร้านเด็ด</a><a href="days.html"><span class="i" aria-hidden="true">🗓</span>แผนรายวัน</a><a href="info.html"><span class="i" aria-hidden="true">🧳</span>ข้อมูล</a><a href="expenses.html" aria-current="page"><span class="i" aria-hidden="true">💴</span>ค่าใช้จ่าย</a></nav>
 </body>
 </html>
