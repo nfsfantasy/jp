@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=Noto+Serif+JP:wght@700&display=swap"><title>เช็กลิสต์เตรียมของ</title>
+<style>
+/* Packing checklist: one card per group; ticking an item strikes it through and moves the progress bar. */
+:root{
+  --bg:#eef1f4; --card:#ffffff; --fg:#17222e; --muted:#5b6876; --line:#d9dfe6;
+  --ikura:#e2571f; --ikura-soft:#fde6db;
+  --ok:#2f6b43; --ok-soft:#e1f0e5; --warn:#a23a1a; --warn-soft:#fbe3da; --done:#1f4f8a; --done-soft:#dde8f6;
+  --sea:#1d3f63; --soba:#7a5a34; --meat:#8c2630; --ramen:#a8741a; --alley:#3a3f47; --coffee:#4b3021; --matcha:#4c6a2a; --gold:#e0a91b; --gold-soft:#fdf3d6; --gold-ink:#7a5600; --sushi:#1f5f5b; --chicken:#9a4a12; --cat:#5b4a7a; --view:#9c3b22; --shop:#6b5a2e;
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif; --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-size:clamp(26px,5vw,34px);line-height:1.2;margin:0 0 6px;font-weight:700}
+header p{margin:0}
+.prog{position:sticky;top:0;z-index:5;padding:12px 0 10px;background:var(--bg)}
+.pr{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.pr small{font-weight:400;color:var(--muted)}
+.track{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px}
+.fill{height:100%;width:0;background:var(--ikura);border-radius:999px;transition:width .25s}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{font:inherit;font-size:13.5px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn[aria-pressed="true"]{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:14px;padding:14px 16px}
+.sec h2{margin:0 0 6px;font-size:18px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.cnt{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+.cnt.done{color:var(--ok)}
+.ck{list-style:none;margin:0;padding:0}
+.ck li{border-top:1px solid var(--line)}
+.ck li:first-child{border-top:0}
+.ck label{display:flex;gap:12px;align-items:flex-start;padding:10px 2px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ck input{flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:var(--ikura)}
+.tx{flex:1;min-width:0}
+.tx b{font-weight:600}
+.tx small{display:block;color:var(--muted);font-size:12.5px}
+.bg{flex:none;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-top:2px;white-space:nowrap}
+.bc{background:var(--done-soft);color:var(--done)}
+.bb{background:var(--gold-soft);color:var(--gold-ink)}
+.bw{background:var(--ok-soft);color:var(--ok)}
+.ck input:checked~.tx b{text-decoration:line-through;color:var(--muted)}
+body.hide .ck li.on{display:none}
+.note{font-size:13px;color:var(--muted);margin-top:16px}
+</style>
+<style>
+/* Shared Japan theme layered over every page: washi paper, sumi ink, ai indigo, shu vermilion. CSS only, no images. */
+:root{
+  --bg:#f5efe3; --card:#fffdf8; --fg:#1d232b; --muted:#6a6357; --line:#e4d9c6;
+  --ikura:#c8372d; --ikura-soft:#f7e1d9; --ai:#1f3a5f; --ai-2:#2b4c76; --kin:#e9c27a;
+  --gold:#c99416; --gold-soft:#f8ecd0; --gold-ink:#7a5600;
+  --shadow:0 1px 2px rgba(31,40,52,.05),0 10px 28px -14px rgba(31,58,95,.28);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+body{background:var(--bg);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{display:none!important}
+
+/* Hero: indigo band with a seigaiha wave pattern and a vermilion seal. */
+.wrap>header,.wrap>.hero{position:relative;overflow:hidden;color:#fff;border-radius:0 0 22px 22px;
+  margin:-24px max(-16px,calc(-1 * env(safe-area-inset-left,0px) - 16px)) 18px;padding:28px 20px 22px;
+  background-color:var(--ai);
+  background-image:
+    linear-gradient(180deg,rgba(15,28,46,.15),rgba(15,28,46,.55)),
+    radial-gradient(circle at 100% 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 0 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 50% 100%,var(--ai-2) 10%,var(--ai) 10% 23%,var(--ai-2) 23% 30%,var(--ai) 30% 43%,var(--ai-2) 43% 50%,var(--ai) 50% 63%,var(--ai-2) 63% 71%,transparent 71%),
+    radial-gradient(circle at 100% 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%),
+    radial-gradient(circle at 0 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%);
+  background-size:auto,64px 32px,64px 32px,64px 32px,64px 32px,64px 32px}
+@media (min-width:760px){.wrap>header,.wrap>.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:-8px}}
+.wrap>header::after,.wrap>.hero::after{content:"旅";position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;background:var(--ikura);color:#fff;font:700 22px/1 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:0 0 0 3px rgba(255,255,255,.18);transform:rotate(-8deg)}
+.wrap>header h1,.wrap>.hero h1{color:#fff;margin:0 56px 8px 0;font-size:clamp(25px,6.6vw,34px);line-height:1.2;letter-spacing:-.01em}
+.wrap>header h1 span,.wrap>.hero h1 span{color:var(--kin);display:block}
+.wrap>header p,.wrap>.hero p{color:rgba(255,255,255,.86)!important;margin-bottom:0}
+.wrap>header .legend{margin-top:14px}
+.wrap>header .legend .tag{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.wrap>header a{color:#fff}
+.navl{display:none!important}
+
+/* Cards and sections */
+.card,.day,.sec,.tired{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sec h2,.card h2,.dh h2{letter-spacing:-.01em}
+:root:not([data-theme="dark"]) .sec h2,:root:not([data-theme="dark"]) .card h2{color:var(--ai)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sec h2,:root:not([data-theme="light"]) .card h2{color:var(--fg)}}
+.sub{color:var(--muted)}
+
+/* Sticky filter / jump bars get a frosted washi backdrop */
+.bar{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.chip{border-radius:999px}
+.chip[aria-pressed="true"],.chip.on{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.btn{border-radius:12px}
+
+/* Bottom tab bar shared by all pages */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs a{flex:1;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;
+  text-decoration:none;color:var(--muted);font:600 11.5px/1.2 var(--f-body,system-ui)}
+.tabs a .i{font-size:20px;line-height:1.1}
+.tabs a[aria-current="page"]{color:var(--ikura);background:var(--ikura-soft)}
+.tabs a:focus-visible{outline:2px solid var(--ikura);outline-offset:1px}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+@media print{.tabs{display:none}body{padding-bottom:0}}
+.wrap>header .links{margin-top:14px}
+.wrap>header .daylink{box-shadow:none}
+.wrap>header .daylink.alt{background:rgba(255,255,255,.13)!important;color:#fff!important;border:1px solid rgba(255,255,255,.32)}
+/* One swipeable row of filter chips instead of a tall sticky block on phones */
+.bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bar::-webkit-scrollbar{display:none}
+.bar>*{flex:none}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>เช็กลิสต์เตรียมของ <span>ก่อนบิน</span></h1>
+    <p>ติ๊กของที่ใส่กระเป๋าแล้ว ระบบจำไว้ในมือถือเครื่องนี้ ปิดแล้วเปิดใหม่ก็ยังอยู่ ป้ายบอกว่าของชิ้นนั้นควร 🎒 ถือขึ้นเครื่อง 🧳 โหลด หรือ 👟 ใส่ไป</p>
+  </header>
+  <div class="prog" role="status" aria-live="polite">
+    <div class="pr"><span id="pt">0/75 ชิ้น</span><small id="pp">0%</small></div>
+    <div class="track"><div class="fill" id="pf"></div></div>
+    <div class="tools"><button class="btn" id="hide" type="button" aria-pressed="false">ซ่อนที่ติ๊กแล้ว</button><button class="btn" id="reset" type="button">ล้างทั้งหมด (เริ่มแพ็กขากลับ)</button></div>
+  </div>
+  <section class="sec" id="doc"><h2>📄 เอกสาร + เงิน (ถือติดตัว) <span class="cnt" data-g="doc"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="doc-0"><span class="tx"><b>พาสปอร์ต</b><small>อายุเหลือเกิน 6 เดือน ถ่ายรูปหน้าแรกเก็บไว้ในมือถือด้วย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-1"><span class="tx"><b>QR ของ Visit Japan Web</b><small>คนละ QR แคปหน้าจอเก็บไว้ เผื่อเน็ตไม่มีตอนลงเครื่อง</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-2"><span class="tx"><b>ตั๋วเครื่องบินขาไป-ขากลับ</b><small>บอร์ดดิ้งพาสในแอป ZIPAIR หรือแคปหน้าจอ</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-3"><span class="tx"><b>ใบขับขี่สากล (IDP) + ใบขับขี่ไทยตัวจริง</b><small>สำหรับคนขับรถเช่า 30 พ.ย.–1 ธ.ค.</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-4"><span class="tx"><b>เอกสารประกันเดินทาง</b><small>เบอร์ฉุกเฉินและเลขกรมธรรม์อยู่ในเอกสารส่วนตัว</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-5"><span class="tx"><b>บัตร Travel card + บัตรเดบิต</b><small>ตั้ง PIN และเปิดใช้ต่างประเทศในแอปแล้ว</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-6"><span class="tx"><b>เงินเยนสด</b><small>ราว ¥40,000–50,000/คน แยกเก็บ 2 ที่</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-7"><span class="tx"><b>เงินบาทเล็กน้อย</b><small>ค่าแท็กซี่/อาหารตอนกลับถึงไทย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="doc-8"><span class="tx"><b>ปากกา 1 ด้าม</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li></ul></section><section class="sec" id="cloth"><h2>👕 เสื้อผ้า (9 วัน ซักกลางทริป 1 รอบ) <span class="cnt" data-g="cloth"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="cloth-0"><span class="tx"><b>กางเกงใน 7 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-1"><span class="tx"><b>ชุดชั้นใน / สปอร์ตบรา 3–4 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-2"><span class="tx"><b>ถุงเท้า 7 คู่</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-3"><span class="tx"><b>ถุงเท้าหนา 2 คู่</b><small>สำหรับคาวากูจิโกะ เช้าติดลบ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-4"><span class="tx"><b>เสื้อฮีทเทค / เสื้อตัวใน 3 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-5"><span class="tx"><b>ลองจอน / เลกกิ้งฮีทเทค 2 ตัว</b><small>ใส่ใต้กางเกงวันไปฟูจิ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-6"><span class="tx"><b>เสื้อยืด / เสื้อด้านใน 5 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-7"><span class="tx"><b>เสื้อแขนยาว / สเวตเตอร์ 2–3 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-8"><span class="tx"><b>กางเกงขายาว 3 ตัว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-9"><span class="tx"><b>แจ็กเก็ตบาง 1 ตัว</b><small>ใส่ในโตเกียวช่วงกลางวัน</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-10"><span class="tx"><b>ดาวน์ / โค้ทกันหนาว 1 ตัว</b><small>ใส่ขึ้นเครื่องเลย ไม่เปลืองที่กระเป๋า</small></span><span class="bg bw">👟 ใส่ไป</span></label></li><li><label><input type="checkbox" data-id="cloth-11"><span class="tx"><b>ชุดนอน 1–2 ชุด</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-12"><span class="tx"><b>ชุดวิ่ง 1 ชุด</b><small>วิ่งรอบพระราชวัง (เช่ารองเท้าที่ ASICS ได้)</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-13"><span class="tx"><b>ชุดตีแบด</b><small>ถ้าจะไปตีที่ Taito Riverside</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cloth-14"><span class="tx"><b>ชุดใส่กลับบ้าน</b><small>ใส่ตอนบินกลับ (เก็บไว้ชั้นบนของกระเป๋า)</small></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="cold"><h2>🧣 กันหนาว <span class="cnt" data-g="cold"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="cold-0"><span class="tx"><b>ถุงมือ (แตะจอมือถือได้)</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cold-1"><span class="tx"><b>หมวกไหมพรม</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="cold-2"><span class="tx"><b>ผ้าพันคอ</b><small>ใช้คลุมไหล่บนเครื่องได้ด้วย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="cold-3"><span class="tx"><b>แผ่นแปะร้อน (カイロ)</b><small>ซื้อที่ร้านสะดวกซื้อญี่ปุ่นถูกกว่า</small></span></label></li></ul></section><section class="sec" id="shoe"><h2>👟 รองเท้า <span class="cnt" data-g="shoe"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="shoe-0"><span class="tx"><b>ผ้าใบคู่หลัก (ใส่ไปเลย)</b><small>คู่ที่นุ่มและใส่จนชินแล้ว</small></span><span class="bg bw">👟 ใส่ไป</span></label></li><li><label><input type="checkbox" data-id="shoe-1"><span class="tx"><b>ผ้าใบคู่สำรอง</b><small>เผื่อเปียกหรือเท้าเจ็บ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="shoe-2"><span class="tx"><b>รองเท้าแตะ</b><small>ใส่ในห้องพัก/วิลล่า</small></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="care"><h2>🧴 ของใช้ส่วนตัว <span class="cnt" data-g="care"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="care-0"><span class="tx"><b>แปรงสีฟัน + ยาสีฟัน</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-1"><span class="tx"><b>ครีมกันแดด</b><small>ไม่เกิน 100 ml ถือขึ้นเครื่องได้</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-2"><span class="tx"><b>ลิปบาล์ม</b><small>อากาศแห้ง ปากแตกง่าย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="care-3"><span class="tx"><b>โลชั่น / ครีมทาผิว + สกินแคร์</b><small>ของเหลวถือขึ้นเครื่องชิ้นละ ≤100 ml ใส่ถุงใส 1 ใบ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-4"><span class="tx"><b>แชมพู / ครีมนวด ไซส์เล็ก</b><small>ที่พักส่วนใหญ่มีให้ เผื่อชอบยี่ห้อตัวเอง</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-5"><span class="tx"><b>หวี ยางรัดผม กิ๊บ</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-6"><span class="tx"><b>ที่โกนหนวด / มีดโกน</b><small>ใบมีดต้องโหลดใต้เครื่อง</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-7"><span class="tx"><b>ผ้าเช็ดหน้า</b><small>ห้องน้ำญี่ปุ่นหลายที่ไม่มีกระดาษเช็ดมือ</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="care-8"><span class="tx"><b>ทิชชู่ + ทิชชู่เปียก</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="care-9"><span class="tx"><b>ผ้าอนามัย</b><small>ถ้าใช้</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="care-10"><span class="tx"><b>แว่น / คอนแทคเลนส์ + น้ำยา</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="care-11"><span class="tx"><b>น้ำหอม / โรลออน</b></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="med"><h2>💊 ยา <span class="cnt" data-g="med"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="med-0"><span class="tx"><b>ยาประจำตัว</b><small>ถือขึ้นเครื่อง พกให้พอ + เผื่อ 2–3 วัน</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="med-1"><span class="tx"><b>ยาแก้ปวด ลดไข้</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="med-2"><span class="tx"><b>ยาแก้แพ้</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="med-3"><span class="tx"><b>ยาธาตุ / ยาแก้ท้องเสีย</b><small>กินอาหารดิบหลายมื้อ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="med-4"><span class="tx"><b>ยาแก้เมารถ</b><small>ขับรถขึ้นเขาไปฟูจิ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="med-5"><span class="tx"><b>พลาสเตอร์ + กันรองเท้ากัด</b></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="tech"><h2>🔌 อุปกรณ์อิเล็กทรอนิกส์ <span class="cnt" data-g="tech"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="tech-0"><span class="tx"><b>มือถือ + สายชาร์จ</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="tech-1"><span class="tx"><b>Power bank (≤20,000 mAh)</b><small>ห้ามโหลดใต้เครื่อง ต้องถือขึ้นเครื่อง</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="tech-2"><span class="tx"><b>หัวชาร์จ + สายสำรอง</b><small>ปลั๊กญี่ปุ่นขาแบน 2 ขา ใช้หัวชาร์จไทยแบบขาแบนได้เลย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="tech-3"><span class="tx"><b>ปลั๊กพ่วงเล็กๆ</b><small>ชาร์จพร้อมกันหลายเครื่อง ปลั๊กในโรงแรมมีน้อย</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="tech-4"><span class="tx"><b>หูฟัง</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="tech-5"><span class="tx"><b>เปิดโรมมิ่ง / eSIM</b><small>ตั้งค่าก่อนบิน เช็กแพ็กเกจให้เปิดแล้ว</small></span></label></li><li><label><input type="checkbox" data-id="tech-6"><span class="tx"><b>ที่จับมือถือในรถ</b><small>ถ้ามี ไว้ดูนำทางตอนขับ (ห้ามจับมือถือขณะขับ)</small></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="plane"><h2>✈️ บนเครื่อง (ZIPAIR ไม่แจกอาหาร น้ำ ผ้าห่ม) <span class="cnt" data-g="plane"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="plane-0"><span class="tx"><b>หมอนรองคอ</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="plane-1"><span class="tx"><b>ที่ปิดตา + ที่อุดหู</b><small>ไฟลต์กลางคืน ลงเช้า 07:30</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="plane-2"><span class="tx"><b>เสื้อคลุม / ผ้าห่มบาง</b><small>แอร์บนเครื่องเย็น</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="plane-3"><span class="tx"><b>ขวดน้ำเปล่า</b><small>ซื้อหรือเติมหลังผ่านจุดตรวจ</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="plane-4"><span class="tx"><b>ขนม</b></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="plane-5"><span class="tx"><b>แปรงสีฟันพกพา</b><small>ลงเครื่องเช้าแล้วไปเที่ยวต่อเลย</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li></ul></section><section class="sec" id="etc"><h2>🧳 อื่นๆ <span class="cnt" data-g="etc"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="etc-0"><span class="tx"><b>ถุงผ้าพับได้</b><small>ร้านสะดวกซื้อคิดค่าถุง</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="etc-1"><span class="tx"><b>กระเป๋าใส่เหรียญ</b><small>ญี่ปุ่นใช้เหรียญเยอะมาก</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="etc-2"><span class="tx"><b>ถุงซิปล็อกใส 1 ลิตร</b><small>ใส่ของเหลวถือขึ้นเครื่อง</small></span><span class="bg bc">🎒 ถือขึ้นเครื่อง</span></label></li><li><label><input type="checkbox" data-id="etc-3"><span class="tx"><b>ถุงใส่ผ้าใช้แล้ว</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="etc-4"><span class="tx"><b>ร่มพับ</b></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="etc-5"><span class="tx"><b>กระเป๋าใบเล็กพับได้</b><small>เผื่อของฝากขากลับ</small></span><span class="bg bb">🧳 โหลด</span></label></li><li><label><input type="checkbox" data-id="etc-6"><span class="tx"><b>กุญแจล็อกกระเป๋า (TSA) + ป้ายชื่อ</b></span><span class="bg bb">🧳 โหลด</span></label></li></ul></section><section class="sec" id="home"><h2>🏠 ก่อนออกจากบ้าน (บินคืนนี้ 23:45) <span class="cnt" data-g="home"></span></h2><ul class="ck"><li><label><input type="checkbox" data-id="home-0"><span class="tx"><b>เช็กอินออนไลน์ ZIPAIR</b></span></label></li><li><label><input type="checkbox" data-id="home-1"><span class="tx"><b>ชาร์จมือถือ + power bank เต็ม</b></span></label></li><li><label><input type="checkbox" data-id="home-2"><span class="tx"><b>ชั่งกระเป๋า</b><small>ZIPAIR ถือขึ้นเครื่องได้ 2 ใบ รวมไม่เกิน 7 กก. · กระเป๋าโหลดตามน้ำหนักที่ซื้อไว้</small></span></label></li><li><label><input type="checkbox" data-id="home-3"><span class="tx"><b>ถอดปลั๊ก ปิดน้ำ ปิดแก๊ส ล็อกหน้าต่าง</b></span></label></li><li><label><input type="checkbox" data-id="home-4"><span class="tx"><b>ทิ้งขยะ + ของสดในตู้เย็น</b></span></label></li><li><label><input type="checkbox" data-id="home-5"><span class="tx"><b>ถึงสุวรรณภูมิราว 20:45</b><small>เคาน์เตอร์เปิด 3 ชม. ก่อนขึ้นเครื่อง และปิด 1 ชม. ก่อนขึ้นเครื่อง ต้องโหลดกระเป๋าก่อนเครื่องออกอย่างน้อย 1 ชม.</small></span></label></li></ul></section>
+  <p class="note">กฎสนามบิน: ของเหลวถือขึ้นเครื่องชิ้นละไม่เกิน 100 ml รวมในถุงใส 1 ลิตร · power bank และบุหรี่ไฟฟ้าห้ามโหลด · ของมีคม ใบมีด ต้องโหลด · จำนวนเสื้อผ้าคิดจาก 9 วัน และซักกลางทริป 1 รอบ ปรับตามที่พักได้</p>
+</div>
+<script>
+const K="tokyo-trip-packing-v1";let S={};try{S=JSON.parse(localStorage.getItem(K)||"{}")||{};}catch(e){}
+const boxes=[...document.querySelectorAll(".ck input")];
+function save(){try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}}
+function draw(){let n=0;boxes.forEach(b=>{const on=!!S[b.dataset.id];b.checked=on;b.closest("li").classList.toggle("on",on);if(on)n++;});
+  document.getElementById("pt").textContent=n+"/"+boxes.length+" ชิ้น"+(n===boxes.length?" · ครบแล้ว 🎉":"");
+  const p=Math.round(n/boxes.length*100);document.getElementById("pp").textContent=p+"%";document.getElementById("pf").style.width=p+"%";
+  document.querySelectorAll(".cnt").forEach(c=>{const g=boxes.filter(b=>b.dataset.id.startsWith(c.dataset.g+"-"));const d=g.filter(b=>b.checked).length;c.textContent=d===g.length?"✓ ครบ":d+"/"+g.length;c.classList.toggle("done",d===g.length);});}
+boxes.forEach(b=>b.addEventListener("change",()=>{if(b.checked)S[b.dataset.id]=1;else delete S[b.dataset.id];save();draw();}));
+const hb=document.getElementById("hide");let hide=false;try{hide=localStorage.getItem(K+"-hide")==="1";}catch(e){}
+function setHide(v){hide=v;document.body.classList.toggle("hide",v);hb.setAttribute("aria-pressed",String(v));try{localStorage.setItem(K+"-hide",v?"1":"0");}catch(e){}}
+hb.onclick=()=>setHide(!hide);setHide(hide);
+const rb=document.getElementById("reset");rb.onclick=()=>{if(!rb.dataset.sure){rb.dataset.sure="1";rb.textContent="แตะอีกครั้งเพื่อยืนยัน";setTimeout(()=>{delete rb.dataset.sure;rb.textContent="ล้างทั้งหมด (เริ่มแพ็กขากลับ)";},2500);return;}S={};save();draw();delete rb.dataset.sure;rb.textContent="ล้างทั้งหมด (เริ่มแพ็กขากลับ)";};
+draw();
+</script>
+
+<nav class="tabs" aria-label="หน้า"><a href="index.html"><span class="i" aria-hidden="true">🍜</span>ร้านเด็ด</a><a href="days.html"><span class="i" aria-hidden="true">🗓</span>แผนรายวัน</a><a href="info.html"><span class="i" aria-hidden="true">🧳</span>ข้อมูล</a><a href="expenses.html"><span class="i" aria-hidden="true">💴</span>ค่าใช้จ่าย</a><a href="packing.html" aria-current="page"><span class="i" aria-hidden="true">✅</span>เตรียมของ</a></nav>
+</body>
+</html>
