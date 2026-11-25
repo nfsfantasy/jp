@@ -82,6 +82,9 @@ select,input[type=text],input[type=number]{font:inherit;width:100%;box-sizing:bo
 .del.sure{background:var(--warn);color:#fff;border-color:var(--warn)}
 .empty{color:var(--muted);font-size:14px;padding:10px 0}
 .note{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.cloud{font-size:13px;margin-top:8px;padding:6px 10px;border-radius:8px;background:var(--chip,rgba(127,127,127,.12));color:var(--muted)}
+.cloud.ok{color:var(--ok)}.cloud.bad{color:var(--warn)}
+#gsOn input,#gsOff input{width:100%;box-sizing:border-box}
 .steps{margin:0 0 4px;padding-left:20px;display:grid;gap:4px;font-size:14px}
 textarea{width:100%;box-sizing:border-box;min-height:80px;font:inherit;font-size:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);padding:8px}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -115,6 +118,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     <label class="l" for="note">อะไร / ที่ไหน</label>
     <input id="note" type="text" placeholder="เช่น ดงอิคุระ Namino, ตั๋ว Skyliner" maxlength="80">
     <div class="btns"><button class="btn" id="save">บันทึก</button><button class="btn ghost" id="cancel" hidden>ยกเลิกแก้ไข</button></div>
+    <div class="cloud" id="cloud" hidden></div>
   </section>
 
   <section class="card" aria-labelledby="sumh">
@@ -136,8 +140,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     <div id="list"></div>
   </section>
 
+  <section class="card" aria-labelledby="gsh">
+    <h2 id="gsh">☁️ เก็บลง Google Sheet อัตโนมัติ</h2>
+    <div id="gsOff">
+      <p class="note" style="margin-top:0">วางลิงก์เชื่อมที่ได้รับ (ลิงก์ส่วนตัว อย่าโพสต์ที่สาธารณะ) ทำครั้งเดียวต่อเครื่อง หลังจากนั้นทุกรายการที่จด แก้ หรือลบ จะไปอยู่ใน Sheet เอง และเห็นรายการของอีกเครื่องด้วย</p>
+      <label class="l" for="gsIn">ลิงก์เชื่อม</label><input id="gsIn" type="text" autocomplete="off" placeholder="วางลิงก์ตรงนี้">
+      <div class="btns"><button class="btn small" id="gsGo">เชื่อม</button></div>
+    </div>
+    <div id="gsOn" hidden>
+      <p class="note" style="margin-top:0">เชื่อมแล้ว จดในเว็บแล้วข้อมูลขึ้น Sheet เอง ถ้าเน็ตหลุดจะเก็บไว้ในเครื่องก่อน แล้วส่งให้เองเมื่อมีเน็ต</p>
+      <div class="btns"><button class="btn small" id="gsNow">🔄 ซิงก์ตอนนี้</button><button class="btn ghost small" id="gsShare">📤 ส่งลิงก์เชื่อมให้อีกเครื่อง</button><button class="btn ghost small" id="gsOffBtn">ยกเลิกการเชื่อม</button></div>
+    </div>
+  </section>
+
   <section class="card" aria-labelledby="synch">
-    <h2 id="synch">🔄 รวมข้อมูลจาก 2 เครื่อง</h2>
+    <h2 id="synch">🔄 รวมข้อมูลผ่าน LINE (สำรอง ถ้าไม่ได้เชื่อม Sheet)</h2>
     <ol class="steps">
       <li>ตั้ง <b>ชื่อคนที่ 1 และคนที่ 2 ให้เหมือนกันทั้งสองเครื่อง</b> (ในตั้งค่าด้านล่าง) แต่ละคนแตะชื่อตัวเองตอนจด</li>
       <li>ทุกเย็น เครื่องที่ 2 กด <b>📤 ส่งข้อมูล</b> แล้วเลือกส่งเข้า LINE ให้อีกคน</li>
@@ -199,7 +216,7 @@ function resetForm(){if(snap){$("date").value=snap.date;$("who").value=snap.who;
 $("save").onclick=()=>{const a=Math.round(+$("amt").value);if(!(a>0)){toast("ใส่จำนวนเงินก่อน");$("amt").focus();return;}
   if(!editId)S.lastPayer=payer;const rec={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:a,cat,pay,payer,date:$("date").value,who:$("who").value,note:$("note").value.trim(),ts:editId?(S.items.find(x=>x.id===editId)||{}).ts||Date.now():Date.now(),u:Date.now()};
   if(editId){S.items=S.items.map(x=>x.id===editId?rec:x);toast("แก้ไขแล้ว");}else{S.items.push(rec);toast("บันทึกแล้ว "+yen(a));}
-  persist();resetForm();render();};
+  persist();resetForm();render();syncNow();};
 $("cancel").onclick=()=>{resetForm();};
 function edit(id){const x=S.items.find(i=>i.id===id);if(!x)return;if(!snap)snap={date:$("date").value,who:$("who").value,cat,pay,payer};editId=id;$("amt").value=x.amt;cat=x.cat;pay=x.pay;payer=x.payer||0;$("date").value=x.date;$("who").value=x.who||"me";$("note").value=x.note||"";drawChips();$("amt").dispatchEvent(new Event("input"));$("save").textContent="บันทึกแก้ไข";$("cancel").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
 function render(){
@@ -227,7 +244,7 @@ function render(){
       const tx=document.createElement("div");tx.className="tx";const tb=document.createElement("b");tb.textContent=x.note||c[2];const ts=document.createElement("small");
       const tm=new Date(x.ts);const tg=document.createElement("span");tg.className="tag"+((x.payer||0)===1?" p1":"");tg.textContent=pn(x.payer||0);ts.append(tg);ts.append(c[2]+" · "+((PAYS.find(p=>p[0]===x.pay)||["",""])[1])+(x.who==="group"?" · กองกลาง":x.who==="split"?" · หารกัน":"")+" · "+String(tm.getHours()).padStart(2,"0")+":"+String(tm.getMinutes()).padStart(2,"0"));tx.append(tb,ts);
       const am=document.createElement("div");am.className="am";am.textContent=yen(x.amt);const sm=document.createElement("small");sm.textContent=baht(x.amt);am.appendChild(sm);
-      const del=document.createElement("button");del.className="del";del.textContent="ลบ";del.onclick=e=>{e.stopPropagation();if(del.classList.contains("sure")){S.items=S.items.filter(i=>i.id!==x.id);if(!S.del.includes(x.id))S.del.push(x.id);persist();if(editId===x.id)resetForm();render();toast("ลบแล้ว");}else{del.classList.add("sure");del.textContent="ยืนยัน";setTimeout(()=>{del.classList.remove("sure");del.textContent="ลบ";},2500);}};
+      const del=document.createElement("button");del.className="del";del.textContent="ลบ";del.onclick=e=>{e.stopPropagation();if(del.classList.contains("sure")){S.items=S.items.filter(i=>i.id!==x.id);if(!S.del.includes(x.id))S.del.push(x.id);if(G&&!S.dq.includes(x.id))S.dq.push(x.id);persist();syncNow();if(editId===x.id)resetForm();render();toast("ลบแล้ว");}else{del.classList.add("sure");del.textContent="ยืนยัน";setTimeout(()=>{del.classList.remove("sure");del.textContent="ลบ";},2500);}};
       r.append(ic,tx,am,del);sec.appendChild(r);});
     list.appendChild(sec);});
 }
@@ -236,7 +253,7 @@ $("csv").onclick=()=>{const head=["date","paid_by","category","amount_jpy","amou
   const blob=new Blob(["﻿"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="japan-trip-expenses.csv";document.body.appendChild(a);a.click();a.remove();toast("ดาวน์โหลดแล้ว");};
 $("copy").onclick=async()=>{const txt=JSON.stringify(S);try{await navigator.clipboard.writeText(txt);toast("คัดลอกแล้ว ไปวางเก็บใน LINE ได้เลย");}catch(e){$("restoreBox").hidden=false;$("restoreTxt").value=txt;$("restoreTxt").select();toast("กดค้างที่ข้อความเพื่อคัดลอก");}};
 $("restoreBtn").onclick=()=>{$("restoreBox").hidden=!$("restoreBox").hidden;};
-$("restoreGo").onclick=()=>{try{const o=JSON.parse($("restoreTxt").value);if(!o||!Array.isArray(o.items))throw 0;S=Object.assign({items:[],rate:0.2142,budget:"",people:["ฉัน","แฟน"],lastPayer:0,del:[]},o);if(!Array.isArray(S.del))S.del=[];persist();$("rate").value=S.rate;$("n0").value=S.people[0];$("n1").value=S.people[1];drawChips();$("budget").value=S.budget||"";render();$("restoreBox").hidden=true;toast("กู้คืนแล้ว "+S.items.length+" รายการ");}catch(e){toast("ข้อมูลไม่ถูกต้อง");}};
+$("restoreGo").onclick=()=>{try{const o=JSON.parse($("restoreTxt").value);if(!o||!Array.isArray(o.items))throw 0;S=Object.assign({items:[],rate:0.2142,budget:"",people:["ฉัน","แฟน"],lastPayer:0,del:[]},o);if(!Array.isArray(S.del))S.del=[];persist();$("rate").value=S.rate;$("n0").value=S.people[0];$("n1").value=S.people[1];drawChips();$("budget").value=S.budget||"";render();$("restoreBox").hidden=true;syncNow();toast("กู้คืนแล้ว "+S.items.length+" รายการ");}catch(e){toast("ข้อมูลไม่ถูกต้อง");}};
 const PFX="TOKYO-EXP:";
 function payload(){return PFX+JSON.stringify({v:1,items:S.items,del:S.del,people:S.people});}
 $("share").onclick=async()=>{const txt=payload();try{if(navigator.share){await navigator.share({title:"ค่าใช้จ่ายทริป",text:txt});return;}}catch(e){if(e&&e.name==="AbortError")return;}
@@ -251,8 +268,51 @@ $("mergeGo").onclick=()=>{let raw=$("mergeTxt").value.trim();const i=raw.indexOf
   const before=S.items.length;S.items=[...map.values()].filter(x=>!del.has(x.id));const removed=Math.max(0,before+add-S.items.length);S.del=[...del];
   persist();render();$("mergeTxt").value="";$("mergeBox").hidden=true;
   const sameNames=Array.isArray(o.people)&&o.people[0]===S.people[0]&&o.people[1]===S.people[1];
-  toast("เพิ่ม "+add+" · อัปเดต "+upd+(removed?" · ลบ "+removed:"")+" รายการ"+(sameNames?"":" (ชื่อ 2 เครื่องไม่ตรงกัน)"));};
+  syncNow();toast("เพิ่ม "+add+" · อัปเดต "+upd+(removed?" · ลบ "+removed:"")+" รายการ"+(sameNames?"":" (ชื่อ 2 เครื่องไม่ตรงกัน)"));};
 drawChips();render();
+
+/* ---- Google Sheet sync: every change is queued, then sent to the Apps Script web app, which returns all rows. ---- */
+const GK="tokyo-trip-sync-v1";let G=null;try{G=JSON.parse(localStorage.getItem(GK)||"null");}catch(e){}
+if(!Array.isArray(S.dq))S.dq=[];
+const tsOf=x=>{const n=parseInt(String(x.id).slice(0,-4),36);return n>1.7e12&&n<2.2e12?n:Date.now();};
+function parseLink(t){t=String(t||"").trim();const m=t.match(/sync=([^&\s]+)/);if(m)t=decodeURIComponent(m[1]);const i=t.lastIndexOf("|");if(i<0)return null;const url=t.slice(0,i),key=t.slice(i+1);return /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)&&key.length>=8?{url,key}:null;}
+function gsUI(){$("gsOn").hidden=!G;$("gsOff").hidden=!!G;}
+function cloud(t,cls){const c=$("cloud");c.hidden=!G;c.textContent=t;c.className="cloud"+(cls?" "+cls:"");}
+function pending(){return S.items.filter(x=>!x.s).length+S.dq.length;}
+let busy=false,again=false;
+async function syncNow(manual){if(!G)return;if(busy){again=true;return;}busy=true;
+  const ups=S.items.filter(x=>!x.s).map(x=>({a:"up",item:x})),dels=S.dq.slice().map(id=>({a:"del",id}));
+  const sent=new Map(ups.map(o=>[o.item.id,o.item.u]));cloud("☁️ กำลังส่งขึ้น Sheet…");
+  try{const r=await fetch(G.url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({key:G.key,ops:[...dels,...ups]}),redirect:"follow"});
+    const o=await r.json();if(!o.ok)throw new Error(o.error||"error");
+    S.dq=S.dq.filter(id=>!dels.some(d=>d.id===id));
+    const srv=new Map(o.items.map(x=>[x.id,x]));const keep=[];
+    S.items.forEach(x=>{const y=srv.get(x.id);
+      if(!x.s&&!(sent.has(x.id)&&sent.get(x.id)===x.u)){keep.push(x);srv.delete(x.id);return;} // changed while sending: keep local, send next round
+      if(y){keep.push(Object.assign({},y,{ts:x.ts||tsOf(y),s:1}));srv.delete(x.id);} // sheet is the source of truth
+      else if(!x.s){keep.push(x);} // not on sheet yet
+    });
+    srv.forEach(y=>{if(!S.dq.includes(y.id))keep.push(Object.assign({},y,{ts:tsOf(y),s:1}));});
+    S.items=keep;
+    if(Array.isArray(o.people)&&o.people[0]&&o.people[1]&&(o.people[0]!==S.people[0]||o.people[1]!==S.people[1])){S.people=o.people.slice(0,2);$("n0").value=S.people[0];$("n1").value=S.people[1];drawChips();}
+    persist();if(!editId||S.items.some(x=>x.id===editId))render();
+    const t=new Date();cloud("☁️ ขึ้น Sheet แล้ว · "+String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0")+(pending()?" · รอส่ง "+pending():""),"ok");if(manual)toast("ซิงก์แล้ว "+S.items.length+" รายการ");
+  }catch(e){const n=pending(),bk=String(e.message)==="bad key";cloud(bk?"⚠️ ลิงก์เชื่อมไม่ถูกต้อง กดยกเลิกการเชื่อมแล้ววางลิงก์ใหม่":n?"📴 ยังส่งไม่ได้ · เก็บไว้ในเครื่อง "+n+" รายการ จะส่งเองเมื่อมีเน็ต":"📴 เชื่อม Sheet ไม่ได้ตอนนี้ ลองใหม่อัตโนมัติ","bad");if(manual)toast(String(e.message)==="bad key"?"ลิงก์เชื่อมไม่ถูกต้อง":"ส่งไม่ได้ ลองใหม่เมื่อมีเน็ต");}
+  busy=false;if(again){again=false;setTimeout(syncNow,300);}}
+function connect(c,quiet){G=c;try{localStorage.setItem(GK,JSON.stringify(G));}catch(e){}S.items.forEach(x=>{delete x.s;});persist();gsUI();syncNow(!quiet);}
+$("gsGo").onclick=()=>{const c=parseLink($("gsIn").value);if(!c){toast("ลิงก์ไม่ถูกต้อง คัดลอกมาให้ครบ");return;}$("gsIn").value="";connect(c);};
+$("gsNow").onclick=()=>syncNow(true);
+$("gsOffBtn").onclick=()=>{if(!confirmOff.armed){confirmOff.armed=1;$("gsOffBtn").textContent="แตะอีกครั้งเพื่อยืนยัน";setTimeout(()=>{confirmOff.armed=0;$("gsOffBtn").textContent="ยกเลิกการเชื่อม";},2500);return;}G=null;try{localStorage.removeItem(GK);}catch(e){}gsUI();cloud("");toast("ยกเลิกแล้ว ข้อมูลในเครื่องยังอยู่");};
+function confirmOff(){}
+$("gsShare").onclick=async()=>{const link=location.origin+location.pathname+"#sync="+encodeURIComponent(G.url+"|"+G.key);const txt="ลิงก์เชื่อมบันทึกค่าใช้จ่าย (ส่วนตัว อย่าส่งต่อ): "+link;
+  try{if(navigator.share){await navigator.share({text:txt});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+  try{await navigator.clipboard.writeText(link);toast("คัดลอกลิงก์แล้ว ส่งใน LINE ส่วนตัวได้เลย");}catch(e){$("gsOff").hidden=false;$("gsIn").value=link;$("gsIn").select();toast("กดค้างที่ช่องเพื่อคัดลอก");}};
+(function(){const h=location.hash;if(h.indexOf("sync=")>=0){const c=parseLink(h);history.replaceState(null,"",location.pathname+location.search);if(c){connect(c,true);toast("เชื่อม Google Sheet แล้ว ✓");}}})();
+gsUI();
+if(G){cloud(pending()?"☁️ รอส่ง "+pending()+" รายการ":"☁️ เชื่อม Sheet แล้ว");syncNow();}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)syncNow();});
+addEventListener("online",()=>syncNow());
+setInterval(()=>{if(!document.hidden)syncNow();},60000);
 </script>
 
 </body>
