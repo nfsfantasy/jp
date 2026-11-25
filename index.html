@@ -76,6 +76,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .note{font-size:12.5px;color:var(--muted)}
 .card{scroll-margin-top:120px}.card.flash{outline:3px solid var(--ikura);outline-offset:2px}
 .daylink{display:inline-flex;align-items:center;gap:8px;margin-top:14px;text-decoration:none;font-weight:700;font-size:15px;background:var(--ikura);color:#fff;border-radius:10px;padding:9px 16px}
+.links{display:flex;flex-wrap:wrap;gap:8px}.daylink.alt{background:var(--fg);color:var(--bg)}
 .empty{color:var(--muted);padding:24px 0}
 footer{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch}
 @media (max-width:620px){
@@ -101,7 +102,7 @@ footer{margin-top:28px;font-size:12.5px;color:var(--muted);max-width:70ch}
       <span><span class="pill p-no">เดินเข้าได้</span></span>
       <span><span class="tag me">ของชอบคุณ</span> <span class="tag">ของชอบแฟน</span></span>
     </div>
-    <a class="daylink" href="days.html">🗓 ดูแผนรายวัน: ไปไหน กินอะไร แต่ละวัน →</a>
+    <div class="links"><a class="daylink" href="days.html">🗓 ดูแผนรายวัน: ไปไหน กินอะไร แต่ละวัน →</a><a class="daylink alt" href="info.html">🧳 ข้อมูลจำเป็น + ประโยคญี่ปุ่น →</a></div>
   </header>
 
   <div class="bar" role="toolbar" aria-label="กรองร้าน">

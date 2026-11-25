@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ข้อมูลจำเป็นทริปญี่ปุ่น</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Noto+Sans+JP:wght@500;700&display=swap">
+<style>
+/* Trip essentials: one column of short sections; the phrase cards use large Japanese so staff can read the screen. */
+:root{
+  --bg:#eef1f4; --card:#ffffff; --fg:#17222e; --muted:#5b6876; --line:#d9dfe6;
+  --ikura:#e2571f; --ikura-soft:#fde6db;
+  --ok:#2f6b43; --ok-soft:#e1f0e5; --warn:#a23a1a; --warn-soft:#fbe3da; --done:#1f4f8a; --done-soft:#dde8f6;
+  --sea:#1d3f63; --soba:#7a5a34; --meat:#8c2630; --ramen:#a8741a; --alley:#3a3f47; --coffee:#4b3021; --matcha:#4c6a2a; --gold:#e0a91b; --gold-soft:#fdf3d6; --gold-ink:#7a5600; --sushi:#1f5f5b; --chicken:#9a4a12; --cat:#5b4a7a; --view:#9c3b22; --shop:#6b5a2e;
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif; --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.65;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.navl{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:14px}
+.navl a{color:var(--ikura);font-weight:600;text-decoration:none;font-size:14px}
+header h1{font-size:clamp(26px,5vw,36px);line-height:1.2;margin:0 0 6px;font-weight:700}
+header h1 span{color:var(--ikura)}
+header p{margin:0;color:var(--muted);max-width:62ch}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-top:16px;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.bar::-webkit-scrollbar{display:none}
+.chip{flex:none;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 14px;text-decoration:none;white-space:nowrap}
+.sec{scroll-margin-top:72px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:16px;padding:16px 20px}
+.sec h2{margin:0 0 10px;font-size:19px;line-height:1.35}
+ul,ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.flow{margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--muted);font-weight:600}
+.note{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.note a{color:var(--ikura)}
+.ph{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.pc{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.pc .jp{font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;font-weight:700;font-size:22px;line-height:1.4}
+.pc .rd{font-size:12.5px;color:var(--muted);margin-top:2px}
+.pc .th{font-weight:600;color:var(--ikura);margin-top:2px}
+footer{margin-top:24px;font-size:12.5px;color:var(--muted)}
+a:focus-visible{outline:2px solid var(--ikura);outline-offset:2px}
+@media (max-width:560px){.sec{padding:14px}th,td{padding:6px 5px}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="navl"><a href="index.html">← ร้านเด็ดทั้งหมด</a><a href="days.html">🗓 แผนรายวัน</a></div>
+    <h1>ข้อมูลจำเป็น <span>ทริปญี่ปุ่น</span></h1>
+    <p>เรื่องที่ทุกคนในกลุ่มควรรู้ก่อนและระหว่างทริป ตั้งแต่ลงเครื่อง การเงิน ประโยคญี่ปุ่นไว้โชว์พนักงาน จนถึงวันกลับ</p>
+  </header>
+  <nav class="bar" aria-label="หัวข้อ"><a class="chip" href="#arrive">วันแรกถึงนาริตะ</a><a class="chip" href="#weather">อากาศ</a><a class="chip" href="#money">เงิน บัตร และ Tax-free</a><a class="chip" href="#phrases">ประโยคชี้ให้ดู</a><a class="chip" href="#rules">มารยาท + เรื่องที่โดนปรับได้</a><a class="chip" href="#drive">ขับรถเช่าไปฟูจิ</a><a class="chip" href="#konbini">ร้านสะดวกซื้อ ของห้ามพลาด</a><a class="chip" href="#apps">แอปที่ควรโหลด + ทำก่อนบิน</a><a class="chip" href="#sos">เบอร์ฉุกเฉิน</a><a class="chip" href="#home">วันกลับ</a></nav>
+  <section class="sec" id="arrive"><h2>✈️ วันแรกถึงนาริตะ (ศ. 27 พ.ย. 07:30)</h2>
+<ol class="flow">
+<li><b>ตรวจคนเข้าเมือง + ศุลกากร</b> เปิด QR ของ Visit Japan Web ไว้ คนละ QR (เว็บจริงคือ vjw-lp.digital.go.jp)</li>
+<li><b>ซื้อบัตรขึ้นรถไฟ</b> มือถือ Android ใช้ Suica ในมือถือไม่ได้ ซื้อบัตรจริง (Welcome Suica / TOURIST PASMO / PASMO) ที่เคาน์เตอร์สถานีรถไฟชั้นใต้ดิน Terminal 1 แล้วเติมเงินสด</li>
+<li><b>กดเงินสด</b> ที่ตู้ Seven Bank ในสนามบิน เลือก Savings และเลือกรับเป็นเยน</li>
+<li><b>เข้าเมือง</b> ไปสถานี Keisei Ueno แล้วเดินไปโรงแรม</li>
+</ol>
+<table><thead><tr><th>รถไฟ</th><th>ถึง Keisei Ueno</th><th>ราคา/คน</th><th>เหมาะกับ</th></tr></thead><tbody>
+<tr><td><b>Skyliner</b></td><td>เร็วสุด ไม่ต้องต่อ</td><td>¥2,470</td><td>ลากกระเป๋าใหญ่ อยากได้ที่นั่งจอง</td></tr>
+<tr><td><b>Access Express / Keisei Main Line</b></td><td>ราว 60–80 นาที</td><td>ราว ¥1,050–1,270</td><td>ประหยัด แตะบัตร IC ได้ (บางขบวนแยกที่ Aoto ดูป้ายปลายทาง)</td></tr>
+</tbody></table>
+<p class="note">Keisei Ueno กับ JR Ueno เป็นคนละสถานี ห่างกันราว 300 ม. ราคาจาก <a href="https://www.keisei.co.jp/keisei/tetudou/skyliner/us/traffic/skyliner_fares.php" target="_blank" rel="noopener">Keisei</a> และ <a href="https://livejapan.com/en/article-a0004375" target="_blank" rel="noopener">LIVE JAPAN</a></p></section><section class="sec" id="weather"><h2>🧥 อากาศ (พยากรณ์ ณ 25 พ.ย. 2026)</h2>
+<table><thead><tr><th>ที่</th><th>กลางวัน</th><th>กลางคืน/เช้า</th><th>แต่งตัว</th></tr></thead><tbody>
+<tr><td><b>โตเกียว</b> 27 พ.ย.–2 ธ.ค.</td><td>14–19°C</td><td>4–9°C</td><td>เสื้อตัวใน + แจ็กเก็ตบาง ถอดใส่ง่าย</td></tr>
+<tr><td><b>คาวากุจิโกะ</b> 30 พ.ย.–1 ธ.ค.</td><td>15–18°C</td><td><b>-1 ถึง 2°C</b></td><td>ดาวน์ ถุงมือ หมวก ผ้าพันคอ แผ่นแปะร้อน (カイロ)</td></tr>
+</tbody></table>
+<p class="note">พยากรณ์ช่วงนี้ฟ้าใส ไม่มีฝน เช้าที่ฟูจิอาจมีน้ำแข็งบนถนน ขับช้าๆ ช่วงเช้า พยากรณ์อาจเปลี่ยน เช็กอีกครั้งก่อนออกจากที่พัก</p></section><section class="sec" id="money"><h2>💴 เงิน บัตร และ Tax-free</h2><ul><li>พกเงินสดไว้บ้าง (ราว ¥40,000–50,000/คน) ร้านเล็ก ฟู้ดทรัค แผงตลาด ตู้กดตั๋วราเมง และปั๊มบางที่รับเงินสดเท่านั้น</li><li>รูดบัตรหรือกดเงิน <b>เลือกสกุลเยน (JPY) เสมอ</b> ถ้าเครื่องถามว่าแปลงเป็นบาทไหม ให้ปฏิเสธ</li><li>บัตร Travel card (YouTrip / Dime = Mastercard) ต้องตั้ง PIN และเปิดใช้ต่างประเทศในแอปก่อนบิน</li><li>กดเงินที่ตู้ <b>Seven Bank ใน 7-Eleven</b> มีเมนูไทย เลือกบัญชี Savings</li><li><b>Tax-free แบบใหม่</b> (ตั้งแต่ 1 พ.ย. 2026): จ่ายราคาเต็มที่ร้าน ยื่นพาสปอร์ตให้ร้านบันทึก แล้ววันกลับไปสแกนพาสปอร์ตที่ kiosk สนามบิน <b>ก่อนโหลดกระเป๋า</b> ห้ามแกะของที่จะขอคืนภาษี</li><li>กลุ่มใหญ่: ตั้งกองกลางคนละ ¥10,000 จ่ายมื้อกลุ่ม/แท็กซี่ และใช้แอปหารค่าใช้จ่าย เช่น Splitwise</li></ul></section><section class="sec" id="phrases"><h2>🗣 ประโยคชี้ให้ดู (โชว์จอให้พนักงานอ่าน)</h2><div class="ph"><div class="pc"><div class="jp">10人です。</div><div class="rd">จูนิน เดส</div><div class="th">เรามากัน 10 คน</div></div><div class="pc"><div class="jp">予約しています。</div><div class="rd">โยยาคุ ชิเตะ อิมัส</div><div class="th">จองไว้แล้ว</div></div><div class="pc"><div class="jp">英語のメニューはありますか？</div><div class="rd">เอโกะ โนะ เมนู วะ อาริมัส ก๊ะ</div><div class="th">มีเมนูภาษาอังกฤษไหม</div></div><div class="pc"><div class="jp">おすすめは何ですか？</div><div class="rd">โอสุสุเมะ วะ นัน เดส ก๊ะ</div><div class="th">เมนูแนะนำคืออะไร</div></div><div class="pc"><div class="jp">これをください。</div><div class="rd">โคเระ โอะ คุดาไซ</div><div class="th">ขออันนี้ (ชี้เมนู)</div></div><div class="pc"><div class="jp">生ビールをください。</div><div class="rd">นามะ บีรุ โอะ คุดาไซ</div><div class="th">ขอเบียร์สด</div></div><div class="pc"><div class="jp">辛さ控えめでお願いします。</div><div class="rd">คาระสะ ฮิกาเอเมะ เดะ โอเนไก ชิมัส</div><div class="th">ขอเผ็ดน้อย</div></div><div class="pc"><div class="jp">別々に払えますか？</div><div class="rd">เบตสึเบตสึ นิ ฮาราเอมัส ก๊ะ</div><div class="th">จ่ายแยกกันได้ไหม</div></div><div class="pc"><div class="jp">カードで払えますか？</div><div class="rd">คาโดะ เดะ ฮาราเอมัส ก๊ะ</div><div class="th">จ่ายบัตรได้ไหม</div></div><div class="pc"><div class="jp">お会計お願いします。</div><div class="rd">โอไกเค โอเนไก ชิมัส</div><div class="th">เช็กบิลด้วย</div></div><div class="pc"><div class="jp">免税できますか？</div><div class="rd">เมนเซ เดคิมัส ก๊ะ</div><div class="th">ทำ tax-free ได้ไหม</div></div><div class="pc"><div class="jp">袋はいりません。</div><div class="rd">ฟุคุโระ วะ อิริมาเซ็น</div><div class="th">ไม่รับถุง</div></div><div class="pc"><div class="jp">トイレはどこですか？</div><div class="rd">โทอิเระ วะ โดโกะ เดส ก๊ะ</div><div class="th">ห้องน้ำอยู่ไหน</div></div><div class="pc"><div class="jp">レギュラー満タンでお願いします。</div><div class="rd">เรกิวรา มันตัน เดะ โอเนไก ชิมัส</div><div class="th">(ปั๊มน้ำมัน) เติมเบนซินธรรมดาเต็มถัง</div></div></div><p class="note">คำที่เจอบ่อย: 唐揚げ คาราอาเกะ = ไก่ทอด · 辛い คาราอิ = เผ็ด · いくら = อิคุระ · 生 = สด · 現金のみ = เงินสดเท่านั้น · 満席 = เต็ม</p></section><section class="sec" id="rules"><h2>⚠️ มารยาท + เรื่องที่โดนปรับได้</h2><ul><li><b>ทางรถไฟตัดถนน:</b> หยุดสนิทก่อนเส้นทุกครั้ง แม้ไม่มีรถไฟ เปิดกระจกฟัง มองซ้ายขวา แล้วค่อยข้าม</li><li><b>เมาไม่ขับ:</b> แม้เบียร์กระป๋องเดียว คนนั่งที่ให้เหล้าคนขับก็ผิดด้วย</li><li><b>สูบบุหรี่:</b> สูบบนทางเท้าในโตเกียวโดนปรับ ใช้จุดสูบเท่านั้น</li><li><b>จอดรถ:</b> จอดในลานจอดเท่านั้น จอดริมถนนโดนปรับ</li><li>ถังขยะหายาก พกถุงใส่ขยะกลับไปทิ้งที่พัก หรือทิ้งที่ร้านสะดวกซื้อที่ซื้อของมา</li><li>บนรถไฟ: คุยเบาๆ ไม่คุยโทรศัพท์ บันไดเลื่อนโตเกียวยืนชิดซ้าย</li><li>ไม่ต้องให้ทิป ถนน Nakamise อาซากุสะไม่ควรเดินไปกินไป ยืนกินหน้าร้าน</li><li>บางร้านและวัดต้องถอดรองเท้า ใส่ถุงเท้าที่ไม่ขาด</li></ul></section><section class="sec" id="drive"><h2>🚗 ขับรถเช่าไปฟูจิ (30 พ.ย.–1 ธ.ค.)</h2><ul><li>คนขับพก <b>ใบขับขี่สากล (IDP) + ใบขับขี่ไทยตัวจริง + พาสปอร์ต</b> ตลอด</li><li>ขอรถพร้อม <b>บัตร ETC</b> ผ่านด่านทางด่วนได้เลย ญี่ปุ่นขับชิดซ้ายเหมือนไทย</li><li>นำทางด้วย Google Maps หรือ Map code ในระบบนำทางของรถ</li><li>คืนรถ: เติมน้ำมันเต็มถังใกล้จุดคืน เก็บใบเสร็จไว้โชว์ ประโยคเติมน้ำมันอยู่ในการ์ดด้านบน</li><li>ปั๊มแบบเติมเอง (セルフ) ปุ่มสีแดง = เบนซินธรรมดา (レギュラー) สีเหลือง = พรีเมียม สีเขียว = ดีเซล</li></ul></section><section class="sec" id="konbini"><h2>🍙 ร้านสะดวกซื้อ ของห้ามพลาด</h2><ul><li><b>FamilyMart:</b> Famichiki ไก่ทอดชิ้นใหญ่</li><li><b>Lawson:</b> Karaage-kun ไก่ทอดก้อนในกล่อง</li><li><b>7-Eleven:</b> แซนด์วิชไข่ โอนิกิริ ขนมหวานรุ่นใหม่</li><li>เบียร์กระป๋องรุ่นจำกัดฤดูหนาว และแผ่นแปะร้อน カイロ สำหรับคืนที่ฟูจิ</li></ul></section><section class="sec" id="apps"><h2>📱 แอปที่ควรโหลด + ทำก่อนบิน</h2><ul><li><b>Google Maps:</b> ดาวน์โหลดแผนที่ออฟไลน์โตเกียวและคาวากุจิโกะ</li><li><b>Google Translate:</b> ดาวน์โหลดภาษาญี่ปุ่นออฟไลน์ และใช้โหมดกล้องแปลเมนู</li><li><b>Visit Japan Web:</b> แคป QR เก็บไว้ในเครื่อง</li><li><b>Sushiro:</b> จองคิวซูชิ · <b>LINE:</b> แชร์ตำแหน่งในกลุ่มกันหลง</li><li><b>ZIPAIR:</b> เช็กอินออนไลน์เปิด 24 ชม. ก่อนบิน กระเป๋าถือขึ้นเครื่องรวมไม่เกิน 7 kg</li><li>พาวเวอร์แบงค์ (ห้ามโหลดใต้เครื่อง) และปลั๊กแปลงขาแบน Type A</li></ul></section><section class="sec" id="sos"><h2>🆘 เบอร์ฉุกเฉิน</h2><table><tbody>
+<tr><td>ตำรวจ</td><td><b>110</b></td></tr>
+<tr><td>รถพยาบาล / ดับเพลิง</td><td><b>119</b></td></tr>
+<tr><td>Japan Visitor Hotline (อังกฤษ 24 ชม.)</td><td><b>050-3816-2787</b></td></tr>
+<tr><td>ของหาย (ตำรวจนครบาลโตเกียว)</td><td>0570-550-142</td></tr>
+</tbody></table><p class="note">ถ้าป่วยหรืออุบัติเหตุ โทรเบอร์ฉุกเฉินของประกันเดินทางของแต่ละคน และเก็บใบเสร็จไว้เคลม</p></section><section class="sec" id="home"><h2>🧳 วันกลับ (ส. 5 ธ.ค. บิน 17:00)</h2><ul><li>ชั่งกระเป๋าก่อนออกจากที่พัก ถือขึ้นเครื่องรวมไม่เกิน 7 kg โหลดตามน้ำหนักที่ซื้อไว้</li><li>ไปถึงนาริตะ T1 ราว 14:00 → <b>สแกนพาสปอร์ตคืนภาษีที่ kiosk</b> → โหลดกระเป๋า (ปิดรับ 1 ชม. ก่อนบิน)</li><li>ใช้เงินเยนที่เหลือซื้อของในสนามบิน หรือเติมเข้าบัตร IC ไว้ใช้ทริปหน้า</li></ul></section>
+  <footer>อัปเดต 25 พ.ย. 2026 ราคาและเวลาอาจเปลี่ยน เช็กหน้างานอีกครั้ง ข้อมูลส่วนตัว เช่น รหัสจองหรือรหัสเข้าที่พัก ไม่ได้ใส่ไว้ในหน้านี้ ถามคนจองในกลุ่ม</footer>
+</div>
+
+</body>
+</html>

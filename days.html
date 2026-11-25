@@ -34,7 +34,8 @@ body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15
 header h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margin:0 0 6px;font-weight:700;text-wrap:balance}
 header h1 span{color:var(--ikura)}
 header p{margin:0;color:var(--muted);max-width:64ch}
-.back{display:inline-flex;gap:6px;margin-bottom:14px;color:var(--ikura);font-weight:600;text-decoration:none;font-size:14px}
+.navl{display:flex;flex-wrap:wrap;gap:4px 18px;margin-bottom:14px}
+.back{display:inline-flex;gap:6px;color:var(--ikura);font-weight:600;text-decoration:none;font-size:14px}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;margin-top:18px;border-bottom:1px solid var(--line);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .bar::-webkit-scrollbar{display:none}
 .chip{flex:none;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 14px;text-decoration:none;white-space:nowrap}
@@ -79,7 +80,7 @@ a:focus-visible{outline:2px solid var(--ikura);outline-offset:2px}
 
 <div class="wrap">
   <header>
-    <a class="back" href="index.html">← กลับไปหน้าร้านเด็ดทั้งหมด</a>
+    <div class="navl"><a class="back" href="index.html">← กลับไปหน้าร้านเด็ดทั้งหมด</a><a class="back" href="info.html">🧳 ข้อมูลจำเป็น + ประโยคญี่ปุ่น</a></div>
     <h1>แผนรายวัน <span>27 พ.ย.–5 ธ.ค.</span></h1>
     <p>แต่ละวันไปไหนตามลำดับ และร้านแนะนำที่อยู่ใกล้เส้นทาง กดชื่อร้านเพื่อดูรีวิว คนชม/คนติ และเมนูที่ควรสั่ง ป้ายทอง ★ คือร้านที่ต้องไปให้ได้</p>
   </header>
