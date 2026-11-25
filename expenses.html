@@ -116,8 +116,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     <div class="chips" id="pays"></div>
     <div class="row">
       <div><label class="l" for="date">วันที่</label><select id="date"></select></div>
-      <div><label class="l" for="who">เป็นค่าของใคร</label><select id="who"><option value="me">ของคนจ่ายเอง</option><option value="split">หารกัน 2 คน</option><option value="group">กองกลางกลุ่มใหญ่</option></select></div>
+      <div><label class="l" for="who">เป็นค่าของใคร</label><select id="who"><option value="me">ของคนจ่ายเอง</option><option value="split">หารกัน</option><option value="group">กองกลางกลุ่มใหญ่</option></select></div>
     </div>
+    <div id="shWrap" hidden><label class="l">หารกับใครบ้าง (แตะเลือกได้หลายคน)</label><div class="chips" id="shs"></div><div class="thb" id="shInfo"></div></div>
     <label class="l" for="note">อะไร / ที่ไหน</label>
     <input id="note" type="text" placeholder="เช่น ดงอิคุระ Namino, ตั๋ว Skyliner" maxlength="80">
     <div class="btns"><button class="btn" id="save">บันทึก</button><button class="btn ghost" id="cancel" hidden>ยกเลิกแก้ไข</button></div>
@@ -198,6 +199,9 @@ let S={items:[],rate:0.2142,budget:"",people:["ใหม่","บุษ"],lastPa
 try{const raw=localStorage.getItem(KEY); if(raw){const o=JSON.parse(raw); if(o&&Array.isArray(o.items)) S=Object.assign(S,o);}}catch(e){}
 if(!Array.isArray(S.people)||S.people.length<2)S.people=["ใหม่","บุษ"];if(!Array.isArray(S.del))S.del=[];S.items.forEach(x=>{if(x.payer===undefined)x.payer=0;});payer=S.lastPayer||0;
 const pn=i=>S.people[i]||("คนที่ "+(i+1));
+function shOf(x){const a=Array.isArray(x.sh)?x.sh.filter(n=>n):[];return a.length?a:[pn(0),pn(1)];}
+function settleList(bal){const c=[],d=[];bal.forEach((v,n)=>{const r=Math.round(Math.abs(v));if(r<1)return;(v>0?c:d).push([n,r]);});c.sort((a,b)=>b[1]-a[1]);d.sort((a,b)=>b[1]-a[1]);const out=[];let i=0,j=0;
+  while(i<d.length&&j<c.length){const m=Math.min(d[i][1],c[j][1]);if(m>=1)out.push([d[i][0],c[j][0],m]);d[i][1]-=m;c[j][1]-=m;if(d[i][1]<1)i++;if(c[j][1]<1)j++;}return out;}
 function idxOf(n){n=String(n||"").trim().slice(0,12);if(!n)return 0;let i=S.people.indexOf(n);if(i<0){S.people.push(n);i=S.people.length-1;}return i;}
 const $=id=>document.getElementById(id);
 const yen=n=>"¥"+Math.round(n).toLocaleString("en-US");
@@ -211,18 +215,18 @@ function todayDefault(){const t=new Date();const iso=t.getFullYear()+"-"+String(
 DAYS.forEach(d=>{const o=document.createElement("option");o.value=d[0];o.textContent=d[1];$("date").appendChild(o);});
 $("date").value=todayDefault();
 $("rate").value=S.rate; $("budget").value=S.budget||"";$("n0").value=S.people[0];$("n1").value=S.people[1];
-["n0","n1"].forEach((id,i)=>$(id).addEventListener("change",()=>{const v=$(id).value.trim()||(i?"บุษ":"ใหม่");if(v!==S.people[i]){S.people[i]=v;S.items.forEach(x=>{if((x.payer||0)===i){x.pn=v;x.u=Date.now();delete x.s;}});persist();drawChips();render();if(typeof syncNow==="function")syncNow();}$(id).value=v;}));
+["n0","n1"].forEach((id,i)=>$(id).addEventListener("change",()=>{const v=$(id).value.trim()||(i?"บุษ":"ใหม่");if(v!==S.people[i]){const old=S.people[i];S.people[i]=v;S.items.forEach(x=>{let ch=false;if((x.payer||0)===i){x.pn=v;ch=true;}if(Array.isArray(x.sh)&&x.sh.includes(old)){x.sh=x.sh.map(n=>n===old?v:n);ch=true;}if(ch){x.u=Date.now();delete x.s;}});persist();drawChips();render();if(typeof syncNow==="function")syncNow();}$(id).value=v;}));
 $("amt").addEventListener("input",()=>{const v=+$("amt").value;$("thbLive").textContent=v>0?("≈ "+baht(v)+" บาท"):"";});
 $("rate").addEventListener("change",()=>{const r=parseFloat($("rate").value);if(r>0&&r<10){if(r!==S.rate){S.rate=r;persist();render();}}else{$("rate").value=S.rate;}});
 $("budget").addEventListener("change",()=>{const v=parseFloat($("budget").value),nb=v>0?v:"";if(nb!==S.budget){S.budget=nb;persist();render();}});
 let snap=null;
-function resetForm(){if(snap){$("date").value=snap.date;$("who").value=snap.who;cat=snap.cat;pay=snap.pay;payer=snap.payer;snap=null;drawChips();}editId=null;$("amt").value="";$("note").value="";$("thbLive").textContent="";$("save").textContent="บันทึก";$("cancel").hidden=true;}
+function resetForm(){if(snap){$("date").value=snap.date;$("who").value=snap.who;cat=snap.cat;pay=snap.pay;payer=snap.payer;shr=new Set(snap.shr&&snap.shr.length?snap.shr:[pn(0),pn(1)]);snap=null;drawChips();}editId=null;$("amt").value="";$("note").value="";$("thbLive").textContent="";$("save").textContent="บันทึก";$("cancel").hidden=true;}
 $("save").onclick=()=>{const a=Math.round(+$("amt").value);if(!(a>0)){toast("ใส่จำนวนเงินก่อน");$("amt").focus();return;}
-  if(!editId)S.lastPayer=payer;const rec={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:a,cat,pay,payer,date:$("date").value,who:$("who").value,note:$("note").value.trim(),pn:pn(payer),ts:editId?(S.items.find(x=>x.id===editId)||{}).ts||Date.now():Date.now(),u:Date.now()};
+  if(!editId)S.lastPayer=payer;if($("who").value==="split")S.lastShr=[...shr];const rec={id:editId||Date.now().toString(36)+Math.random().toString(36).slice(2,6),amt:a,cat,pay,payer,date:$("date").value,who:$("who").value,note:$("note").value.trim(),pn:pn(payer),sh:$("who").value==="split"?[...shr]:undefined,ts:editId?(S.items.find(x=>x.id===editId)||{}).ts||Date.now():Date.now(),u:Date.now()};
   if(editId){S.items=S.items.map(x=>x.id===editId?rec:x);toast("แก้ไขแล้ว");}else{S.items.push(rec);toast("บันทึกแล้ว "+yen(a));}
   persist();resetForm();render();syncNow();};
 $("cancel").onclick=()=>{resetForm();};
-function edit(id){const x=S.items.find(i=>i.id===id);if(!x)return;if(!snap)snap={date:$("date").value,who:$("who").value,cat,pay,payer};editId=id;$("amt").value=x.amt;cat=x.cat;pay=x.pay;payer=x.payer||0;$("date").value=x.date;$("who").value=x.who||"me";$("note").value=x.note||"";drawChips();$("amt").dispatchEvent(new Event("input"));$("save").textContent="บันทึกแก้ไข";$("cancel").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
+function edit(id){const x=S.items.find(i=>i.id===id);if(!x)return;if(!snap)snap={date:$("date").value,who:$("who").value,cat,pay,payer,shr:[...shr]};editId=id;$("amt").value=x.amt;cat=x.cat;pay=x.pay;payer=x.payer||0;$("date").value=x.date;$("who").value=x.who||"me";if(x.who==="split")shr=new Set(shOf(x));$("note").value=x.note||"";drawChips();$("amt").dispatchEvent(new Event("input"));$("save").textContent="บันทึกแก้ไข";$("cancel").hidden=false;window.scrollTo({top:0,behavior:"smooth"});}
 function render(){
   const it=S.items, tot=it.reduce((s,x)=>s+x.amt,0), days=new Set(it.map(x=>x.date)).size||1;
   $("tY").textContent=yen(tot);$("tB").textContent="≈ "+baht(tot);
@@ -232,8 +236,13 @@ function render(){
   const g=it.filter(x=>x.who==="group").reduce((s,x)=>s+x.amt,0);$("pB").textContent=g?("จ่ายกองกลาง "+yen(g)):"";
   const ppl=$("ppl");ppl.textContent="";S.people.map((_,i)=>i).filter(i=>i<2||it.some(x=>(x.payer||0)===i)).forEach(i=>{const v=it.filter(x=>(x.payer||0)===i).reduce((s,x)=>s+x.amt,0);const k=document.createElement("div");k.className="kpi";
     const a=document.createElement("div");a.className="k";a.textContent=pn(i)+" จ่ายไป";const b=document.createElement("div");b.className="v";b.style.fontSize="17px";b.textContent=yen(v);const c=document.createElement("div");c.className="s";c.textContent="≈ "+baht(v);k.append(a,b,c);ppl.appendChild(k);});
-  const sp=it.filter(x=>x.who==="split"&&(x.payer||0)<2),half=sp.reduce((s,x)=>s+x.amt,0)/2,p0=sp.filter(x=>(x.payer||0)===0).reduce((s,x)=>s+x.amt,0),net=p0-half,st=$("settle");st.textContent="";
-  if(sp.length){const m=document.createElement("span");m.textContent=Math.abs(net)<1?"รายการหารกัน: เท่ากันแล้ว ไม่ต้องโอน 🎉":(pn(net>0?1:0)+" ต้องโอนให้ "+pn(net>0?0:1)+" "+yen(Math.abs(net))+" (≈ "+baht(Math.abs(net))+")");const sm=document.createElement("small");sm.textContent="คิดจากรายการ \"หารกัน 2 คน\" "+sp.length+" รายการ รวม "+yen(half*2);st.append(m,sm);}
+  const sp=it.filter(x=>x.who==="split"),st=$("settle");st.textContent="";
+  if(sp.length){const bal=new Map();const add=(n,v)=>bal.set(n,(bal.get(n)||0)+v);
+    sp.forEach(x=>{const ps=shOf(x);add(pn(x.payer||0),x.amt);ps.forEach(n=>add(n,-x.amt/ps.length));});
+    const tr=settleList(bal);
+    if(!tr.length){const m=document.createElement("span");m.textContent="รายการหารกัน: เท่ากันแล้ว ไม่ต้องโอน 🎉";st.append(m);}
+    tr.forEach(t=>{const m=document.createElement("span");m.style.display="block";m.textContent="💸 "+t[0]+" โอนให้ "+t[1]+" "+yen(t[2])+" (≈ "+baht(t[2])+")";st.append(m);});
+    const sm=document.createElement("small");sm.textContent="รวบยอดจากรายการ \"หารกัน\" "+sp.length+" รายการ รวม "+yen(sp.reduce((s,x)=>s+x.amt,0))+" · โอนน้อยครั้งที่สุด";st.append(sm);}
   const bars=$("bars");bars.textContent="";const max=Math.max(1,...CATS.map(c=>it.filter(x=>x.cat===c[0]).reduce((s,x)=>s+x.amt,0)));
   CATS.forEach(c=>{const v=it.filter(x=>x.cat===c[0]).reduce((s,x)=>s+x.amt,0);const r=document.createElement("div");r.className="bar";
     const l=document.createElement("span");l.textContent=c[1]+" "+c[2];const tr=document.createElement("div");tr.className="track";const f=document.createElement("div");f.className="fill";f.style.width=(v/max*100)+"%";tr.appendChild(f);
@@ -246,14 +255,14 @@ function render(){
     rows.forEach(x=>{const c=CATS.find(k=>k[0]===x.cat)||CATS[5];const r=document.createElement("div");r.className="it";r.tabIndex=0;r.onclick=()=>edit(x.id);r.onkeydown=e=>{if(e.key==="Enter")edit(x.id);};
       const ic=document.createElement("span");ic.className="ic";ic.textContent=c[1];
       const tx=document.createElement("div");tx.className="tx";const tb=document.createElement("b");tb.textContent=x.note||c[2];const ts=document.createElement("small");
-      const tm=new Date(x.ts);const tg=document.createElement("span");tg.className="tag"+((x.payer||0)===1?" p1":(x.payer||0)>1?" p2":"");tg.textContent=pn(x.payer||0);ts.append(tg);ts.append(c[2]+" · "+((PAYS.find(p=>p[0]===x.pay)||["",""])[1])+(x.who==="group"?" · กองกลาง":x.who==="split"?" · หารกัน":"")+" · "+String(tm.getHours()).padStart(2,"0")+":"+String(tm.getMinutes()).padStart(2,"0"));tx.append(tb,ts);
+      const tm=new Date(x.ts);const tg=document.createElement("span");tg.className="tag"+((x.payer||0)===1?" p1":(x.payer||0)>1?" p2":"");tg.textContent=pn(x.payer||0);ts.append(tg);ts.append(c[2]+" · "+((PAYS.find(p=>p[0]===x.pay)||["",""])[1])+(x.who==="group"?" · กองกลาง":x.who==="split"?" · หาร "+shOf(x).length+" คน":"")+" · "+String(tm.getHours()).padStart(2,"0")+":"+String(tm.getMinutes()).padStart(2,"0"));tx.append(tb,ts);
       const am=document.createElement("div");am.className="am";am.textContent=yen(x.amt);const sm=document.createElement("small");sm.textContent=baht(x.amt);am.appendChild(sm);
       const del=document.createElement("button");del.className="del";del.textContent="ลบ";del.onclick=e=>{e.stopPropagation();if(del.classList.contains("sure")){S.items=S.items.filter(i=>i.id!==x.id);if(!S.del.includes(x.id))S.del.push(x.id);if(G&&!S.dq.includes(x.id))S.dq.push(x.id);persist();syncNow();if(editId===x.id)resetForm();render();toast("ลบแล้ว");}else{del.classList.add("sure");del.textContent="ยืนยัน";setTimeout(()=>{del.classList.remove("sure");del.textContent="ลบ";},2500);}};
       r.append(ic,tx,am,del);sec.appendChild(r);});
     list.appendChild(sec);});
 }
 $("csv").onclick=()=>{const head=["date","paid_by","category","amount_jpy","amount_thb_approx","payment","for","note"];const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const rows=S.items.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.ts-b.ts).map(x=>[x.date,pn(x.payer||0),(CATS.find(c=>c[0]===x.cat)||CATS[5])[2],x.amt,Math.round(x.amt*S.rate),(PAYS.find(p=>p[0]===x.pay)||["",""])[1].replace(/^\S+\s/,""),x.who==="group"?"กองกลาง":x.who==="split"?"หารกัน 2 คน":"ของคนจ่ายเอง",x.note||""].map(q).join(","));
+  const rows=S.items.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.ts-b.ts).map(x=>[x.date,pn(x.payer||0),(CATS.find(c=>c[0]===x.cat)||CATS[5])[2],x.amt,Math.round(x.amt*S.rate),(PAYS.find(p=>p[0]===x.pay)||["",""])[1].replace(/^\S+\s/,""),x.who==="group"?"กองกลาง":x.who==="split"?"หารกับ "+shOf(x).join(" "):"ของคนจ่ายเอง",x.note||""].map(q).join(","));
   const blob=new Blob(["﻿"+head.join(",")+"\n"+rows.join("\n")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="japan-trip-expenses.csv";document.body.appendChild(a);a.click();a.remove();toast("ดาวน์โหลดแล้ว");};
 $("copy").onclick=async()=>{const txt=JSON.stringify(S);try{await navigator.clipboard.writeText(txt);toast("คัดลอกแล้ว ไปวางเก็บใน LINE ได้เลย");}catch(e){$("restoreBox").hidden=false;$("restoreTxt").value=txt;$("restoreTxt").select();toast("กดค้างที่ข้อความเพื่อคัดลอก");}};
 $("restoreBtn").onclick=()=>{$("restoreBox").hidden=!$("restoreBox").hidden;};
@@ -267,12 +276,18 @@ $("mergeGo").onclick=()=>{let raw=$("mergeTxt").value.trim();const i=raw.indexOf
   if(!o||!Array.isArray(o.items)){toast("ข้อความไม่ถูกต้อง");return;}
   const del=new Set([...(S.del||[]),...(Array.isArray(o.del)?o.del:[])]);const map=new Map(S.items.map(x=>[x.id,x]));let add=0,upd=0;
   o.items.forEach(x=>{if(!x||typeof x.id!=="string"||!(x.amt>0)||del.has(x.id))return;const y=map.get(x.id);
-    const clean={id:x.id,amt:Math.round(+x.amt),cat:CATS.some(c=>c[0]===x.cat)?x.cat:"other",pay:PAYS.some(p=>p[0]===x.pay)?x.pay:"cash",payer:x.pn?idxOf(x.pn):(x.payer===1?1:0),date:DAYS.some(d=>d[0]===x.date)?x.date:DAYS[0][0],who:["me","split","group"].includes(x.who)?x.who:"me",note:String(x.note||"").slice(0,80),ts:+x.ts||Date.now(),u:+x.u||+x.ts||0};clean.pn=pn(clean.payer);
+    const clean={id:x.id,amt:Math.round(+x.amt),cat:CATS.some(c=>c[0]===x.cat)?x.cat:"other",pay:PAYS.some(p=>p[0]===x.pay)?x.pay:"cash",payer:x.pn?idxOf(x.pn):(x.payer===1?1:0),date:DAYS.some(d=>d[0]===x.date)?x.date:DAYS[0][0],who:["me","split","group"].includes(x.who)?x.who:"me",note:String(x.note||"").slice(0,80),ts:+x.ts||Date.now(),u:+x.u||+x.ts||0};clean.pn=pn(clean.payer);if(clean.who==="split"&&Array.isArray(x.sh))clean.sh=x.sh.map(n=>String(n).trim().slice(0,12)).filter(n=>n).slice(0,20);
     if(!y){map.set(x.id,clean);add++;}else if((clean.u||0)>(y.u||y.ts||0)){map.set(x.id,clean);upd++;}});
   const before=S.items.length;S.items=[...map.values()].filter(x=>!del.has(x.id));const removed=Math.max(0,before+add-S.items.length);S.del=[...del];
   persist();render();$("mergeTxt").value="";$("mergeBox").hidden=true;
   const sameNames=Array.isArray(o.people)&&o.people[0]===S.people[0]&&o.people[1]===S.people[1];
   syncNow();toast("เพิ่ม "+add+" · อัปเดต "+upd+(removed?" · ลบ "+removed:"")+" รายการ"+(sameNames?"":" (ชื่อ 2 เครื่องไม่ตรงกัน)"));};
+let shr=new Set(Array.isArray(S.lastShr)&&S.lastShr.length?S.lastShr:[pn(0),pn(1)]);
+function drawSh(){const w=$("shWrap");w.hidden=$("who").value!=="split";const box=$("shs");box.textContent="";[...shr].forEach(n=>{if(!S.people.includes(n))shr.delete(n);});
+  S.people.forEach(n=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=(shr.has(n)?"✓ ":"")+n;b.setAttribute("aria-pressed",String(shr.has(n)));b.onclick=()=>{if(shr.has(n)){if(shr.size>1)shr.delete(n);else{toast("ต้องมีอย่างน้อย 1 คน");return;}}else shr.add(n);drawSh();};box.appendChild(b);});
+  const a=+$("amt").value;$("shInfo").textContent=shr.size+" คน"+(a>0?" · คนละ "+yen(a/shr.size)+" (≈ "+baht(a/shr.size)+")":"");}
+$("who").addEventListener("change",drawSh);$("amt").addEventListener("input",()=>{if($("who").value==="split")drawSh();});
+const _drawChips=drawChips;drawChips=function(){_drawChips();drawSh();};
 function addPayer(){const n=$("npIn").value.trim();if(!n){$("npIn").focus();return;}payer=idxOf(n);$("npIn").value="";$("npBox").hidden=true;persist();drawChips();toast("เลือกคนจ่าย: "+n);}
 $("npOk").onclick=addPayer;$("npIn").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addPayer();}});
 drawChips();render();
