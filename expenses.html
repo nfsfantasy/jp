@@ -286,7 +286,8 @@ async function syncNow(manual){if(!G)return;if(busy){again=true;return;}busy=tru
   try{const r=await fetch(G.url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({key:G.key,ops:[...dels,...ups]}),redirect:"follow"});
     const o=await r.json();if(!o.ok)throw new Error(o.error||"error");
     S.dq=S.dq.filter(id=>!dels.some(d=>d.id===id));
-    const srv=new Map(o.items.map(x=>[x.id,x]));const keep=[];
+    const fixD=d=>{if(/^\d{4}-\d{2}-\d{2}$/.test(d))return d;const t=new Date(d);return isNaN(t)?DAYS[0][0]:t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0");};
+    const srv=new Map(o.items.map(x=>[x.id,Object.assign({},x,{date:fixD(String(x.date||""))})]));const keep=[];
     S.items.forEach(x=>{const y=srv.get(x.id);
       if(!x.s&&!(sent.has(x.id)&&sent.get(x.id)===x.u)){keep.push(x);srv.delete(x.id);return;} // changed while sending: keep local, send next round
       if(y){keep.push(Object.assign({},y,{ts:x.ts||tsOf(y),s:1}));srv.delete(x.id);} // sheet is the source of truth
