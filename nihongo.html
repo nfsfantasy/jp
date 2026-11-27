@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=Noto+Serif+JP:wght@700&display=swap"><title>ภาษาญี่ปุ่นเที่ยว</title>
+<style>
+:root{
+  --bg:#eef1f4; --card:#ffffff; --fg:#17222e; --muted:#5b6876; --line:#d9dfe6;
+  --ikura:#e2571f; --ikura-soft:#fde6db;
+  --ok:#2f6b43; --ok-soft:#e1f0e5; --warn:#a23a1a; --warn-soft:#fbe3da; --done:#1f4f8a; --done-soft:#dde8f6;
+  --sea:#1d3f63; --soba:#7a5a34; --meat:#8c2630; --ramen:#a8741a; --alley:#3a3f47; --coffee:#4b3021; --matcha:#4c6a2a; --gold:#e0a91b; --gold-soft:#fdf3d6; --gold-ink:#7a5600; --sushi:#1f5f5b; --chicken:#9a4a12; --cat:#5b4a7a; --view:#9c3b22; --shop:#6b5a2e;
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif; --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* Shared Japan theme layered over every page: washi paper, sumi ink, ai indigo, shu vermilion. CSS only, no images. */
+:root{
+  --bg:#f5efe3; --card:#fffdf8; --fg:#1d232b; --muted:#6a6357; --line:#e4d9c6;
+  --ikura:#c8372d; --ikura-soft:#f7e1d9; --ai:#1f3a5f; --ai-2:#2b4c76; --kin:#e9c27a;
+  --gold:#c99416; --gold-soft:#f8ecd0; --gold-ink:#7a5600;
+  --shadow:0 1px 2px rgba(31,40,52,.05),0 10px 28px -14px rgba(31,58,95,.28);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+body{background:var(--bg);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{display:none!important}
+
+/* Hero: indigo band with a seigaiha wave pattern and a vermilion seal. */
+.wrap>header,.wrap>.hero{position:relative;overflow:hidden;color:#fff;border-radius:0 0 22px 22px;
+  margin:-24px max(-16px,calc(-1 * env(safe-area-inset-left,0px) - 16px)) 18px;padding:28px 20px 22px;
+  background-color:var(--ai);
+  background-image:
+    linear-gradient(180deg,rgba(15,28,46,.15),rgba(15,28,46,.55)),
+    radial-gradient(circle at 100% 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 0 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 50% 100%,var(--ai-2) 10%,var(--ai) 10% 23%,var(--ai-2) 23% 30%,var(--ai) 30% 43%,var(--ai-2) 43% 50%,var(--ai) 50% 63%,var(--ai-2) 63% 71%,transparent 71%),
+    radial-gradient(circle at 100% 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%),
+    radial-gradient(circle at 0 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%);
+  background-size:auto,64px 32px,64px 32px,64px 32px,64px 32px,64px 32px}
+@media (min-width:760px){.wrap>header,.wrap>.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:-8px}}
+.wrap>header::after,.wrap>.hero::after{content:"旅";position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;background:var(--ikura);color:#fff;font:700 22px/1 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:0 0 0 3px rgba(255,255,255,.18);transform:rotate(-8deg)}
+.wrap>header h1,.wrap>.hero h1{color:#fff;margin:0 56px 8px 0;font-size:clamp(25px,6.6vw,34px);line-height:1.2;letter-spacing:-.01em}
+.wrap>header h1 span,.wrap>.hero h1 span{color:var(--kin);display:block}
+.wrap>header p,.wrap>.hero p{color:rgba(255,255,255,.86)!important;margin-bottom:0}
+.wrap>header .legend{margin-top:14px}
+.wrap>header .legend .tag{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.wrap>header a{color:#fff}
+.navl{display:none!important}
+
+/* Cards and sections */
+.card,.day,.sec,.tired{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sec h2,.card h2,.dh h2{letter-spacing:-.01em}
+:root:not([data-theme="dark"]) .sec h2,:root:not([data-theme="dark"]) .card h2{color:var(--ai)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sec h2,:root:not([data-theme="light"]) .card h2{color:var(--fg)}}
+.sub{color:var(--muted)}
+
+/* Sticky filter / jump bars get a frosted washi backdrop */
+.bar{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.chip{border-radius:999px}
+.chip[aria-pressed="true"],.chip.on{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.btn{border-radius:12px}
+
+/* Bottom tab bar shared by all pages */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs a{flex:1;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;
+  text-decoration:none;color:var(--muted);font:600 11.5px/1.2 var(--f-body,system-ui)}
+.tabs a .i{font-size:20px;line-height:1.1}
+.tabs a[aria-current="page"]{color:var(--ikura);background:var(--ikura-soft)}
+.tabs a:focus-visible{outline:2px solid var(--ikura);outline-offset:1px}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+@media print{.tabs{display:none}body{padding-bottom:0}}
+.wrap>header .links{margin-top:14px}
+.wrap>header .daylink{box-shadow:none}
+.wrap>header .daylink.alt{background:rgba(255,255,255,.13)!important;color:#fff!important;border:1px solid rgba(255,255,255,.32)}
+/* One swipeable row of filter chips instead of a tall sticky block on phones */
+.bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bar::-webkit-scrollbar{display:none}
+.bar>*{flex:none}
+/* Japanese phrasebook: level chips, phrase cards with audio, big "show staff" overlay, quick quiz. */
+.lv{position:sticky;top:0;z-index:6;display:flex;gap:8px;padding:10px 0;margin-bottom:6px}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:8px 13px;font:600 14px/1.2 var(--f-body);cursor:pointer}
+.chip small{display:block;font-weight:400;font-size:11px;opacity:.8}
+.intro{padding:14px 16px;margin-bottom:12px}
+.intro h2{margin:0 0 4px;font-size:19px}
+.intro p{margin:0;color:var(--muted)}
+.meter{height:6px;border-radius:9px;background:var(--line);margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--ikura);transition:width .3s}
+.tools2{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--fg);padding:9px 14px;font:600 14px/1.2 var(--f-body);cursor:pointer}
+.btn.pri{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.ph{padding:14px 14px 12px;margin-bottom:10px;position:relative}
+.ph.ok{border-color:color-mix(in srgb,var(--ok) 55%,var(--line))}
+.jp{font:700 22px/1.35 var(--f-jp);margin:0 0 2px;word-break:keep-all}
+.ro{color:var(--muted);font-size:13px;font-style:italic}
+.th{font-size:16px;font-weight:600;color:var(--ikura);margin-top:4px}
+.me{margin-top:2px}
+.tip{margin-top:6px;font-size:13px;color:var(--muted);background:color-mix(in srgb,var(--kin) 18%,transparent);border-radius:10px;padding:6px 10px}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.acts button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:7px 12px;font:600 13px/1 var(--f-body);cursor:pointer}
+.acts button[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.search{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:12px;padding:11px 14px;font:15px var(--f-body);margin-bottom:12px}
+.empty{color:var(--muted);text-align:center;padding:20px}
+/* full-screen card to show staff */
+.show{position:fixed;inset:0;z-index:100;background:#fbf8f1;color:#111;display:none;flex-direction:column;justify-content:center;align-items:center;padding:24px;text-align:center}
+.show.on{display:flex}
+.show .big{font:700 clamp(34px,11vw,72px)/1.3 var(--f-jp);word-break:keep-all}
+.show .sm{margin-top:18px;color:#555;font-size:16px}
+.show .x{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;border:0;background:#1f3a5f;color:#fff;border-radius:999px;padding:10px 16px;font:600 15px var(--f-body)}
+.show .say{margin-top:24px;border:0;background:#c8372d;color:#fff;border-radius:999px;padding:12px 22px;font:600 16px var(--f-body)}
+/* quiz */
+.qz{padding:16px;margin-bottom:12px}
+.qz .q{font-size:18px;font-weight:700;margin:6px 0 12px}
+.qz .ops{display:grid;gap:8px}
+.qz .ops button{text-align:left;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:12px;padding:11px 13px;font:600 18px/1.3 var(--f-jp);cursor:pointer}
+.qz .ops button.r{background:var(--ok-soft);border-color:var(--ok)}
+.qz .ops button.w{background:var(--warn-soft);border-color:var(--warn)}
+.qz .st{color:var(--muted);font-size:13px}
+.qz .fb{margin-top:10px;min-height:22px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>ภาษาญี่ปุ่นเที่ยว <span>ฉบับเอาตัวรอด</span></h1>
+    <p>ไล่จาก Level 1 ขึ้นไป แตะ 🔊 ฟังเสียง · 📱 โชว์ ให้พนักงานอ่านจากจอ · ✓ จำได้ เพื่อเก็บความคืบหน้า (จำไว้ในมือถือเครื่องนี้)</p>
+  </header>
+  <nav class="lv bar" id="lv" aria-label="เลือกระดับ"></nav>
+  <section class="sec intro" id="intro"></section>
+  <section class="sec qz" id="qz" hidden></section>
+  <input class="search" id="q" type="search" placeholder="🔍 ค้นหาทุก Level เช่น ห้องน้ำ, เช็คบิล, tax">
+  <div id="list"></div>
+  <p class="note sub">คำอ่านภาษาไทยเป็นการเทียบเสียงโดยประมาณ ฟังจากปุ่ม 🔊 จะแม่นกว่า · ลงท้ายประโยคด้วย です/ます ก็สุภาพพอสำหรับนักท่องเที่ยวแล้ว</p>
+</div>
+<div class="show" id="show" role="dialog" aria-modal="true" aria-label="โชว์ให้พนักงานดู"><button class="x" id="sx" type="button">ปิด ✕</button><div class="big" id="sb"></div><div class="sm" id="ss"></div><button class="say" id="sp" type="button">🔊 พูดให้ฟัง</button></div>
+<script>
+// [jp, romaji, thai reading, meaning, tip]
+const L=[
+{n:"Level 1",t:"คำพื้นฐาน",i:"👋",d:"11 คำที่ใช้ได้ทุกที่ จำแค่นี้ก็เอาตัวรอดได้ครึ่งทาง",p:[
+["こんにちは","konnichiwa","คนนิจิวะ","สวัสดี (กลางวัน)"],
+["おはようございます","ohayō gozaimasu","โอฮาโย โกะไซมัส","สวัสดีตอนเช้า","ใช้ได้ถึงราว 10 โมง"],
+["こんばんは","konbanwa","คมบังวะ","สวัสดีตอนเย็น/ค่ำ"],
+["ありがとうございます","arigatō gozaimasu","อาริงาโต โกะไซมัส","ขอบคุณ (สุภาพ)","พูดพร้อมก้มหัวนิดหน่อย"],
+["すみません","sumimasen","สึมิมาเซ็น","ขอโทษ / ขอทางหน่อย / เรียกพนักงาน","คำที่คุ้มที่สุด ใช้เรียกพนักงานในร้านได้เลย"],
+["はい / いいえ","hai / iie","ไฮ / อี้เอะ","ใช่ / ไม่ใช่"],
+["お願いします","onegai shimasu","โอะเนไง ชิมัส","ขอ... / รบกวนด้วย","ชี้ของแล้วพูดคำนี้ ได้ทุกสถานการณ์"],
+["大丈夫です","daijōbu desu","ไดโจบุ เดส","ไม่เป็นไร / ไม่ต้องค่ะ","ใช้ปฏิเสธสุภาพ เช่น ไม่รับถุง"],
+["わかりません","wakarimasen","วะคะริมาเซ็น","ไม่เข้าใจ"],
+["英語でいいですか","eigo de ii desu ka","เองโกะ เดะ อี้ เดสกะ","พูดภาษาอังกฤษได้ไหม"],
+["タイから来ました","Tai kara kimashita","ไท คาระ คิมาชิตะ","มาจากประเทศไทย"]]},
+{n:"Level 2",t:"ร้านอาหาร",i:"🍣",d:"ตั้งแต่เข้าร้าน สั่งอาหาร จนเช็คบิล",p:[
+["二人です","futari desu","ฟุตาริ เดส","มา 2 คนค่ะ","1 คน 一人 ฮิโตริ · 3 คน 三人 ซันนิน · 4 คน 四人 โยนิน · 10 คน 十人 จูนิน"],
+["英語のメニューはありますか","eigo no menyū wa arimasu ka","เองโกะ โนะ เมนิว วะ อาริมัสกะ","มีเมนูภาษาอังกฤษไหม"],
+["これをください","kore o kudasai","โคเระ โอะ คุดาไซ","เอาอันนี้ค่ะ","ชี้ที่รูปในเมนู ง่ายที่สุด"],
+["おすすめは何ですか","osusume wa nan desu ka","โอะสึสึเมะ วะ นัน เดสกะ","แนะนำเมนูอะไร"],
+["生ビール二つ","nama bīru futatsu","นามะ บีรุ ฟุตัตสึ","เบียร์สด 2 แก้ว","นับของ: 1 ひとつ ฮิโตะสึ · 2 ふたつ ฟุตัตสึ · 3 みっつ มิตสึ"],
+["お水をください","omizu o kudasai","โอะมิซุ โอะ คุดาไซ","ขอน้ำเปล่า","น้ำเปล่า/ชาในร้านส่วนใหญ่ฟรี"],
+["わさび抜きで","wasabi nuki de","วาซาบิ นุคิ เดะ","ไม่ใส่วาซาบิ","ไม่ใส่ผักชี パクチー抜き ปาคุจี นุคิ"],
+["いただきます","itadakimasu","อิตาดาคิมัส","(พูดก่อนกิน)"],
+["おいしい！","oishii","โออิชี่","อร่อย!"],
+["ごちそうさまでした","gochisōsama deshita","โกะจิโซซามะ เดชิตะ","ขอบคุณสำหรับอาหาร (ตอนกินเสร็จ/ออกร้าน)","พนักงานจะยิ้มให้ทันที"],
+["お会計お願いします","okaikei onegai shimasu","โอะไคเค โอะเนไง ชิมัส","เช็คบิลค่ะ","หลายร้านจ่ายที่แคชเชียร์หน้าร้าน ไม่จ่ายที่โต๊ะ"],
+["カードで払えますか","kādo de haraemasu ka","คาโดะ เดะ ฮาราเอมัสกะ","จ่ายบัตรได้ไหม","เงินสดอย่างเดียว = 現金のみ เกนคินโนมิ"],
+["持ち帰りで","mochikaeri de","โมจิคาเอริ เดะ","ห่อกลับบ้าน","กินที่ร้าน = 店内で เท็นไน เดะ"]]},
+{n:"Level 3",t:"คอนบินี & ช้อป",i:"🛍",d:"ร้านสะดวกซื้อ ดรักสโตร์ และห้าง",p:[
+["いくらですか","ikura desu ka","อิคุระ เดสกะ","ราคาเท่าไหร่"],
+["袋はいりません","fukuro wa irimasen","ฟุคุโระ วะ อิริมาเซ็น","ไม่รับถุงค่ะ","ถุงคิดเงิน 3–5 เยน"],
+["温めますか？","atatamemasu ka","อาตาตาเมมัสกะ","(พนักงานถาม) อุ่นไหมคะ","ตอบ はい ไฮ = อุ่น / 大丈夫です = ไม่ต้อง"],
+["お箸ください","ohashi kudasai","โอะฮาชิ คุดาไซ","ขอตะเกียบ","ช้อน スプーン สึปูน"],
+["これはありますか","kore wa arimasu ka","โคเระ วะ อาริมัสกะ","มีอันนี้ไหม","โชว์รูปในมือถือพร้อมกัน"],
+["見ているだけです","mite iru dake desu","มิเตะ อิรุ ดาเคะ เดส","แค่ดูเฉยๆ ค่ะ"],
+["試着してもいいですか","shichaku shite mo ii desu ka","ชิจาคุ ชิเตะโมะ อี้ เดสกะ","ขอลองได้ไหม"],
+["別のサイズはありますか","betsu no saizu wa arimasu ka","เบ็ตสึ โนะ ไซซุ วะ อาริมัสกะ","มีไซซ์อื่นไหม","ใหญ่กว่า 大きい โองิ · เล็กกว่า 小さい ชีไซ"],
+["免税できますか","menzei dekimasu ka","เมนเซ เดคิมัสกะ","ทำ Tax-free ได้ไหม","เตรียมพาสปอร์ตตัวจริง"],
+["レシートください","reshīto kudasai","เรชีโตะ คุดาไซ","ขอใบเสร็จ"]]},
+{n:"Level 4",t:"เดินทาง & ถามทาง",i:"🚃",d:"รถไฟ แท็กซี่ ถามทาง ถ่ายรูป",p:[
+["〜はどこですか","~ wa doko desu ka","…วะ โดโกะ เดสกะ","…อยู่ที่ไหน","ใส่ชื่อสถานที่ข้างหน้า"],
+["トイレはどこですか","toire wa doko desu ka","โทะอิเระ วะ โดโกะ เดสกะ","ห้องน้ำอยู่ที่ไหน"],
+["駅はどこですか","eki wa doko desu ka","เอคิ วะ โดโกะ เดสกะ","สถานีรถไฟอยู่ที่ไหน"],
+["この電車は上野に行きますか","kono densha wa Ueno ni ikimasu ka","โคโนะ เดนชะ วะ อุเอโนะ นิ อิคิมัสกะ","รถไฟขบวนนี้ไปอุเอโนะไหม","เปลี่ยน 上野 เป็นที่อื่นได้ เช่น 浅草 อาซากุสะ"],
+["何番線ですか","nanban-sen desu ka","นัมบังเซ็น เดสกะ","ชานชาลาที่เท่าไหร่"],
+["ここまでお願いします","koko made onegai shimasu","โคโคะ มาเดะ โอะเนไง ชิมัส","ไปที่นี่ค่ะ (แท็กซี่)","ชี้แผนที่ในมือถือ ประตูแท็กซี่เปิด-ปิดเอง ไม่ต้องจับ"],
+["歩いて行けますか","aruite ikemasu ka","อารุอิเตะ อิเคมัสกะ","เดินไปได้ไหม"],
+["右 / 左 / まっすぐ","migi / hidari / massugu","มิงิ / ฮิดาริ / มัสสึงุ","ขวา / ซ้าย / ตรงไป","ฟังคำพวกนี้ตอนมีคนบอกทาง"],
+["写真を撮ってもらえますか","shashin o totte moraemasu ka","ชาชิน โอะ ทตเตะ โมะราเอมัสกะ","ช่วยถ่ายรูปให้หน่อยได้ไหม"],
+["写真を撮ってもいいですか","shashin o totte mo ii desu ka","ชาชิน โอะ ทตเตะโมะ อี้ เดสกะ","ขอถ่ายรูปได้ไหม","ถามก่อนถ่ายในร้าน/วัด"]]},
+{n:"Level 5",t:"ที่พัก & ฉุกเฉิน",i:"🏨",d:"เช็กอิน ฝากกระเป๋า และตอนมีเรื่อง",p:[
+["チェックインお願いします","chekku-in onegai shimasu","เช็คกุอิน โอะเนไง ชิมัส","ขอเช็กอินค่ะ"],
+["荷物を預かってもらえますか","nimotsu o azukatte moraemasu ka","นิโมะสึ โอะ อาซึคัตเตะ โมะราเอมัสกะ","ฝากกระเป๋าได้ไหม","ใช้ตอนมาถึงก่อนเวลาเช็กอิน"],
+["Wi-Fiのパスワードは？","waifai no pasuwādo wa","วายฟาย โนะ พาสุวาโดะ วะ","รหัส Wi-Fi คืออะไร"],
+["ゆっくり話してください","yukkuri hanashite kudasai","ยุกคุริ ฮานาชิเตะ คุดาไซ","ช่วยพูดช้าๆ หน่อย"],
+["書いてください","kaite kudasai","ไคเตะ คุดาไซ","ช่วยเขียนให้หน่อย","ยื่นมือถือหรือกระดาษให้"],
+["道に迷いました","michi ni mayoimashita","มิจิ นิ มาโยอิมาชิตะ","หลงทาง"],
+["財布をなくしました","saifu o nakushimashita","ไซฟุ โอะ นาคุชิมาชิตะ","ทำกระเป๋าเงินหาย","ป้อมตำรวจ 交番 โคบัง มีแทบทุกสถานี"],
+["気分が悪いです","kibun ga warui desu","คิบุง งะ วารุย เดส","รู้สึกไม่สบาย"],
+["助けてください","tasukete kudasai","ทาสึเคเตะ คุดาไซ","ช่วยด้วย!"],
+["救急車を呼んでください","kyūkyūsha o yonde kudasai","คิวคิวชะ โอะ ยนเดะ คุดาไซ","ช่วยเรียกรถพยาบาล","โทร 119 รถพยาบาล/ดับเพลิง · 110 ตำรวจ"]]},
+{n:"Level 6",t:"ตัวเลข & อ่านป้าย",i:"🔢",d:"ฟังราคาให้ออก และอ่านป้ายที่เจอบ่อย",p:[
+["一 二 三 四 五","ichi ni san yon go","อิจิ นิ ซัง ยน โกะ","1 2 3 4 5"],
+["六 七 八 九 十","roku nana hachi kyū jū","โระคุ นานะ ฮาจิ คิว จู","6 7 8 9 10"],
+["百 / 千 / 万","hyaku / sen / man","เฮียคุ / เซ็น / มัง","100 / 1,000 / 10,000","¥1,500 = เซ็น โกะเฮียคุ เอ็น · ¥10,000 = อิจิมัง เอ็น"],
+["入口 / 出口","iriguchi / deguchi","อิริงุจิ / เดงุจิ","ทางเข้า / ทางออก"],
+["押す / 引く","osu / hiku","โอสึ / ฮิคุ","ผลัก / ดึง","ติดที่ประตู"],
+["営業中 / 準備中","eigyō-chū / junbi-chū","เอเงียวจู / จุมบิจู","เปิดอยู่ / ยังไม่เปิด (เตรียมร้าน)"],
+["男 / 女","otoko / onna","โอะโตะโกะ / อนนะ","ชาย / หญิง","ดูหน้าห้องน้ำและออนเซ็น (男 ผ้าม่านฟ้า · 女 ผ้าม่านแดง มักเป็นแบบนี้)"],
+["現金のみ","genkin nomi","เกนคิน โนะมิ","รับเงินสดเท่านั้น"],
+["禁煙 / 喫煙所","kin'en / kitsuen-jo","คินเอ็น / คิตสึเอ็นโจ","ห้ามสูบบุหรี่ / ที่สูบบุหรี่"],
+["税込 / 税抜","zeikomi / zeinuki","เซโคมิ / เซนุคิ","ราคารวมภาษี / ยังไม่รวมภาษี","ราคา 税抜 ต้องบวกอีก 8–10%"]]}
+];
+const K="jp-nihongo-v1";let S={done:{},lv:0};try{Object.assign(S,JSON.parse(localStorage.getItem(K)||"{}"));}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S));}catch(e){}};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const id=(l,i)=>l+"-"+i;
+// speech: Japanese voice, a little slower; "/" and "〜" read as pauses
+let jaVoice=null;function pickVoice(){const v=(speechSynthesis.getVoices?speechSynthesis.getVoices():[]).filter(x=>/^ja/i.test(x.lang));jaVoice=v[0]||null;}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function say(t){if(!("speechSynthesis" in window)){toast("มือถือเครื่องนี้ไม่รองรับเสียง");return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[〜~]/g,"").replace(/\//g,"、"));u.lang="ja-JP";u.rate=.8;if(jaVoice)u.voice=jaVoice;speechSynthesis.speak(u);}
+function toast(m){const t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#17222e;color:#fff;padding:10px 16px;border-radius:12px;z-index:200;font-size:14px";document.body.appendChild(t);setTimeout(()=>t.remove(),1800);}
+function cnt(l){return L[l].p.filter((_,i)=>S.done[id(l,i)]).length;}
+function chips(){$("lv").innerHTML=L.map((x,l)=>`<button class="chip" type="button" aria-pressed="${l===S.lv}" data-l="${l}">${x.i} ${x.n}<small>${x.t} · ${cnt(l)}/${x.p.length}</small></button>`).join("");
+  $("lv").querySelectorAll("button").forEach(b=>b.onclick=()=>{S.lv=+b.dataset.l;save();$("q").value="";$("qz").hidden=true;render();scrollTo({top:$("lv").offsetTop-4,behavior:"smooth"});});}
+function intro(){const x=L[S.lv],c=cnt(S.lv),n=x.p.length,all=L.reduce((a,_,l)=>a+cnt(l),0),tot=L.reduce((a,y)=>a+y.p.length,0);
+  $("intro").innerHTML=`<h2>${x.i} ${x.n}: ${x.t}</h2><p>${x.d}</p><div class="meter"><i style="width:${Math.round(c/n*100)}%"></i></div>
+  <p style="margin-top:6px;font-size:13px">จำได้ ${c}/${n} ประโยค${c===n?" · ผ่านแล้ว 🎉":""} · รวมทุก Level ${all}/${tot}</p>
+  <div class="tools2"><button class="btn pri" type="button" id="go">📝 ทดสอบ Level นี้ (5 ข้อ)</button>${c===n&&S.lv<L.length-1?`<button class="btn" type="button" id="nx">ไป ${L[S.lv+1].n} →</button>`:""}</div>`;
+  $("go").onclick=quiz;if($("nx"))$("nx").onclick=()=>{S.lv++;save();render();};}
+function card(l,i){const p=L[l].p[i],k=id(l,i),ok=!!S.done[k];
+  return `<article class="sec ph${ok?" ok":""}" data-k="${k}"><div class="jp" lang="ja">${esc(p[0])}</div><div class="ro">${esc(p[1])}</div><div class="th">${esc(p[2])}</div><div class="me">${esc(p[3])}</div>${p[4]?`<div class="tip">💡 ${esc(p[4])}</div>`:""}
+  <div class="acts"><button type="button" data-a="say">🔊 ฟัง</button><button type="button" data-a="show">📱 โชว์</button><button type="button" data-a="ok" aria-pressed="${ok}">${ok?"✓ จำได้แล้ว":"○ จำได้"}</button></div></article>`;}
+function list(){const q=$("q").value.trim().toLowerCase();let h="";
+  if(q){L.forEach((x,l)=>x.p.forEach((p,i)=>{if(p.join(" ").toLowerCase().includes(q))h+=`<p class="sub" style="margin:8px 2px 4px;font-size:12px">${x.i} ${x.n}</p>`+card(l,i);}));if(!h)h=`<p class="empty">ไม่เจอคำนี้ ลองคำอื่น เช่น "ห้องน้ำ" "บัตร"</p>`;}
+  else L[S.lv].p.forEach((_,i)=>h+=card(S.lv,i));
+  $("list").innerHTML=h;}
+function render(){chips();intro();list();}
+$("list").addEventListener("click",e=>{const b=e.target.closest("button[data-a]");if(!b)return;const k=b.closest(".ph").dataset.k,[l,i]=k.split("-").map(Number),p=L[l].p[i];
+  if(b.dataset.a==="say")say(p[0]);
+  if(b.dataset.a==="show")show(p);
+  if(b.dataset.a==="ok"){if(S.done[k])delete S.done[k];else S.done[k]=1;save();const y=window.scrollY;chips();intro();list();scrollTo(0,y);}});
+$("q").addEventListener("input",list);
+let cur=null;function show(p){cur=p;$("sb").textContent=p[0];$("ss").textContent=p[3];$("show").classList.add("on");}
+$("sx").onclick=()=>$("show").classList.remove("on");$("sp").onclick=()=>cur&&say(cur[0]);
+// quiz: Thai meaning -> pick the Japanese; right answers mark the phrase as remembered
+function quiz(){const l=S.lv,ps=L[l].p.map((p,i)=>i).sort(()=>Math.random()-.5).slice(0,5);let n=0,sc=0;const box=$("qz");box.hidden=false;
+  function step(){if(n>=ps.length){box.innerHTML=`<div class="q">ได้ ${sc}/${ps.length} ข้อ ${sc===ps.length?"🎉 เก่งมาก":sc>=3?"👍 ดีแล้ว":"💪 ทบทวนอีกนิด"}</div><p class="sub">ข้อที่ตอบถูกถูกติ๊ก ✓ จำได้ ให้อัตโนมัติ</p><div class="tools2"><button class="btn pri" type="button" id="ag">ทำอีกรอบ</button><button class="btn" type="button" id="cl">ปิด</button></div>`;
+      $("ag").onclick=quiz;$("cl").onclick=()=>{box.hidden=true;};chips();intro();list();return;}
+    const i=ps[n],p=L[l].p[i],wr=L[l].p.map((_,j)=>j).filter(j=>j!==i).sort(()=>Math.random()-.5).slice(0,3),ops=[i,...wr].sort(()=>Math.random()-.5);
+    box.innerHTML=`<div class="st">ข้อ ${n+1}/${ps.length} · ${L[l].n}</div><div class="q">“${esc(p[3])}” ภาษาญี่ปุ่นคือ?</div><div class="ops">${ops.map(j=>`<button type="button" lang="ja" data-j="${j}">${esc(L[l].p[j][0])}</button>`).join("")}</div><div class="fb" id="fb"></div>`;
+    box.querySelectorAll(".ops button").forEach(b=>b.onclick=()=>{if(box.dataset.lock)return;box.dataset.lock=1;const j=+b.dataset.j,ok=j===i;
+      b.classList.add(ok?"r":"w");if(!ok)box.querySelector(`[data-j="${i}"]`).classList.add("r");
+      $("fb").textContent=ok?"✓ ถูกต้อง · "+p[2]:"✗ คำตอบคือ "+p[0]+" ("+p[2]+")";if(ok){sc++;S.done[id(l,i)]=1;save();}say(p[0]);
+      setTimeout(()=>{delete box.dataset.lock;n++;step();},ok?1100:2200);});}
+  step();box.scrollIntoView({behavior:"smooth",block:"start"});}
+render();
+</script>
+
+<nav class="tabs" aria-label="หน้า"><a href="index.html"><span class="i" aria-hidden="true">🍜</span>ร้านเด็ด</a><a href="days.html"><span class="i" aria-hidden="true">🗓</span>แผนรายวัน</a><a href="info.html"><span class="i" aria-hidden="true">🧳</span>ข้อมูล</a><a href="expenses.html"><span class="i" aria-hidden="true">💴</span>ค่าใช้จ่าย</a><a href="packing.html"><span class="i" aria-hidden="true">✅</span>เตรียมของ</a><a href="nihongo.html" aria-current="page"><span class="i" aria-hidden="true">🗣</span>ภาษา</a></nav>
+</body>
+</html>
