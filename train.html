@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=Noto+Serif+JP:wght@700&display=swap"><title>ขึ้นรถไฟเอง</title>
+<style>
+/* Train self-guide: search box opens Google Maps transit; route cards from Ueno; numbered how-to; lost-and-found tips. */
+:root{
+  --bg:#eef1f4; --card:#ffffff; --fg:#17222e; --muted:#5b6876; --line:#d9dfe6;
+  --ikura:#e2571f; --ikura-soft:#fde6db;
+  --ok:#2f6b43; --ok-soft:#e1f0e5; --warn:#a23a1a; --warn-soft:#fbe3da; --done:#1f4f8a; --done-soft:#dde8f6;
+  --sea:#1d3f63; --soba:#7a5a34; --meat:#8c2630; --ramen:#a8741a; --alley:#3a3f47; --coffee:#4b3021; --matcha:#4c6a2a; --gold:#e0a91b; --gold-soft:#fdf3d6; --gold-ink:#7a5600; --sushi:#1f5f5b; --chicken:#9a4a12; --cat:#5b4a7a; --view:#9c3b22; --shop:#6b5a2e;
+  --f-body:"IBM Plex Sans Thai",system-ui,sans-serif; --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c; --card:#18212b; --fg:#e5ebf1; --muted:#9aa7b4; --line:#2a3542;
+  --ikura:#ff7a3d; --ikura-soft:#3a2117;
+  --ok:#7cc495; --ok-soft:#1b2e22; --warn:#ff9b78; --warn-soft:#3a1d14; --done:#8fb7ee; --done-soft:#17263a;
+  --sea:#2a5684; --soba:#8f6b40; --meat:#a3343f; --ramen:#b4801f; --alley:#4a515b; --coffee:#6a4632; --matcha:#5f8236; --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a; --sushi:#2b7a75; --chicken:#b45a1a; --cat:#72609a; --view:#b8492c; --shop:#84703a; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header h1{font-size:clamp(26px,5vw,34px);line-height:1.2;margin:0 0 6px;font-weight:700}
+header p{margin:0}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:14px;padding:16px}
+.sec h2{margin:0 0 10px;font-size:19px}
+.sbox{display:flex;gap:8px}
+.sbox input{flex:1;min-width:0;font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--fg)}
+.sbox button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:0 16px;background:var(--ikura);color:#fff;cursor:pointer}
+.small{font-size:13px;color:var(--muted);margin:8px 0 0}
+.rt{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:11px 2px;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.rt:first-of-type{border-top:0}
+.rn{min-width:0}.rn b{font-size:16px}
+.rn small{display:block;color:var(--fg);font-size:13.5px}
+.rn small.rm{color:var(--muted);font-size:12.5px}
+.go{flex:none;font-size:13px;font-weight:700;color:var(--ikura);white-space:nowrap}
+ol.st{margin:0;padding-left:22px}
+ol.st li{margin:0 0 10px} ol.st li b{display:block} ol.st li span{color:var(--fg)}
+ul.ln{list-style:none;margin:0;padding:0}
+ul.ln li{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+ul.ln li:first-child{border-top:0}
+.lc{flex:none;min-width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;border:3px solid rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line)}
+ul.ln small{display:block;color:var(--muted);font-size:12.5px}
+ul.ls{margin:0;padding-left:20px} ul.ls li{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{border-top:1px solid var(--line);padding:8px 6px;vertical-align:top}
+td.jpc{font-family:"Noto Sans JP","Hiragino Sans",sans-serif;font-weight:700;white-space:nowrap}
+.ph{display:grid;gap:10px}
+.pc{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
+.pc .jp{font-family:"Noto Sans JP","Hiragino Sans",sans-serif;font-size:20px;font-weight:700;line-height:1.4}
+.pc .rd{color:var(--muted);font-size:13px} .pc .th{font-size:14px}
+.tip{background:var(--gold-soft);color:var(--fg);border-radius:12px;padding:10px 12px;margin:0 0 10px;font-size:14px}
+</style>
+<style>
+/* Shared Japan theme layered over every page: washi paper, sumi ink, ai indigo, shu vermilion. CSS only, no images. */
+:root{
+  --bg:#f5efe3; --card:#fffdf8; --fg:#1d232b; --muted:#6a6357; --line:#e4d9c6;
+  --ikura:#c8372d; --ikura-soft:#f7e1d9; --ai:#1f3a5f; --ai-2:#2b4c76; --kin:#e9c27a;
+  --gold:#c99416; --gold-soft:#f8ecd0; --gold-ink:#7a5600;
+  --shadow:0 1px 2px rgba(31,40,52,.05),0 10px 28px -14px rgba(31,58,95,.28);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10141a; --card:#19202a; --fg:#ece6da; --muted:#a59d8e; --line:#2a3441;
+  --ikura:#ff6f5a; --ikura-soft:#3a1f1a; --ai:#16263d; --ai-2:#1f3554; --kin:#f0cd8a;
+  --gold:#f2bf3a; --gold-soft:#3a3016; --gold-ink:#f2bf3a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -14px rgba(0,0,0,.6); color-scheme:dark}
+
+body{background:var(--bg);padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{display:none!important}
+
+/* Hero: indigo band with a seigaiha wave pattern and a vermilion seal. */
+.wrap>header,.wrap>.hero{position:relative;overflow:hidden;color:#fff;border-radius:0 0 22px 22px;
+  margin:-24px max(-16px,calc(-1 * env(safe-area-inset-left,0px) - 16px)) 18px;padding:28px 20px 22px;
+  background-color:var(--ai);
+  background-image:
+    linear-gradient(180deg,rgba(15,28,46,.15),rgba(15,28,46,.55)),
+    radial-gradient(circle at 100% 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 0 150%,var(--ai) 24%,var(--ai-2) 24% 28%,var(--ai) 28% 36%,var(--ai-2) 36% 40%,transparent 40%),
+    radial-gradient(circle at 50% 100%,var(--ai-2) 10%,var(--ai) 10% 23%,var(--ai-2) 23% 30%,var(--ai) 30% 43%,var(--ai-2) 43% 50%,var(--ai) 50% 63%,var(--ai-2) 63% 71%,transparent 71%),
+    radial-gradient(circle at 100% 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%),
+    radial-gradient(circle at 0 50%,var(--ai-2) 5%,var(--ai) 5% 15%,var(--ai-2) 15% 20%,var(--ai) 20% 29%,var(--ai-2) 29% 34%,var(--ai) 34% 44%,var(--ai-2) 44% 49%,transparent 49%);
+  background-size:auto,64px 32px,64px 32px,64px 32px,64px 32px,64px 32px}
+@media (min-width:760px){.wrap>header,.wrap>.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:-8px}}
+.wrap>header::after,.wrap>.hero::after{content:"旅";position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;background:var(--ikura);color:#fff;font:700 22px/1 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  box-shadow:0 0 0 3px rgba(255,255,255,.18);transform:rotate(-8deg)}
+.wrap>header h1,.wrap>.hero h1{color:#fff;margin:0 56px 8px 0;font-size:clamp(25px,6.6vw,34px);line-height:1.2;letter-spacing:-.01em}
+.wrap>header h1 span,.wrap>.hero h1 span{color:var(--kin);display:block}
+.wrap>header p,.wrap>.hero p{color:rgba(255,255,255,.86)!important;margin-bottom:0}
+.wrap>header .legend{margin-top:14px}
+.wrap>header .legend .tag{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.wrap>header a{color:#fff}
+.navl{display:none!important}
+
+/* Cards and sections */
+.card,.day,.sec,.tired{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.sec h2,.card h2,.dh h2{letter-spacing:-.01em}
+:root:not([data-theme="dark"]) .sec h2,:root:not([data-theme="dark"]) .card h2{color:var(--ai)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sec h2,:root:not([data-theme="light"]) .card h2{color:var(--fg)}}
+.sub{color:var(--muted)}
+
+/* Sticky filter / jump bars get a frosted washi backdrop */
+.bar{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.chip{border-radius:999px}
+.chip[aria-pressed="true"],.chip.on{background:var(--ikura);border-color:var(--ikura);color:#fff}
+.btn{border-radius:12px}
+
+/* Bottom tab bar shared by all pages */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs a{flex:1;max-width:150px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;
+  text-decoration:none;color:var(--muted);font:600 11.5px/1.2 var(--f-body,system-ui)}
+.tabs a .i{font-size:20px;line-height:1.1}
+.tabs a[aria-current="page"]{color:var(--ikura);background:var(--ikura-soft)}
+.tabs a:focus-visible{outline:2px solid var(--ikura);outline-offset:1px}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))!important}
+@media print{.tabs{display:none}body{padding-bottom:0}}
+.wrap>header .links{margin-top:14px}
+.wrap>header .daylink{box-shadow:none}
+.wrap>header .daylink.alt{background:rgba(255,255,255,.13)!important;color:#fff!important;border:1px solid rgba(255,255,255,.32)}
+/* One swipeable row of filter chips instead of a tall sticky block on phones */
+.bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.bar::-webkit-scrollbar{display:none}
+.bar>*{flex:none}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>ขึ้นรถไฟเอง <span>ไม่หลง</span></h1>
+    <p>ค้นเส้นทาง ดูสาย ดูขบวน ดูเวลา แล้วเดินตามป้ายสี ถ้าแยกจากเพื่อนก็ไปเองได้ ใช้ Suica ใบเดียวขึ้นได้ทุกสาย</p>
+  </header>
+
+  <section class="sec" id="search">
+    <h2>🔎 ค้นเส้นทางจากจุดที่ยืนอยู่</h2>
+    <form class="sbox" id="sf"><input id="dest" type="text" placeholder="พิมพ์ปลายทาง เช่น Shibuya Station" autocomplete="off" enterkeyhint="go"><button type="submit">ค้นหา</button></form>
+    <p class="small">เปิด Google Maps แบบรถไฟให้เลย บอกสาย ชานชาลา เวลาออก และราคา · พิมพ์ชื่อสถานีหรือชื่อร้านเป็นภาษาอังกฤษได้</p>
+  </section>
+
+  <section class="sec" id="routes">
+    <h2>🚉 เส้นทางที่ใช้บ่อย จากอุเอโนะ</h2>
+    <p class="tip">แตะการ์ดเพื่อดูเวลาขบวนถัดไปใน Google Maps · เวลาและราคาเป็นค่าประมาณ</p>
+    <a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Ginza%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>กินซ่า</b><small>สาย Hibiya (H) หรือ Ginza (G)</small><small class="rm">~15 นาที · ¥180 · ไม่ต้องเปลี่ยนสาย</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Tsukiji%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>ซึกิจิ (ตลาด)</b><small>สาย Hibiya (H) ทิศ 中目黒 Naka-meguro</small><small class="rm">~15 นาที · ¥180 · ลงสถานี Tsukiji H-11</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Asakusa%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>อาซากุสะ</b><small>สาย Ginza (G) ทิศ 浅草 Asakusa</small><small class="rm">~5 นาที · ¥180 · 3 สถานี ปลายสาย</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Akihabara%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>อากิฮาบาระ</b><small>JR Yamanote / Keihin-Tohoku ทิศ 東京 Tokyo</small><small class="rm">~4 นาที · ~¥150 · 2 สถานี</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Tokyo%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>สถานีโตเกียว</b><small>JR Yamanote / Keihin-Tohoku ทิศ 東京・品川</small><small class="rm">~8 นาที · ~¥170 · 4 สถานี</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Shibuya%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>ชิบูย่า</b><small>สาย Ginza (G) ทิศ 渋谷 Shibuya</small><small class="rm">~30 นาที · ~¥200–300 · นั่งยาวถึงปลายสาย ไม่ต้องเปลี่ยน</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Omotesando%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>โอโมเตะซันโด</b><small>สาย Ginza (G) ทิศ 渋谷</small><small class="rm">~27 นาที · ~¥200–300 · ก่อนปลายสาย 1 สถานี</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Harajuku%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>ฮาราจูกุ</b><small>JR Yamanote ทิศ 池袋・新宿 Ikebukuro</small><small class="rm">~30 นาที · ~¥200–300 · หรือสาย Ginza ไปโอโมเตะซันโดแล้วเดิน</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Shinjuku%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>ชินจูกุ</b><small>JR Yamanote ทิศ 池袋・新宿</small><small class="rm">~25 นาที · ~¥200–300 · ไม่ต้องเปลี่ยน</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Jiyugaoka%20Station&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>จิยูกาโอกะ</b><small>สาย Hibiya ไปนากาเมงุโระ → Tokyu Toyoko ไปจิยูกาโอกะ</small><small class="rm">~45 นาที · เปลี่ยนสาย 1 ครั้ง ที่ Naka-meguro</small></span><span class="go">เส้นทาง →</span></a><a class="rt" href="https://www.google.com/maps/dir/?api=1&amp;origin=Ueno%20Station&amp;destination=Narita%20Airport%20Terminal%201&amp;travelmode=transit" target="_blank" rel="noopener"><span class="rn"><b>สนามบินนาริตะ (วันกลับ)</b><small>Keisei Skyliner จาก Keisei Ueno (คนละสถานีกับ JR เดินไป ~5 นาที)</small><small class="rm">~45 นาที · ~¥2,600 · ต้องซื้อตั๋วที่นั่ง Skyliner</small></span><span class="go">เส้นทาง →</span></a>
+  </section>
+
+  <section class="sec" id="how">
+    <h2>🧭 ขึ้นรถไฟ 8 ขั้นตอน</h2>
+    <ol class="st"><li><b>ค้นเส้นทางใน Google Maps</b><span>พิมพ์ปลายทาง กดรูปรถไฟ 🚆 แล้วกดเลือกเส้นทาง จะเห็น <b>ชื่อสาย + สี + ทิศ (ปลายทางของขบวน) + ชานชาลา + เวลาออก</b> แคปหน้าจอไว้ เผื่อใต้ดินเน็ตหลุด</span></li><li><b>หาป้ายสีของสาย</b><span>ในสถานีเดินตามป้าย<b>สีและตัวอักษรของสาย</b> เช่น วงกลมส้ม G = สายกินซ่า ไม่ต้องอ่านญี่ปุ่นออก ดูสีกับตัวอักษรพอ</span></li><li><b>แตะ Suica เข้าประตู</b><span>แตะบัตรหรือมือถือที่แผ่นสีฟ้า ประตูเปิดแล้วเดินผ่านเลย ถ้าไฟแดงหรือประตูปิด เงินไม่พอหรือแตะไม่ติด ไปช่องเจ้าหน้าที่ข้างประตู</span></li><li><b>เลือกชานชาลาตาม<b>ทิศ</b></b><span>ป้ายจะเขียนว่า <b>○○方面</b> (ทิศไป ○○) ดูชื่อปลายทางหรือสถานีถัดไปให้ตรงกับใน Google Maps ชานชาลามีเลข <b>○番線</b></span></li><li><b>ดูจอบอกขบวนก่อนขึ้น</b><span>จอเหนือชานชาลาบอก <b>เวลาออก · ประเภทขบวน · ปลายทาง</b> สลับภาษาอังกฤษ ระวังขบวน<b>ด่วน</b> (急行 / 快速) จอดไม่ทุกสถานี ถ้าสถานีเราเล็ก ขึ้นขบวน<b>ธรรมดา</b> (各停) ชัวร์สุด</span></li><li><b>ระหว่างนั่ง</b><span>จอในรถบอกสถานีถัดไปเป็นอังกฤษ และมีรหัสสถานี เช่น G-09 นับสถานีตามแอปได้ ประตูเปิดฝั่งไหนจอก็บอก</span></li><li><b>เปลี่ยนสาย</b><span>ลงแล้วเดินตามป้ายสีเหลือง <b>のりかえ / Transfer</b> และสีของสายถัดไป ถ้าเปลี่ยนจาก JR ไปรถไฟใต้ดิน (หรือกลับกัน) มักต้อง<b>แตะออกแล้วแตะเข้าใหม่</b> เป็นเรื่องปกติ</span></li><li><b>ออกให้ถูกทาง</b><span>ดู<b>เลขหรือชื่อทางออก</b>ที่ Google Maps บอก เช่น A2, 東口 (ทางออกตะวันออก) สถานีใหญ่อย่างชินจูกุ โตเกียว มีทางออกเป็นร้อย ออกผิดทางเดินอ้อมไกลมาก</span></li></ol>
+  </section>
+
+  <section class="sec" id="lines">
+    <h2>🎨 สีสายที่เราใช้บ่อย</h2>
+    <ul class="ln"><li><span class="lc" style="background:#f39700;color:#1d1d1d">G</span><span><b>สายกินซ่า (ส้ม)</b><small>อุเอโนะ ↔ อาซากุสะ · กินซ่า · โอโมเตะซันโด · ชิบูย่า</small></span></li><li><span class="lc" style="background:#9caeb7;color:#1d1d1d">H</span><span><b>สายฮิบิยะ (เทา)</b><small>อุเอโนะ ↔ อากิฮาบาระ · กินซ่า · ซึกิจิ · รปปงหงิ · เอบิสุ · นากาเมงุโระ</small></span></li><li><span class="lc" style="background:#e60012;color:#fff">M</span><span><b>สายมารุโนะอุจิ (แดง)</b><small>สถานีโตเกียว · กินซ่า · ชินจูกุ</small></span></li><li><span class="lc" style="background:#80c241;color:#1d1d1d">JY</span><span><b>JR ยามาโนเตะ (เขียวอ่อน วงกลม)</b><small>อุเอโนะ · โตเกียว · ชิบูย่า · ฮาราจูกุ · ชินจูกุ · อิเคะบุคุโระ</small></span></li><li><span class="lc" style="background:#00b2e5;color:#1d1d1d">JK</span><span><b>JR เคฮิน-โทโฮคุ (ฟ้า)</b><small>วิ่งคู่ยามาโนเตะฝั่งตะวันออก อุเอโนะ ↔ โตเกียว ↔ ชินางาวะ</small></span></li><li><span class="lc" style="background:#f15a22;color:#1d1d1d">JC</span><span><b>JR ชูโอ (ส้ม)</b><small>สถานีโตเกียว ↔ ชินจูกุ ตรงๆ เร็วกว่ายามาโนเตะ</small></span></li><li><span class="lc" style="background:#1e50a2;color:#fff">KS</span><span><b>เคเซ (น้ำเงิน)</b><small>Keisei Ueno ↔ สนามบินนาริตะ (Skyliner / Access Express)</small></span></li></ul>
+    <p class="small">ทุกสถานีมีรหัส เช่น <b>G-16</b> = สายกินซ่า สถานีที่ 16 (อุเอโนะ) ใช้นับสถานีได้ง่ายกว่าอ่านชื่อ · JR ยามาโนเตะ ไปทิศ 池袋・新宿 = ไปชินจูกุทางเหนือ · ทิศ 東京・品川 = ไปสถานีโตเกียว</p>
+  </section>
+
+  <section class="sec" id="lost">
+    <h2>😵 ถ้าหลงหรือพลาด</h2>
+    <ul class="ls"><li><b>ขึ้นผิดทิศ:</b> ลงสถานีถัดไป แล้วข้ามไปชานชาลาฝั่งตรงข้าม (หลายสถานีอยู่ชานชาลาเดียวกันคนละฝั่ง) <b>ไม่เสียเงินเพิ่ม</b> ถ้ายังไม่แตะออก</li><li><b>นั่งเลยสถานี:</b> ทำเหมือนกัน ลงแล้วนั่งย้อนกลับ ไม่ต้องตกใจ</li><li><b>ขึ้นขบวนด่วนแล้วไม่จอดสถานีเรา:</b> ลงสถานีที่จอดถัดไป แล้วต่อขบวนธรรมดา (各停) ย้อนกลับมา</li><li><b>เงินใน Suica ไม่พอตอนออก:</b> ประตูจะไม่เปิด ใช้<b>เครื่องปรับค่าโดยสาร 精算機 (のりこし精算)</b> ข้างประตู ใส่บัตร เติมส่วนต่าง แล้วออกได้</li><li><b>หลงกับเพื่อน:</b> ตกลงจุดนัดก่อนทุกครั้ง เช่น <b>หน้าประตูตรวจตั๋วทางออกที่ใช้</b> อย่ายืนรอกลางชานชาลาคนเยอะ ส่งโลเคชันใน LINE</li><li><b>ไม่รู้จะไปทางไหนจริงๆ:</b> ไปถามที่<b>ช่องเจ้าหน้าที่ (改札窓口)</b> ข้างประตูตรวจตั๋ว ยื่นจอปลายทางให้ดู พนักงานช่วยดีมาก</li></ul>
+  </section>
+
+  <section class="sec" id="words">
+    <h2>🪧 คำบนป้ายที่ต้องรู้</h2>
+    <table><tbody><tr><td class="jpc">○番線</td><td>ชานชาลาที่ ○</td></tr><tr><td class="jpc">○○方面</td><td>ทิศไป ○○</td></tr><tr><td class="jpc">各駅停車 / 各停</td><td>ขบวนธรรมดา จอดทุกสถานี</td></tr><tr><td class="jpc">快速 / 急行</td><td>ขบวนด่วน ข้ามบางสถานี</td></tr><tr><td class="jpc">特急</td><td>ด่วนพิเศษ ต้องซื้อตั๋วเพิ่ม</td></tr><tr><td class="jpc">のりかえ</td><td>เปลี่ยนสาย</td></tr><tr><td class="jpc">出口</td><td>ทางออก</td></tr><tr><td class="jpc">東口 / 西口 / 南口 / 北口</td><td>ทางออก ตะวันออก / ตะวันตก / ใต้ / เหนือ</td></tr><tr><td class="jpc">改札</td><td>ประตูตรวจตั๋ว</td></tr><tr><td class="jpc">精算機</td><td>เครื่องปรับค่าโดยสาร</td></tr><tr><td class="jpc">終電</td><td>รถไฟเที่ยวสุดท้าย</td></tr><tr><td class="jpc">女性専用車</td><td>ตู้ผู้หญิงเท่านั้น (ช่วงเช้าวันธรรมดา)</td></tr></tbody></table>
+  </section>
+
+  <section class="sec" id="phrase">
+    <h2>🗣 ถามพนักงาน</h2>
+    <div class="ph"><div class="pc"><div class="jp">○○に行きたいです。</div><div class="rd">○○ นิ อิคิไต เดส</div><div class="th">อยากไป ○○</div></div><div class="pc"><div class="jp">この電車は○○に止まりますか？</div><div class="rd">โคโนะ เด็นฉะ วะ ○○ นิ โทมาริมัส คะ</div><div class="th">รถไฟขบวนนี้จอด ○○ มั้ย</div></div><div class="pc"><div class="jp">何番線ですか？</div><div class="rd">นัมบัง เซ็น เดส คะ</div><div class="th">ชานชาลาที่เท่าไหร่</div></div><div class="pc"><div class="jp">どの出口ですか？</div><div class="rd">โดโนะ เดกุจิ เดส คะ</div><div class="th">ออกทางไหน</div></div></div>
+  </section>
+
+  <section class="sec" id="manner">
+    <h2>🙇 มารยาทบนรถไฟ</h2>
+    <ul class="ls">
+      <li>ห้ามคุยโทรศัพท์ ปิดเสียงมือถือ คุยกันเบาๆ</li>
+      <li>ยืนต่อแถวตามเส้นบนพื้น รอคนลงก่อนแล้วค่อยขึ้น</li>
+      <li>กระเป๋าเป้สะพายไว้ด้านหน้าหรือวางบนชั้นเหนือหัว</li>
+      <li>ชั่วโมงเร่งด่วน 7:30–9:30 และ 17:30–19:30 แน่นมาก ถ้าลากกระเป๋าใหญ่ หลีกเลี่ยงช่วงนี้</li>
+      <li>รถไฟเที่ยวสุดท้ายราว 0:00–0:30 ถ้าเที่ยวดึกเช็ก "終電" ใน Google Maps</li>
+    </ul>
+  </section>
+</div>
+<script>
+document.getElementById("sf").addEventListener("submit",ev=>{ev.preventDefault();const d=document.getElementById("dest").value.trim();if(!d){document.getElementById("dest").focus();return;}
+  location.href="https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(d)+"&travelmode=transit";});
+</script>
+
+<nav class="tabs" aria-label="หน้า"><a href="index.html"><span class="i" aria-hidden="true">🍜</span>ร้าน</a><a href="days.html"><span class="i" aria-hidden="true">🗓</span>แผน</a><a href="train.html" aria-current="page"><span class="i" aria-hidden="true">🚃</span>รถไฟ</a><a href="info.html"><span class="i" aria-hidden="true">🧳</span>ข้อมูล</a><a href="expenses.html"><span class="i" aria-hidden="true">💴</span>ค่าใช้จ่าย</a><a href="packing.html"><span class="i" aria-hidden="true">✅</span>เตรียมของ</a></nav>
+</body>
+</html>
